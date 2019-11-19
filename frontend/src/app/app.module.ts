@@ -13,6 +13,8 @@ import { TransactionSenderComponent } from './transaction-sender/transaction-sen
 import { TransactionReceiverComponent } from './transaction-receiver/transaction-receiver.component';
 
 import { TransactionSenderService } from './transaction-sender/transaction-sender.service';
+import { LoginComponent } from './login';
+import { HomeComponent } from './home';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { TransactionSenderService } from './transaction-sender/transaction-sende
     FooterComponent,
     MainContextComponent,
     TransactionSenderComponent,
-    TransactionReceiverComponent
+    TransactionReceiverComponent,
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

@@ -3,13 +3,14 @@
 
     <links>
         <ul class="navbar-nav mr-auto">
-            <!-- <li class="nav-item active">
-                <a class="nav-link waves-light navbar-item-text-color" mdbWavesEffect>Home<span class="sr-only">(current)</span></a>
+
+             <li class="nav-item active">
+                <a class="nav-link waves-light navbar-item-text-color" mdbWavesEffect routerLink="/">Home<span class="sr-only"></span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link waves-light navbar-item-text-color" mdbWavesEffect>Features</a>
+                <a class="nav-link waves-light navbar-item-text-color" mdbWavesEffect (click)="logout()">Logout</a>
             </li>
-
+            <!--
             <li class="nav-item dropdown" dropdown>
                 <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light navbar-item-text-color" mdbWavesEffect>
                 Basic dropdown<span class="caret"></span></a>
