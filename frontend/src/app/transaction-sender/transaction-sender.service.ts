@@ -24,23 +24,13 @@ export class TransactionSenderService {
     return this.http.post<any>('http://localhost:8080/api/test', JSON.stringify(data), this.httpOptions);
   }
 
-  // get input fields
-  getInputFields(): any {
-    // for now, fields properties are hardcoded, there is no call to backend yet
-    let inputFields = [
-      {id: 1, label: "label1", whatever: "qwe"},
-      {id: 2, label: "label2", whatever: "asd"},
-      {id: 4, label: "label3", whatever: "zxc"},
-    ];
-    console.log("TODO: get input fields from server");
-    return inputFields;
+  // get transaction type input fields
+  getInputFields(): Observable<any> {
+    return this.http.get<any>('http://localhost:8080/api/getTransactionFields');
   }
 
   // send data from input fields
-  sendForm(data): void {
-    // for now, there is no call to backend yet
-    console.log("TODO: send fields ID and value to server");
-    console.log(data);
-    console.log("SENT dummy data");
+  sendForm(data): Observable<any> {
+    return this.http.post<any>('http://localhost:8080/api/sendTransactionFields', JSON.stringify(data), this.httpOptions);
   }
 }
