@@ -1,5 +1,6 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+/backend/firstKeyPair.txt
 # compiled output
 /frontend/dist
 /frontend/tmp

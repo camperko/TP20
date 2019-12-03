@@ -4,6 +4,7 @@ const cors = require('cors');
 const app = express();
 var db_conf = require("./database_conf");
 var cryptoapis = require("./cryptoapis");
+const util = require('util');
 var inputFields = [];
 var inputFieldsValues = [];
 
@@ -20,14 +21,59 @@ app.use(cors(corsOptions));
 
 app.listen(8080, () => {
   console.log('Server started!');
+  cryptoapis.switchNetwork(cryptoapis.caClient.BC.BTC.NETWORKS.TESTNET);
 
+  /*
+    Create arguments for new transaction
+  */
+
+  // const inputs = [
+  //   {
+  //     address: address1,
+  //     value: 0.02410000
+  //   }
+  // ];
+  // const outputs = [
+  //   {
+  //     address: address2,
+  //     value: 0.00010000
+  //   },
+  //   {
+  //     address: address1,
+  //     value: 0.02400000
+  //   }
+  // ];
+  // const fee = {
+  //   value: 0.00000385,
+  //   address: address1
+  // };
+  // const wifs = [
+  //   wif1,
+  // ]
+
+  // cryptoapis.newTransaction(inputs, outputs, fee, wifs);
+  (async () => {
+    var data = await cryptoapis.getAddressTransactions('mvR8K3k8NhprrsCzs3qouWW95pKu66CnSZ');
+    console.log(util.inspect(data, false, null, true));
+  }) ();
+  //cryptoapis.getAddressTransactions('mgEymmJsYjkAU1BuErR7xoNDtavCW96wKE');
+  //cryptoapis.getInfo('mgEymmJsYjkAU1BuErR7xoNDtavCW96wKE');
+  //cryptoapis.generateAddress();
   //cryptoapis.createAccount();
-  //cryptoapis.getAssets(200);
-  //cryptoapis.getSpecRate('5b1ea92e584bf50020130637', '5b1ea92e584bf50020130670');
+  //cryptoapis.getAssets(5);
+  //cryptoapis.getAllRates('LTC');
+  //cryptoapis.getSpecRate('LTC', 'USD');
   //cryptoapis.listAllAccounts();
   //cryptoapis.getAllRates('5b1ea92e584bf50020130616');
+  //cryptoapis.createHDWallet('jofoTestWallet', 3, 'Tim201920Tim');
+  //cryptoapis.deleteHDWallet('jofoTestWallet');
+  //cryptoapis.listHDWallets();
+  //cryptoapis.generateAddressInWallet('jofoTestWallet');
+  //cryptoapis.getHDWallet('jofoTestWallet');
 
-  getTransactionTypeFields(1);
+
+
+  //getTransactionTypeFields(1);
   // select all from table
   // db_conf.db.any('SELECT * FROM transaction_type')
   //   .then(function(data) {
