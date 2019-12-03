@@ -18,6 +18,7 @@
     "cors": "^2.8.5",
     "cryptoapis.io": "^4.0.0",
     "express": "^4.17.1",
+    "express-jwt": "^5.3.1",
     "pg-promise": "^9.3.6"
   }
 }

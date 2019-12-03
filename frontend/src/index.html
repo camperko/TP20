@@ -6,8 +6,35 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  
+  <style type="text/css">
+      /* Necessary for full page carousel*/
+      html,
+      body,
+      header,
+      .view {
+        height: 100%;
+      }
+
+      /* Carousel*/
+      .carousel,
+      .carousel-item,
+      .carousel-item.active {
+        height: 100%;
+      }
+      .carousel-inner {
+        height: 100%;
+      }
+
+      @media (min-width: 800px) and (max-width: 850px) {
+        .navbar:not(.top-nav-collapse) {
+            background: #1C2331!important;
+        }
+    }
+  </style>
 </head>
 <body>
-  <app-root></app-root>
+  <app-root>Loading...</app-root>
 </body>
 </html>

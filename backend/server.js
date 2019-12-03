@@ -1,11 +1,15 @@
+//require('rootpath')();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 var db_conf = require("./database_conf");
+const jwt = require('./_helpers/jwt');
+const errorHandler = require('./_helpers/error-handler');
 var cryptoapis = require("./cryptoapis");
 var inputFields = [];
 var inputFieldsValues = [];
+
 
 var corsOptions = {
   origin: 'http://localhost:4200',
@@ -13,10 +17,18 @@ var corsOptions = {
 }
 
 
-
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
 
+// use JWT auth to secure the api
+app.use(jwt());
+
+// api routes
+app.use('/users', require('./users/users.controller'));
+
+// global error handler
+app.use(errorHandler);
 
 app.listen(8080, () => {
   console.log('Server started!');
