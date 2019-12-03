@@ -65,8 +65,7 @@ CREATE TABLE public.transaction_log (
     sender_price numeric,
     receiver_price numeric,
     is_successful boolean,
-    hash character varying,
-    create_date timestamp without time zone
+    hash character varying
 );
 
 
@@ -302,7 +301,7 @@ COPY public.account_type (account_type_id, account_type) FROM stdin;
 -- Data for Name: transaction_log; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.transaction_log (trans_log_id, sender_trans_type_fk, receiver_trans_type_fk, sender_price, receiver_price, is_successful, hash, create_date) FROM stdin;
+COPY public.transaction_log (trans_log_id, sender_trans_type_fk, receiver_trans_type_fk, sender_price, receiver_price, is_successful, hash) FROM stdin;
 \.
 
 
@@ -311,6 +310,7 @@ COPY public.transaction_log (trans_log_id, sender_trans_type_fk, receiver_trans_
 --
 
 COPY public.transaction_type (trans_type_id, type_name, type_display, is_active, create_date, trans_fee, url, currency) FROM stdin;
+1	T1	Transaction type n. 1	t	2019-11-18 22:28:55.095932	0.0002	https://btc.com/	BTC
 \.
 
 
@@ -319,6 +319,9 @@ COPY public.transaction_type (trans_type_id, type_name, type_display, is_active,
 --
 
 COPY public.transaction_type_field (trans_type_field_id, trans_type_fk, field_name, field_display, is_active, create_date, validators, is_required, field_order) FROM stdin;
+1	1	Whatever	This should display as 1st field	t	2019-11-18 22:28:55.095141	\N	f	1
+2	1	Dummy	This should display as 3rd field	t	2019-11-18 22:28:55.095141	\N	f	3
+3	1	Another	This should display as 2nd field	t	2019-11-18 22:28:55.095141	\N	f	2
 \.
 
 

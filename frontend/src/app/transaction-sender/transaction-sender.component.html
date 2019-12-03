@@ -13,7 +13,7 @@
 
 <form (ngSubmit)="sendForm()" #form="ngForm">
   <div *ngFor="let field of inputFields; index as i">
-    <input type="text" name="field-{{ field.id }}" [(ngModel)]="inputFields[i].value" [attr.data-index]="i"><label>{{ field.label }}</label>
+    <input type="text" name="{{ field.field_name }}" [(ngModel)]="inputFields[i].value" [attr.data-index]="i"><label>{{ field.field_display }}</label>
   </div>
   <div>
     <button type="submit">Send</button>
