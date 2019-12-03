@@ -36,7 +36,7 @@ import { NavigationTransparentComponent } from './navigation-transparent/navigat
     MainContextComponent,
     TransactionSenderComponent,
     TransactionReceiverComponent,
-    RegistrationFormComponent
+    RegistrationFormComponent,
     LoginComponent,
     HomeComponent,
     HomeSellerComponent,
@@ -50,20 +50,18 @@ import { NavigationTransparentComponent } from './navigation-transparent/navigat
     HttpClientModule,
     FormsModule,
     MDBBootstrapModule.forRoot(),
-    BrowserAnimationsModule
-  ],
-  providers: [
-    TransactionSenderService,
-    RegistrationFormService
+    BrowserAnimationsModule,
     ReactiveFormsModule
   ],
   providers: [
     TransactionSenderService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }//,
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 
     // provider used to create fake backend
     //fakeBackendProvider
+    RegistrationFormService,
+    ReactiveFormsModule
   ],
   bootstrap: [AppComponent]
 })
