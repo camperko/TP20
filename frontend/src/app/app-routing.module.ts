@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { RegistrationFormComponent } from './registration-form/registration-form.component';
+import { MainContextComponent } from './main-context/main-context.component';
 
 import { HomeComponent } from './home';
 import { HomeSellerComponent } from './home-seller';
@@ -8,6 +10,8 @@ import { AuthGuard } from './_helpers';
 import { MainContextComponent } from './main-context';
 
 const routes: Routes = [
+
+  { path: 'registration', component: RegistrationFormComponent }
   { path: 'user/home', component: HomeSellerComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: '', component: HomeComponent },

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -17,6 +18,9 @@ import { MainContextComponent } from './main-context/main-context.component';
 import { TransactionSenderComponent } from './transaction-sender/transaction-sender.component';
 import { TransactionReceiverComponent } from './transaction-receiver/transaction-receiver.component';
 import { TransactionSenderService } from './transaction-sender/transaction-sender.service';
+import { RegistrationFormComponent } from './registration-form/registration-form.component';
+import { RegistrationFormService } from './registration-form/registration-form.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login';
 import { HomeComponent } from './home';
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
@@ -32,6 +36,7 @@ import { NavigationTransparentComponent } from './navigation-transparent/navigat
     MainContextComponent,
     TransactionSenderComponent,
     TransactionReceiverComponent,
+    RegistrationFormComponent
     LoginComponent,
     HomeComponent,
     HomeSellerComponent,
@@ -39,11 +44,17 @@ import { NavigationTransparentComponent } from './navigation-transparent/navigat
     NavigationTransparentComponent
   ],
   imports: [
+    MatFormFieldModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
     MDBBootstrapModule.forRoot(),
+    BrowserAnimationsModule
+  ],
+  providers: [
+    TransactionSenderService,
+    RegistrationFormService
     ReactiveFormsModule
   ],
   providers: [
