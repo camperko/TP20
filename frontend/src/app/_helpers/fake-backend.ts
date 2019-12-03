@@ -1,4 +1,9 @@
-﻿import { Injectable } from '@angular/core';
+﻿/*
+This compoent is for testing reasons. Fake backend, logins user test test. Can be deleted.
+- Lenočka
+*/
+
+import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';

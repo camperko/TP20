@@ -1,5 +1,5 @@
 /*
-This component handles navigation for not logged user (beside home page).
+This component handles navigation for logged user.
 - Lenočka.
 */
 import { Component, OnInit } from '@angular/core';
@@ -9,11 +9,11 @@ import { AuthenticationService } from '../_services';
 import { User } from '../_models';
 
 @Component({
-  selector: 'app-navigation',
-  templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.sass']
+  selector: 'app-navigation-seller',
+  templateUrl: './navigation-seller.component.html',
+  styleUrls: ['./navigation-seller.component.sass']
 })
-export class NavigationComponent {
+export class NavigationSellerComponent {
 
   currentUser: User;
 
@@ -24,6 +24,10 @@ export class NavigationComponent {
       this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
-  
+  logout() {
+      this.authenticationService.logout();
+      this.router.navigate(['/login']);
+  }
+
 
 }

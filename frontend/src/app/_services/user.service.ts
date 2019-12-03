@@ -1,4 +1,8 @@
-﻿import { Injectable } from '@angular/core';
+﻿/*
+This component gets all users. For test reasons. MAybe could be deleted?
+- Lenočka
+*/
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from '@environments/environment';

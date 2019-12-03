@@ -1,4 +1,8 @@
-﻿import { Injectable } from '@angular/core';
+﻿/*
+This component checks current user and if it's not active and tries to acces guarded page, redirects to login page
+- Lenočka
+*/
+import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 import { AuthenticationService } from '@app/_services';

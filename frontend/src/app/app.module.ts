@@ -20,6 +20,9 @@ import { TransactionSenderService } from './transaction-sender/transaction-sende
 import { LoginComponent } from './login';
 import { HomeComponent } from './home';
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
+import { HomeSellerComponent } from './home-seller/home-seller.component';
+import { NavigationSellerComponent } from './navigation-seller/navigation-seller.component';
+import { NavigationTransparentComponent } from './navigation-transparent/navigation-transparent.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,10 @@ import { JwtInterceptor, ErrorInterceptor } from './_helpers';
     TransactionSenderComponent,
     TransactionReceiverComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    HomeSellerComponent,
+    NavigationSellerComponent,
+    NavigationTransparentComponent
   ],
   imports: [
     BrowserModule,
@@ -43,10 +49,10 @@ import { JwtInterceptor, ErrorInterceptor } from './_helpers';
   providers: [
     TransactionSenderService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }//,
 
     // provider used to create fake backend
-    fakeBackendProvider
+    //fakeBackendProvider
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,19 @@
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark elegant-color-dark">
+    <mdb-navbar-brand><a class="navbar-brand base-color" routerLink="/user/home">
+        <img src="assets/images/logoNewTransparent.png" height="50" alt="Team logo">
+        BlockPay</a>
+    </mdb-navbar-brand>
+
+    <links>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                    <a class="nav-link waves-light navbar-item-text-color" mdbWavesEffect routerLink="">Exchange rates</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                    <a class="nav-link waves-light navbar-item-text-color" mdbWavesEffect (click)="logout()">Logout</a>
+            </li>
+        </ul>
+    </links>
+</mdb-navbar>
