@@ -1,7 +1,40 @@
 const express = require('express');
+var morgan = require('morgan');
+var uuid = require('node-uuid');
+var fs = require('fs');
+var path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
+
+// MORGAN LOGGER SETUP
+// set directory and name of .log file
+var accessLogStream = fs.createWriteStream(path.join('./logs', 'access.log'), { flags: 'a' });
+// function to generate unique request id
+app.use(function requestId(req, res, next) {
+  req.id = uuid.v4();
+  next();
+})
+// setup morgan requestID token
+morgan.token('requestID', function (req) {
+  return req.id;
+})
+// setup morgan reqHeaders token
+morgan.token('reqHeaders', function(req, res) {
+   return JSON.stringify(req.headers);
+});
+// define log format
+// :date[iso] = the current date and time in UTC
+// :requestID = unique generated request ID
+// :remote-addr = the remote address of the request
+// :reqHeaders = request headers in JSON format
+// :method = the HTTP method of the request
+// :url = the URL of the request
+// :status = the status code of the response
+// :res[content-length] = the content lenght of response
+// :response-time = the time between the request coming into morgan and when the response headers are written, in milliseconds
+app.use(morgan(':date[iso] :requestID :remote-addr :reqHeaders :method :url :status :res[content-length] :response-time ms', { stream: accessLogStream }));
+
 var db_conf = require("./database_conf");
 var cryptoapis = require("./cryptoapis");
 var inputFields = [];

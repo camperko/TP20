@@ -18,6 +18,11 @@
     "cors": "^2.8.5",
     "cryptoapis.io": "^4.0.0",
     "express": "^4.17.1",
-    "pg-promise": "^9.3.6"
+    "morgan": "^1.9.1",
+    "node-uuid": "^1.4.8",
+    "pg-promise": "^9.3.6",
+    "request-ip": "^2.1.3",
+    "rotating-file-stream": "^2.0.0",
+    "winston": "^3.2.1"
   }
 }
