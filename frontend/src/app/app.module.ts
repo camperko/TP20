@@ -37,7 +37,7 @@ import { NavigationTransparentComponent } from './navigation-transparent/navigat
     MainContextComponent,
     TransactionSenderComponent,
     TransactionReceiverComponent,
-    ExchangeRatesTableComponent
+    ExchangeRatesTableComponent,
     RegistrationFormComponent,
     LoginComponent,
     HomeComponent,
