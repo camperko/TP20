@@ -22,10 +22,10 @@ app.listen(8080, () => {
   console.log('Server started!');
 
   //cryptoapis.createAccount();
-  //cryptoapis.getAssets(200);
   //cryptoapis.getSpecRate('5b1ea92e584bf50020130637', '5b1ea92e584bf50020130670');
   //cryptoapis.listAllAccounts();
   //cryptoapis.getAllRates('5b1ea92e584bf50020130616');
+  cryptoapis.saveAssets(200);
 
   getTransactionTypeFields(1);
   // select all from table
@@ -92,4 +92,12 @@ app.route('/api/sendTransactionFields').post((req, res) => {
   inputFieldsValues = req.body.inputFields;
   console.log("RECEIVED");
   console.log(inputFieldsValues);
+});
+
+app.route('/api/getAssetDetails').get((req,res) => {
+  res.setHeader('Content-type', 'application/json');
+  res.send(JSON.stringify({
+    data: cryptoapis.assetDetails
+  }));
+  console.log("asset details");
 });

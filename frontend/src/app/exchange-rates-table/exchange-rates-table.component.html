@@ -1,0 +1,19 @@
+<div class="tableContainer">
+  <table id="tableID" class="scrollTable">
+    <thead class="fixedHeader">
+      <tr>
+        <th>Currency</th>
+        <th>Price</th>
+        <th>Net Change</th>
+      </tr>
+    </thead>
+    <tbody class="scrollContent">
+      <tr *ngFor="let item of assetDetails">
+        <td>{{ item.payload.assetId }}</td>
+        <td>{{ item.payload.price | number:'1.2-2' }}</td>
+        <td  [ngClass]="{'color-green': item.payload.change > 0, 'color-red': item.payload.change < 0}">{{ item.payload.change | number:'1.2-2' }}</td>
+        <!--<td ng-style="{background-color: changeColor}">{{ item.payload.change | number:'1.2-2' }}</td>-->
+      </tr>
+    </tbody>
+  </table>
+</div>

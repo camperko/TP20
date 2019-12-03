@@ -13,6 +13,7 @@ import { TransactionSenderComponent } from './transaction-sender/transaction-sen
 import { TransactionReceiverComponent } from './transaction-receiver/transaction-receiver.component';
 
 import { TransactionSenderService } from './transaction-sender/transaction-sender.service';
+import { ExchangeRatesTableComponent } from './exchange-rates-table/exchange-rates-table.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { TransactionSenderService } from './transaction-sender/transaction-sende
     FooterComponent,
     MainContextComponent,
     TransactionSenderComponent,
-    TransactionReceiverComponent
+    TransactionReceiverComponent,
+    ExchangeRatesTableComponent
   ],
   imports: [
     BrowserModule,

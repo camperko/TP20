@@ -1,0 +1,54 @@
+/* Scrollable area height and width */
+div.tableContainer
+	clear: both
+	border: 1px solid gray
+	height: 285px
+	overflow: auto
+	width: 456px
+
+/* Reset overflow value to hidden (non-IE browsers) */
+html>body div.tableContainer
+	overflow: hidden
+	width: 456px
+
+/* Table width */
+div.tableContainer table
+	float: left
+	width: 438px
+
+/* Set <thead> block level attributes (non-IE, non-Mozilla browsers) */
+html>body thead.fixedHeader tr
+	display: block
+
+/* Scrollable table content (non-IE, non-Mozilla browsers) */
+html>body tbody.scrollContent
+	display: block
+	height: 262px
+	overflow: auto
+	width: 100%
+
+/* <th> styling */
+thead.fixedHeader th
+	background: #C96
+	border-left: 1px solid #EB8
+	border-right: 1px solid #B74
+	border-top: 1px solid #EB8
+	font-weight: normal
+	padding: 4px 3px
+	text-align: left
+
+/* <td> styling */
+tbody.scrollContent td, tbody.scrollContent tr td
+	background: #FFF
+	border-bottom: none
+	border-left: none
+	border-right: 1px solid #CCC
+	border-top: 1px solid #DDD
+	padding: 2px 3px 3px 4px
+
+/* Price change visuals */
+.color-red
+	background-color: #db8c8c !important
+
+.color-green
+	background-color: #cff097 !important

@@ -2,7 +2,6 @@ const CryptoApis = require('cryptoapis.io');
 const apiKey = '6db0a0872e44d399423d2b9dfcacb37feee399c7';
 exports.caClient = new CryptoApis(apiKey);
 
-
 exports.createAccount = function() {
   exports.caClient.TR.exchangeAccounts.create(
     'BINANCE',
@@ -26,28 +25,24 @@ exports.listAllAccounts = function() {
   })
 }
 
-exports.getSpecRate = function(baseAssetId, quoteAssetId) {
-  exports.caClient.CMD.exchangeRates.getSpecificRate(baseAssetId, quoteAssetId)
-    .then(function(response){
-      console.log(response);
-    }).catch(function(error) {
-      console.log(error);
-    });
-}
-
-exports.getAssets = function(inputLimit) {
+exports.saveAssets = function(inputLimit) {
   exports.caClient.CMD.meta.listAllAssets({limit: inputLimit})
   .then(function(response) {
-    console.log(response);
+    for(var i = 0; i < inputLimit; i++) {
+      if(response.payload[i].cryptoType)
+        getAssetDetails(response.payload[i]._id);
+    }
   }).catch(function(errors) {
     console.log(errors);
   });
 }
 
-exports.getAllRates = function(baseAsset) {
-  exports.caClient.CMD.exchangeRates.getAllCurrentRates(baseAsset)
+exports.assetDetails = [];
+
+getAssetDetails = function(baseAsset) {
+  exports.caClient.CMD.base.getAssetDetails(baseAsset)
   .then(function(response) {
-    console.log(response);
+    exports.assetDetails.push(response);
   }).catch(function(errors) {
     console.log(errors);
   })
