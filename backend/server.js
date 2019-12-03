@@ -1,3 +1,4 @@
+//require('rootpath')();
 const express = require('express');
 var morgan = require('morgan');
 var uuid = require('node-uuid');
@@ -36,20 +37,42 @@ morgan.token('reqHeaders', function(req, res) {
 app.use(morgan(':date[iso] :requestID :remote-addr :reqHeaders :method :url :status :res[content-length] :response-time ms', { stream: accessLogStream }));
 
 var db_conf = require("./database_conf");
+const jwt = require('./_helpers/jwt');
+const errorHandler = require('./_helpers/error-handler');
 var cryptoapis = require("./cryptoapis");
 var inputFields = [];
 var inputFieldsValues = [];
+
 
 var corsOptions = {
   origin: 'http://localhost:4200',
   optionSuccessStatus: 200
 }
 
+function getTransactionTypeFields(transactionTypeID) {
+  db_conf.db.any("SELECT * FROM transaction_type_field WHERE trans_type_fk = ${transactionTypeID} ORDER BY field_order ASC;", { transactionTypeID })
+    .then(function (data) {
+      console.log(data);
+      inputFields = data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 
+}
 
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
 
+// use JWT auth to secure the api
+app.use(jwt());
+
+// api routes
+app.use('/users', require('./users/users.controller'));
+
+// global error handler
+app.use(errorHandler);
 
 app.listen(8080, () => {
   console.log('Server started!');
@@ -77,6 +100,34 @@ app.listen(8080, () => {
   //});
 });
 
+
+// do a single select to the database with specific username
+// return true if found, else return false
+async function findUser(username) {
+  try {
+    let data = await db_conf.db.any('SELECT user_account_id FROM user_account WHERE username = $1', [username]);
+    //console.log(data);
+    if (Object.keys(data).length) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+//create a new user in database
+function addUser(username, password) {
+  db_conf.db.any('INSERT INTO user_account(username, userpassword, is_active, create_date)'
+    + 'VALUES($1, $2, $3, $4)', [username, password, true, new Date()])
+    .then(() => {
+      console.log("User successfully added!");
+    })
+    .catch(error => {
+      console.log("Fail! Adding unsuccessfull!");
+    });
+}
 // app.route('/api/test').get((req, res) => {
 //   console.log('Request accepted!');
 //   res.setHeader('Content-type', 'application/json');
@@ -89,16 +140,7 @@ app.listen(8080, () => {
 //   console.log(req.body);
 // });
 
-function getTransactionTypeFields(transactionTypeID) {
-  db_conf.db.any("SELECT * FROM transaction_type_field WHERE trans_type_fk = ${transactionTypeID} ORDER BY field_order ASC;", {transactionTypeID})
-    .then(function(data) {
-        console.log(data);
-        inputFields = data;
-      })
-      .catch(function(error) {
-        console.log(error);
-    });
-}
+
 
 app.route('/api/test').get((req, res) => {
   console.log('Request accepted!');
@@ -110,6 +152,32 @@ app.route('/api/test').get((req, res) => {
 
 app.route('/api/test').post((req, res) => {
   console.log(req.body);
+});
+
+
+//method to receive data from client
+app.route('/api/registration').post((req, res) => {
+  console.log('Request of registration accepted!');
+  var username = req.body.username;
+  var password = req.body.password;
+
+  (async () => {
+    // chceck whether is specific user already in database
+    // if he is, return fail for new user registration
+    // if he is not, add new user to database and return success
+    if (await findUser(username)) {
+      console.log("User already exists!");
+      res.send(JSON.stringify({
+        value: 'fail'
+      }));
+    } else {
+      addUser(username, password);
+      // console.log("User added!");
+      res.send(JSON.stringify({
+        value: 'success'
+      }));
+    }
+  })();
 });
 
 app.route('/api/getTransactionFields').get((req, res) => {

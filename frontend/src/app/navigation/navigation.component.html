@@ -1,26 +1,25 @@
-<mdb-navbar SideClass="navbar navbar-expand-lg elegant-color">
-    <mdb-navbar-brand><a class="navbar-brand navbar-item-text-color" href="#">BlockPay</a></mdb-navbar-brand>
+<mdb-navbar SideClass="navbar fixed-top navbar-expand-lg navbar-dark elegant-color-dark">
+    <mdb-navbar-brand><a class="navbar-brand base-color" routerLink="/">
+        <img src="assets/images/logoNewTransparent.png" height="50" alt="Team logo">
+        BlockPay</a>
+    </mdb-navbar-brand>
 
     <links>
         <ul class="navbar-nav mr-auto">
-            <!-- <li class="nav-item active">
-                <a class="nav-link waves-light navbar-item-text-color" mdbWavesEffect>Home<span class="sr-only">(current)</span></a>
+            <li class="nav-item">
+                <a class="nav-link waves-light navbar-item-text-color" mdbWavesEffect routerLink="">Exchange rates</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link waves-light navbar-item-text-color" mdbWavesEffect>Features</a>
+                <a class="nav-link waves-light navbar-item-text-color" mdbWavesEffect routerLink="">Test PayGate</a>
             </li>
-
-            <li class="nav-item dropdown" dropdown>
-                <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light navbar-item-text-color" mdbWavesEffect>
-                Basic dropdown<span class="caret"></span></a>
-                <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-                    <a class="dropdown-item waves-light" mdbWavesEffect href="#">Action</a>
-                    <a class="dropdown-item waves-light" mdbWavesEffect href="#">Another action</a>
-                    <a class="dropdown-item waves-light" mdbWavesEffect href="#">Something else here</a>
-                    <div class="divider dropdown-divider"></div>
-                    <a class="dropdown-item waves-light" mdbWavesEffect href="#">Separated link</a>
-                </div>
-            </li> -->
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link border border-light rounded waves-effect waves-light navbar-item-text-color base-color" mdbWavesEffect routerLink="/registration">Register</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link waves-light navbar-item-text-color" mdbWavesEffect routerLink="/login">Login</a>
+            </li>
         </ul>
     </links>
 </mdb-navbar>
