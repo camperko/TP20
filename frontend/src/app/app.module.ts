@@ -18,6 +18,7 @@ import { MainContextComponent } from './main-context/main-context.component';
 import { TransactionSenderComponent } from './transaction-sender/transaction-sender.component';
 import { TransactionReceiverComponent } from './transaction-receiver/transaction-receiver.component';
 import { TransactionSenderService } from './transaction-sender/transaction-sender.service';
+import { ExchangeRatesTableComponent } from './exchange-rates-table/exchange-rates-table.component';
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
 import { RegistrationFormService } from './registration-form/registration-form.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -36,6 +37,7 @@ import { NavigationTransparentComponent } from './navigation-transparent/navigat
     MainContextComponent,
     TransactionSenderComponent,
     TransactionReceiverComponent,
+    ExchangeRatesTableComponent
     RegistrationFormComponent,
     LoginComponent,
     HomeComponent,
