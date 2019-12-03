@@ -1,8 +1,11 @@
-<mdb-navbar SideClass="navbar navbar-expand-lg elegant-color">
-    <mdb-navbar-brand><a class="navbar-brand navbar-item-text-color" href="#">BlockPay</a></mdb-navbar-brand>
-
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark elegant-color">
+    <mdb-navbar-brand><a class="navbar-brand navbar-item-text-color" [routerLink]="['']" [routerLinkActive]="'active'">BlockPay</a></mdb-navbar-brand>
     <links>
         <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link waves-light navbar-item-text-color" [routerLink]="['registration']" [routerLinkActive]="'active'"><i aria-hidden="true"></i>Registracia</a>
+            </li>
+        </ul>
             <!-- <li class="nav-item active">
                 <a class="nav-link waves-light navbar-item-text-color" mdbWavesEffect>Home<span class="sr-only">(current)</span></a>
             </li>
@@ -20,7 +23,7 @@
                     <div class="divider dropdown-divider"></div>
                     <a class="dropdown-item waves-light" mdbWavesEffect href="#">Separated link</a>
                 </div>
-            </li> -->
-        </ul>
+            </li> 
+        </ul> -->
     </links>
 </mdb-navbar>

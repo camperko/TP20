@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { AppComponent } from './app.component';
@@ -13,6 +14,9 @@ import { TransactionSenderComponent } from './transaction-sender/transaction-sen
 import { TransactionReceiverComponent } from './transaction-receiver/transaction-receiver.component';
 
 import { TransactionSenderService } from './transaction-sender/transaction-sender.service';
+import { RegistrationFormComponent } from './registration-form/registration-form.component';
+import { RegistrationFormService } from './registration-form/registration-form.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -21,17 +25,21 @@ import { TransactionSenderService } from './transaction-sender/transaction-sende
     FooterComponent,
     MainContextComponent,
     TransactionSenderComponent,
-    TransactionReceiverComponent
+    TransactionReceiverComponent,
+    RegistrationFormComponent
   ],
   imports: [
+    MatFormFieldModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [
-    TransactionSenderService
+    TransactionSenderService,
+    RegistrationFormService
   ],
   bootstrap: [AppComponent]
 })

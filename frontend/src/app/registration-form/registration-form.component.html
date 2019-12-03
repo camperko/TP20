@@ -1,0 +1,53 @@
+<div class="jumbotron vertical-center bck-width">
+    <h2 class="text-align">Registration details</h2>
+    <div class="border-top my-3"></div>
+    <div *ngIf="validationPwd" class="alert alert-warning">
+        {{validationPwd}}
+        <button type="button" (click)="validationPwd = ''" class="close" >
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div *ngIf="regFail" class="alert alert-danger">
+        {{regFail}}
+        <button type="button" (click)="regFail = ''" class="close" >
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div *ngIf="regSuccess" class="alert alert-success">
+        {{regSuccess}}
+        <button type="button" (click)="regSuccess = ''" class="close" >
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form class="form-width" (ngSubmit)="sendData()">
+        <!-- Default input -->
+        <div class="form-group">
+            <label class="text-secondary label" for="formGroupExampleInput">Username</label>
+            <input type="text" class="form-control" id="formGroupExampleInput" name="username"  [(ngModel)]="username" placeholder="Enter username">
+        </div>
+        <!-- Default input -->
+        <div class="form-group">
+            <label class="text-secondary label" for="formGroupExampleInput2">Password</label>
+            <input type="password" class="form-control" name="password" [(ngModel)]="password" id="formGroupExampleInput2" placeholder="Enter password">
+            <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
+                    At least 8 characters
+            </small>
+        </div>
+        <div class="form-group">
+            <label class="text-secondary label">Repeat password</label>
+            <input type="password" class="form-control" name="repPassword" [(ngModel)]="repPassword" id="formGroupExampleInput3" placeholder="Re-enter password">
+        </div>
+
+        <button type="submit" class="btn btn-info btn-block my-4">Sign in</button>
+        <hr>
+        <p class="text-align">By clicking
+            <em>Sign up</em> you agree to our terms of service
+    </form>
+</div>
+
+<br>
+<br>
+<br>
+<app-footer></app-footer>
+
+<router-outlet></router-outlet>
