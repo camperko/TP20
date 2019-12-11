@@ -7,55 +7,52 @@ import { TransactionSenderService } from './transaction-sender.service';
   styleUrls: ['./transaction-sender.component.sass']
 })
 export class TransactionSenderComponent implements OnInit {
-  dataFromServer;
   error;
-  visa;
   inputFields;
-  arr;
-  constructor(private messageService: TransactionSenderService) { }
+  formInputs;
+  transactionTypes;
+  selectedType;
+  constructor(private transactionSenderService: TransactionSenderService) { }
 
   ngOnInit() {
-    this.getTestData();
-    this.visa = '';
-    this.getInputFields();
-  }
-
-  getTestData() {
-    this.messageService.getResponseFromServer().subscribe(
-      data => {
-        this.dataFromServer = data.testMessages;
-        console.log(data);
-      },
-      error => this.error
-    );
-  }
-
-  sendTestData() {
-    console.log('test!');
-    let data = {type: this.visa};
-    this.messageService.postDataToServer(data).subscribe(
-      response => console.log(response),
-      error => this.error
-    );
+    this.getTransactionTypes();
   }
 
   // get transaction type input fields
-  getInputFields() {
-    this.messageService.getInputFields().subscribe(
+  changeFields() {
+    this.transactionSenderService.getTransactionFields(this.selectedType).subscribe(
       data => {
-        this.inputFields = data.inputFields;
-        console.log("RECEIVED");
-        console.log(this.inputFields);
+        this.inputFields = data;
+        this.formInputs = [data];
       },
-      error => this.error
+      error => this.error = error
+    );
+  }
+
+  addInputRow() {
+    this.formInputs.push(JSON.parse(JSON.stringify(this.inputFields)));
+  }
+
+  removeInputRow(index) {
+    this.formInputs.splice(index, 1);
+  }
+
+  getTransactionTypes() {
+    this.transactionSenderService.getTransactionTypes().subscribe(
+      response => {
+        this.transactionTypes = response;
+        this.selectedType = response[0].type_name;
+        this.changeFields();
+      },
+      error => this.error = error
     );
   }
 
   // send data from input fields
   sendForm() {
     // send only fields ID and value
-    let data = {inputFields: this.inputFields.map(({trans_type_field_id, value}) => ({trans_type_field_id, value}))};
-    this.messageService.sendForm(data).subscribe(
+    const data = {inputFields: this.inputFields.map(({trans_type_field_id, value}) => ({trans_type_field_id, value}))};
+    this.transactionSenderService.sendForm(data).subscribe(
       response => console.log(response),
       error => this.error
     );

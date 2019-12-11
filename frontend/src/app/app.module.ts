@@ -28,6 +28,7 @@ import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { HomeSellerComponent } from './home-seller/home-seller.component';
 import { NavigationSellerComponent } from './navigation-seller/navigation-seller.component';
 import { NavigationTransparentComponent } from './navigation-transparent/navigation-transparent.component';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { NavigationTransparentComponent } from './navigation-transparent/navigat
     FormsModule,
     MDBBootstrapModule.forRoot(),
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularFontAwesomeModule
   ],
   providers: [
     TransactionSenderService,

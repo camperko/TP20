@@ -1,19 +1,28 @@
-<h5>Here goes form for transaction sender</h5>
-<h6>{{ dataFromServer }}</h6>
-
-
-<form (ngSubmit)="sendTestData()">
-  <div>
-    <input type="text" name="transactionType" [(ngModel)]="visa"/>
-  </div>
-  <div>
-    <button type="submit">Upload</button>
-  </div>
-</form>
+<label class="col-3">Select cryptocurrency for payment</label>
+<select [(ngModel)]="selectedType" (change)="changeFields()" class="browser-default custom-select col-3">
+  <option *ngFor="let transationType of transactionTypes" [ngValue]="transationType.type_name">
+    {{transationType.type_name}} - {{transationType.type_display}}
+  </option>
+</select>
 
 <form (ngSubmit)="sendForm()" #form="ngForm">
-  <div *ngFor="let field of inputFields; index as i">
-    <input type="text" name="{{ field.field_name }}" [(ngModel)]="inputFields[i].value" [attr.data-index]="i"><label>{{ field.field_display }}</label>
+  <div class="container">
+    <div *ngFor="let formInput of formInputs; index as j" class="row">
+      <div class="col my-auto">
+        <h5 class="index-number">
+          <b>{{j + 1}}</b>
+        </h5>
+      </div>
+      <div *ngFor="let field of formInput; index as i" class="col-5">
+          <div class="md-form">
+              <input mdbInput type="text" id="{{j}}-{{i}}" class="form-control" name="{{ field.field_name }}" [(ngModel)]="field.value">
+              <label for="form1" class="">{{ field.field_display }}</label>
+            </div>
+      </div>
+      <div *ngIf="formInputs.length > j + 1" class="col my-auto"></div>
+      <fa *ngIf="formInputs.length === j + 1" name="plus-circle" class="col my-auto plus-sign" (click)="addInputRow()"></fa>
+      <fa name="minus-circle" class="col my-auto minus-sign" (click)="removeInputRow(j)"></fa>
+    </div>
   </div>
   <div>
     <button type="submit">Send</button>
