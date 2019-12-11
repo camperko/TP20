@@ -81,9 +81,9 @@ app.listen(8080, () => {
   //cryptoapis.getSpecRate('5b1ea92e584bf50020130637', '5b1ea92e584bf50020130670');
   //cryptoapis.listAllAccounts();
   //cryptoapis.getAllRates('5b1ea92e584bf50020130616');
-  cryptoapis.saveAssets(200);
+  //cryptoapis.saveAssets(200);
 
-  getTransactionTypeFields(1);
+  //getTransactionTypeFields(1);
   // select all from table
   // db_conf.db.any('SELECT * FROM transaction_type')
   //   .then(function(data) {

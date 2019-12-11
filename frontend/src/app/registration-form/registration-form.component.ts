@@ -25,6 +25,7 @@ export class RegistrationFormComponent implements OnInit {
   regSuccess = '';
   password;
   repPassword;
+  chckbox: boolean = false;
   constructor(private messageService: RegistrationFormService) { }
 
   ngOnInit() {
@@ -35,6 +36,21 @@ export class RegistrationFormComponent implements OnInit {
 
   // method used to send data to server
   sendData() {
+
+    if(this.chckbox === false){
+      this.regFail = '';
+      this.regSuccess = '';
+      this.validationPwd = 'You must agree with the terms of service!';
+      return;
+    }
+    // validation for the username
+    if(this.username.length < 3){
+      this.regFail = '';
+      this.regSuccess = '';
+      this.validationPwd = 'Username is too short. Minimal lenght is 3 characters!';
+      return;
+    }
+
     // validation, whether passowrd contains >= 8 characters
     if(this.password.length < 8){
       this.regFail = '';
