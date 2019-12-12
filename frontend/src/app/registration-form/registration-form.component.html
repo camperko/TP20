@@ -27,8 +27,8 @@
                     <!-- Meno-->
                     <div class="md-form">
                         <mdb-icon fas icon="user-alt" class="prefix"></mdb-icon>
-                        <input mdbInput type="text" id="form2" class="form-control" name="username" [(ngModel)]="username">
-                        <label for="form2">Username</label>
+                        <input mdbInput type="text" id="form1" class="form-control" name="username" [(ngModel)]="username">
+                        <label for="form1">Username</label>
                         <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
                             At least 3 characters
                         </small>
@@ -43,10 +43,10 @@
                     </div>
                     <div class="md-form">
                         <mdb-icon fas icon="lock" class="prefix"></mdb-icon>
-                        <input mdbInput type="password" id="form2" class="form-control" name="repPassword" [(ngModel)]="repPassword">
-                        <label for="form2">Repeat password</label>
+                        <input mdbInput type="password" id="form3" class="form-control" name="repPassword" [(ngModel)]="repPassword">
+                        <label for="form3">Re-enter password</label>
                     </div>
-                    <div class="custom-control custom-checkbox">
+                    <div class="cbox custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" id="defaultUnchecked" [checked]="chckbox" (change)="chckbox = !chckbox" (click)="chckbox ?  chckbox : basicModal.show()">
                         <label class="custom-control-label" for="defaultUnchecked">Accept the Terms of service</label>
                     </div>
