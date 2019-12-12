@@ -37,6 +37,28 @@ morgan.token('reqHeaders', function(req, res) {
 // :response-time = the time between the request coming into morgan and when the response headers are written, in milliseconds
 app.use(morgan(':date[iso] :requestID :remote-addr :reqHeaders :method :url :status :res[content-length] :response-time ms', { stream: accessLogStream }));
 
+// WINSTON LOGGER SETUP
+const { createLogger, transports, format } = require('winston');
+const { combine, timestamp } = format;
+const logform = require('logform');
+// define log format
+const winstonConsoleFormat = logform.format.combine(
+  logform.format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`)
+);
+const logger = createLogger({
+  format: combine(
+    timestamp(),
+    winstonConsoleFormat
+  ),
+  transports: [],
+  // set exception logging
+  exceptionHandlers: [
+    // set directory and name of .log file
+    new transports.File({ filename: path.join('./logs', '/exceptions.log'), timestamp: true })
+  ],  
+  exitOnError: false // winston will handle uncaught exceptions
+});
+
 var db_conf = require("./database_conf");
 const jwt = require('./_helpers/jwt');
 const errorHandler = require('./_helpers/error-handler');
@@ -67,6 +89,14 @@ app.use(errorHandler);
 
 app.listen(8080, () => {
   console.log('Server started!');
+
+  // try to throw errors to see if winston logger works
+  /*fs.readFile('nonexistingfile.txt', function (err, data) {
+    if (err) throw err;
+    console.log(data);
+  });*/
+  //throw new Error('An error occurred'); 
+
   // cryptoapis.switchNetwork(cryptoapis.caClient.BC.BTC);
   // // cryptoapis.generateAddress();
   // // cryptoapis.generateAddress();
