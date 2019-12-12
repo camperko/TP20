@@ -23,8 +23,12 @@ export class TransactionSenderService {
     return this.http.get<any>('http://localhost:8080/transaction/fields/' + typeName);
   }
 
+  getSellerWallet(typeName): Observable<any> {
+    return this.http.get<any>('http://localhost:8080/transaction/seller/' + typeName);
+  }
+
   // send data from input fields
-  sendForm(data): Observable<any> {
-    return this.http.post<any>('http://localhost:8080/api/sendTransactionFields', JSON.stringify(data), this.httpOptions);
+  sendForm(typeName, data): Observable<any> {
+    return this.http.post<any>('http://localhost:8080/transaction/send/' + typeName, JSON.stringify(data), this.httpOptions);
   }
 }

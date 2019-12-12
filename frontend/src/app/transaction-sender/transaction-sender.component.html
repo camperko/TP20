@@ -1,5 +1,5 @@
-<label class="col-3">Select cryptocurrency for payment</label>
-<select [(ngModel)]="selectedType" (change)="changeFields()" class="browser-default custom-select col-3">
+<label class="col-4">Select cryptocurrency for payment</label>
+<select [(ngModel)]="selectedType" (change)="changeFields()" class="browser-default custom-select col-4">
   <option *ngFor="let transationType of transactionTypes" [ngValue]="transationType.type_name">
     {{transationType.type_name}} - {{transationType.type_display}}
   </option>
@@ -13,18 +13,53 @@
           <b>{{j + 1}}</b>
         </h5>
       </div>
-      <div *ngFor="let field of formInput; index as i" class="col-5">
+      <div *ngFor="let field of formInput; index as i" class="col-4">
           <div class="md-form">
               <input mdbInput type="text" id="{{j}}-{{i}}" class="form-control" name="{{ field.field_name }}" [(ngModel)]="field.value">
               <label for="form1" class="">{{ field.field_display }}</label>
-            </div>
+          </div>
+      </div>
+      <div class="col-2">
+        <div class="md-form">
+          <input mdbInput type="number" id="value-{{j}}" class="form-control" name="value-{{j}}" [(ngModel)]="walletsInputs[j]">
+          <label for="form1" class="">Input in satoshi</label>
+        </div>
       </div>
       <div *ngIf="formInputs.length > j + 1" class="col my-auto"></div>
       <fa *ngIf="formInputs.length === j + 1" name="plus-circle" class="col my-auto plus-sign" (click)="addInputRow()"></fa>
-      <fa name="minus-circle" class="col my-auto minus-sign" (click)="removeInputRow(j)"></fa>
+      <fa *ngIf="formInputs.length !== 1" name="minus-circle" class="col my-auto minus-sign" (click)="removeInputRow(j)"></fa>
+    </div>
+  </div>
+  <div class="border-top my-3"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-6">
+        <div class="md-form">
+          <input mdbInput type="text" id="seller" class="form-control" name="seller_wallet" [(ngModel)]="sellerWallet" disabled>
+          <label for="form1" class="">Seller wallet</label>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="md-form">
+          <input mdbInput type="number" id="price" class="form-control" name="price" [(ngModel)]="price">
+          <label for="form1" class="">Price</label>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="md-form">
+          <input mdbInput type="number" id="fees" class="form-control" name="fees" [(ngModel)]="fees">
+          <label for="form1" class="">Fees in satoshi</label>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="md-form">
+          <input mdbInput type="number" id="feeWallet" class="form-control" name="feeWallet" [(ngModel)]="feeWallet">
+          <label for="form1" class="">Fee wallet order</label>
+        </div>
+      </div>
     </div>
   </div>
   <div>
-    <button type="submit">Send</button>
+    <button type="submit" mdbBtn color="info" mdbWavesEffect>Send</button>
   </div>
 </form>

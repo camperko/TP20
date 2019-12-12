@@ -4,6 +4,7 @@ var morgan = require('morgan');
 var uuid = require('node-uuid');
 var fs = require('fs');
 var path = require('path');
+const util = require('util');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
@@ -41,6 +42,10 @@ const jwt = require('./_helpers/jwt');
 const errorHandler = require('./_helpers/error-handler');
 var cryptoapis = require("./cryptoapis");
 
+module.exports = {
+  cryptoapis
+}
+
 var corsOptions = {
   origin: 'http://localhost:4200',
   optionSuccessStatus: 200
@@ -62,6 +67,18 @@ app.use(errorHandler);
 
 app.listen(8080, () => {
   console.log('Server started!');
+  // cryptoapis.switchNetwork(cryptoapis.caClient.BC.BTC);
+  // cryptoapis.generateAddress();
+  // cryptoapis.generateAddress();
+
+  // (async () => {
+  //   try {
+  //     var data = await cryptoapis.getAddressTransactions('mt39sKy96aeg8XyVc4K1LyxVcXquuutWDX');
+  //     console.log(util.inspect(data, false, null, true));
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }) ();
 
   //cryptoapis.createAccount();
   //cryptoapis.getSpecRate('5b1ea92e584bf50020130637', '5b1ea92e584bf50020130670');
