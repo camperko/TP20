@@ -1,4 +1,112 @@
 <app-navigation-seller></app-navigation-seller>
 <main>
-    <app-exchange-rates-table></app-exchange-rates-table>
+    <!-- Heading -->
+    <div class="card mb-4 wow fadeIn">
+        <!--Card content-->
+        <div class="card-body d-sm-flex justify-content-between">
+            <h4 class="mb-2 mb-sm-0 pt-1">
+                <span>Dashboard</span>
+                <span> / </span>
+                <span>Welcome</span>
+            </h4>
+        </div>
+    </div>
+    <!-- Heading -->
+
+    <!--Grid row-->
+    <div class="row wow fadeIn">
+        <!--Grid column-->
+        <div class="col-md-5 mb-4">
+            <!--Card-->
+            <div class="card mb-4">
+                <!--Card content-->
+                <div class="card-header text-center">
+                    Exchange rates
+                </div>
+                <div class="card-body">
+                    <app-exchange-rates-table></app-exchange-rates-table>
+                </div>
+            </div>
+            <!--/.Card-->
+        </div>
+        <!--Grid column-->
+        <!--Grid column-->
+        <div class="col-md-4 mb-4">
+            <!--Card-->
+            <div class="card mb-4">
+                <!-- Card header -->
+                <div class="card-header">BTC stock price <i class="fas fa-angle-down ml-1"></i></div>
+                <!--Card content-->
+                <div class="card-body">
+                    <img src="../../assets/images/stockBTC.PNG" width=100%>
+                </div>
+            </div>
+            <!--/.Card-->
+            <!--Card-->
+            <div class="card mb-4">
+                <!-- Card header -->
+                <div class="card-header">ETH stock price <i class="fas fa-angle-down ml-1"></i></div>
+                <!--Card content-->
+                <div class="card-body">
+                    <img src="../../assets/images/stockETH.PNG" width=100%>
+                </div>
+            </div>
+            <!--/.Card-->
+        </div>
+        <!--Grid column-->
+        <!--Grid column-->
+        <div class="col-md-3 mb-4">
+            <!--Card-->
+            <div class="card mb-4">
+                <!-- Card header -->
+                <div class="card-header text-center">
+                    My PayGate 1
+                </div>
+                <!--Card content-->
+                <div class="card-body">
+                    <!-- List group links -->
+                    <div class="list-group list-group-flush">
+                        <a class="list-group-item list-group-item-action waves-effect">Amount
+                            <span class="badge badge-info pull-right ml-1">1.78 BTC</span>
+                        </a>
+                        <a class="list-group-item list-group-item-action waves-effect">Orders
+                            <span class="badge badge-info pull-right ml-1">14</span>
+                        </a>
+                        <a class="list-group-item list-group-item-action waves-effect">Accessed
+                            <span class="badge badge-info pull-right ml-1">21x</span>
+                        </a>
+                    </div>
+                    <!-- List group links -->
+                </div>
+            </div>
+            <!--/.Card-->
+
+            <div class="card mb-4">
+                <!-- Card header -->
+                <div class="card-header text-center">
+                    My PayGate 2
+                </div>
+                <!--Card content-->
+                <div class="card-body">
+                    <!-- List group links -->
+                    <div class="list-group list-group-flush">
+                        <a class="list-group-item list-group-item-action waves-effect">Amount
+                            <span class="badge badge-info pull-right ml-1">2 020 EUR</span>
+                        </a>
+                        <a class="list-group-item list-group-item-action waves-effect">Orders
+                            <span class="badge badge-info pull-right ml-1">101</span>
+                        </a>
+                        <a class="list-group-item list-group-item-action waves-effect">Accessed
+                            <span class="badge badge-info pull-right ml-1">221x</span>
+                        </a>
+                    </div>
+                    <!-- List group links -->
+                </div>
+            </div>
+            <!--/.Card-->
+        </div>
+        <!--Grid column-->
+
+    </div>
+    <!--Grid row-->
 </main>
