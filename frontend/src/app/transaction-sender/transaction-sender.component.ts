@@ -63,10 +63,10 @@ export class TransactionSenderComponent implements OnInit {
         this.inputFields = data;
         this.formInputs = [data];
         this.walletsInputs = [1];
+        this.getSellerWallet();
       },
       error => this.error = error
     );
-    this.getSellerWallet();
   }
 
   /*

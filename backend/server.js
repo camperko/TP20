@@ -68,8 +68,8 @@ app.use(errorHandler);
 app.listen(8080, () => {
   console.log('Server started!');
   // cryptoapis.switchNetwork(cryptoapis.caClient.BC.BTC);
-  // cryptoapis.generateAddress();
-  // cryptoapis.generateAddress();
+  // // cryptoapis.generateAddress();
+  // // cryptoapis.generateAddress();
 
   // (async () => {
   //   try {
