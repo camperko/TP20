@@ -1,7 +1,7 @@
 /*
 Exchange rates table
 - gets asset details on init, then every 4 minutes
-- 
+-
 */
 import { Component, OnInit } from '@angular/core';
 import { ExchangeRatesTableService } from './exchange-rates-table.service';
@@ -19,7 +19,7 @@ export class ExchangeRatesTableComponent implements OnInit {
 
   ngOnInit() {
     this.getAssetDetails();
-    setInterval(()=> { this.getAssetDetails() }, 240000);
+    //setInterval(()=> { this.getAssetDetails() }, 240000);
   }
 
   getAssetDetails() {

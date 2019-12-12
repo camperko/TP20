@@ -1,9 +1,18 @@
+/*
+  TransactionSenderService - contains functions for http communication with backend for transactions
+  attributes:
+    - httpOptions
+  methods:
+    - getTransactionTypes
+    - getTransactionFields
+    - getSellerWallet
+    - sendForm
+*/
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,21 +25,56 @@ export class TransactionSenderService {
   };
   constructor(private http: HttpClient) { }
 
-  getResponseFromServer(): Observable<any> {
-    return this.http.get<any>('http://localhost:8080/api/test');
+  /*
+    getTransactionTypes - Observable<any> function
+    returns:
+      - array of transaction types
+    method:
+      - http.get - /transaction/types
+  */
+  getTransactionTypes(): Observable<any> {
+    return this.http.get<any>('http://localhost:8080/transaction/types');
   }
 
-  postDataToServer(data): Observable<any> {
-    return this.http.post<any>('http://localhost:8080/api/test', JSON.stringify(data), this.httpOptions);
+  /*
+    getTransactionFields - Observable<any> function
+    params:
+      - typeName - identifier of selected transaction type
+    returns:
+      - array of fields for selected typeName
+    method:
+      - http.get - /transaction/fields/{typeName}
+  */
+  getTransactionFields(typeName): Observable<any> {
+    return this.http.get<any>('http://localhost:8080/transaction/fields/' + typeName);
   }
 
-  // get transaction type input fields
-  getInputFields(): Observable<any> {
-    return this.http.get<any>('http://localhost:8080/api/getTransactionFields');
+  /*
+    getSellerWallet - Observable<any> function
+    params:
+      - typeName - identifier of selected transaction type
+    returns:
+      - output wallet for seller
+    method:
+      - http.get - /transaction/seller/{typeName}
+  */
+  getSellerWallet(typeName): Observable<any> {
+    return this.http.get<any>('http://localhost:8080/transaction/seller/' + typeName);
   }
 
-  // send data from input fields
-  sendForm(data): Observable<any> {
-    return this.http.post<any>('http://localhost:8080/api/sendTransactionFields', JSON.stringify(data), this.httpOptions);
+  /*
+    getSellerWallet - Observable<any> function
+    params:
+      - typeName - identifier of selected transaction type
+      - data - json of all necesary transaction fields
+        - input wallets addresses, wifs and inputs + price + fees + order of wallet paying fee + output wallet address
+    returns:
+      - message of status report for transaction
+    method:
+      - http.post - /transaction/send/{typeName}
+        - sending JSON.stringify(data)
+  */
+  sendForm(typeName, data): Observable<any> {
+    return this.http.post<any>('http://localhost:8080/transaction/send/' + typeName, JSON.stringify(data), this.httpOptions);
   }
 }

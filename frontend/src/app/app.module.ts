@@ -16,7 +16,6 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { FooterComponent } from './footer/footer.component';
 import { MainContextComponent } from './main-context/main-context.component';
 import { TransactionSenderComponent } from './transaction-sender/transaction-sender.component';
-import { TransactionReceiverComponent } from './transaction-receiver/transaction-receiver.component';
 import { TransactionSenderService } from './transaction-sender/transaction-sender.service';
 import { ExchangeRatesTableComponent } from './exchange-rates-table/exchange-rates-table.component';
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
@@ -28,6 +27,7 @@ import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { HomeSellerComponent } from './home-seller/home-seller.component';
 import { NavigationSellerComponent } from './navigation-seller/navigation-seller.component';
 import { NavigationTransparentComponent } from './navigation-transparent/navigation-transparent.component';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 @NgModule({
   declarations: [
@@ -36,7 +36,6 @@ import { NavigationTransparentComponent } from './navigation-transparent/navigat
     FooterComponent,
     MainContextComponent,
     TransactionSenderComponent,
-    TransactionReceiverComponent,
     ExchangeRatesTableComponent,
     RegistrationFormComponent,
     LoginComponent,
@@ -53,7 +52,8 @@ import { NavigationTransparentComponent } from './navigation-transparent/navigat
     FormsModule,
     MDBBootstrapModule.forRoot(),
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularFontAwesomeModule
   ],
   providers: [
     TransactionSenderService,

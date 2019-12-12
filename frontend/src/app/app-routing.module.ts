@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'user/home', component: HomeSellerComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationFormComponent },
+  { path: 'transaction', component: MainContextComponent },
   { path: '', component: HomeComponent },
   // otherwise redirect to home
   { path: '**', redirectTo: '' }
