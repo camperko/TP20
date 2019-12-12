@@ -7,7 +7,7 @@ const util = require('util');
 caClient = new CryptoApis(apiKey);
 
 /*
-  List all exchange accounts for current apiKey
+  listAllAccounts - list all exchange accounts for current apiKey
 */
 listAllAccounts = function() {
   caClient.TR.exchangeAccounts.listAll()
@@ -19,9 +19,10 @@ listAllAccounts = function() {
 }
 
 /*
-  Get specific exchange rate
-  baseAssetId - string -> base asset ID (etc. 'LTC')
-  quoteAssetId - string -> quote asset ID (etc. 'USD')
+  getSpecRate - get specific exchange rate
+  params
+    - baseAssetId - string -> base asset ID (etc. 'LTC')
+    - quoteAssetId - string -> quote asset ID (etc. 'USD')
 */
 getSpecRate = function(baseAssetId, quoteAssetId) {
   caClient.CMD.exchangeRates.getSpecificRate(baseAssetId, quoteAssetId)
@@ -33,8 +34,9 @@ getSpecRate = function(baseAssetId, quoteAssetId) {
 }
 
 /*
-  Get assets for cryptocurrencies
-  inputLimit - integer -> for number of displayed assets
+  getAssets - get assets for cryptocurrencies
+  params
+    - inputLimit - integer -> for number of displayed assets
 */
 getAssets = function(inputLimit) {
   caClient.CMD.meta.listAllAssets({limit: inputLimit})
@@ -46,8 +48,9 @@ getAssets = function(inputLimit) {
 }
 
 /*
-  Get all exchange rates
-  baseAsset - string -> baseAssetID (etc. 'BTC')
+  getAllRates - get all exchange rates
+  params
+    - baseAsset - string -> baseAssetID (etc. 'BTC')
 */
 getAllRates = function(baseAsset) {
   caClient.CMD.exchangeRates.getAllCurrentRates(baseAsset)
@@ -59,7 +62,7 @@ getAllRates = function(baseAsset) {
 }
 
 /*
-  Create key pair with address and wif
+  generateAddress - create key pair with address and wif
 */
 generateAddress = function() {
   caClient.BC.BTC.address.generateAddress()
@@ -71,10 +74,11 @@ generateAddress = function() {
 }
 
 /*
-  Create HD wallet
-  name - string -> for wallet name
-  addressCount - integer -> for number of addresses
-  password - string -> for wallet password
+  createHDWallet - create HD wallet
+  params
+    - name - string -> for wallet name
+    - addressCount - integer -> for number of addresses
+    - password - string -> for wallet password
 */
 createHDWallet = function(name, addressCount, password) {
   caClient.BC.BTC.wallet.createHDWallet(name, addressCount, password)
@@ -86,7 +90,7 @@ createHDWallet = function(name, addressCount, password) {
 }
 
 /*
-  List all HD wallets for account
+  listHDWallets - list all HD wallets for account
 */
 listHDWallets = function() {
   caClient.BC.BTC.wallet.listHDWallets()
@@ -98,8 +102,9 @@ listHDWallets = function() {
 }
 
 /*
-  Delete HD wallet by name
-  name - string -> for wallet name
+  deleteHDWallet - delete HD wallet by name
+  params
+    - name - string -> for wallet name
 */
 deleteHDWallet = function(name) {
   caClient.BC.BTC.wallet.deleteHDWallet(name)
@@ -111,8 +116,9 @@ deleteHDWallet = function(name) {
 }
 
 /*
-  Get details about HD wallet
-  name - string -> for wallet name
+  getHDWallet - get details about HD wallet
+  params
+    - name - string -> for wallet name
 */
 getHDWallet = function(name) {
   caClient.BC.BTC.wallet.getHDWallet(name)
@@ -124,8 +130,9 @@ getHDWallet = function(name) {
 }
 
 /*
-  Get all transactions on given address
-  address - string -> for address
+  getAddressTransactions - get all transactions on given address
+  params
+    - address - string -> for address
 */
 getAddressTransactions = async function(address) {
   try {
@@ -136,8 +143,9 @@ getAddressTransactions = async function(address) {
 }
 
 /*
-  Get infos about given address
-  name - string -> for wallet name
+  getInfo - get infos about given address
+  params
+    - name - string -> for wallet name
 */
 getInfo = function(address) {
   caClient.BC.BTC.address.getInfo(address)
@@ -149,11 +157,12 @@ getInfo = function(address) {
 }
 
 /*
-  Create new transaction
-  inputs - array of jsons -> every json contains 'address' of sender (string) and paid 'value' (float)
-  outputs - array of jsons -> every json contains 'address' of receiver (string) and incoming 'value' (float)
-  fee -> json -> contains 'address' which is paying fee (string) and 'value' of fee (float)
-  wifs -> array of strings -> each string is wif for one input address
+  newTransaction - create new transaction
+  params
+    - inputs - array of jsons -> every json contains 'address' of sender (string) and paid 'value' (float)
+    - outputs - array of jsons -> every json contains 'address' of receiver (string) and incoming 'value' (float)
+    - fee -> json -> contains 'address' which is paying fee (string) and 'value' of fee (float)
+    - wifs -> array of strings -> each string is wif for one input address
 */
 newTransaction = async function(client, inputs, outputs, fee, wifs) {
   try {
@@ -164,8 +173,9 @@ newTransaction = async function(client, inputs, outputs, fee, wifs) {
 }
 
 /*
-  Switch network to given one
-  network - object from caClient
+  switchNetwork - switch network to given one
+  params
+    - network - object from caClient
 */
 switchNetwork = function(network) {
   network.switchNetwork(network.NETWORKS.TESTNET);

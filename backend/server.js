@@ -68,8 +68,8 @@ app.use(errorHandler);
 app.listen(8080, () => {
   console.log('Server started!');
   // cryptoapis.switchNetwork(cryptoapis.caClient.BC.BTC);
-  // cryptoapis.generateAddress();
-  // cryptoapis.generateAddress();
+  // // cryptoapis.generateAddress();
+  // // cryptoapis.generateAddress();
 
   // (async () => {
   //   try {
@@ -141,21 +141,6 @@ app.route('/api/registration').post((req, res) => {
     }
   })();
 });
-
-// app.route('/api/getTransactionFields').get((req, res) => {
-//   res.setHeader('Content-type', 'application/json');
-//   res.send(JSON.stringify({
-//     inputFields
-//   }));
-//   console.log("SENT");
-//   console.log(inputFields);
-// });
-
-// app.route('/api/sendTransactionFields').post((req, res) => {
-//   inputFieldsValues = req.body.inputFields;
-//   console.log("RECEIVED");
-//   console.log(inputFieldsValues);
-// });
 
 app.route('/api/getAssetDetails').get((req,res) => {
   res.setHeader('Content-type', 'application/json');

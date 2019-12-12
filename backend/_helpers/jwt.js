@@ -10,13 +10,10 @@ function jwt() {
             // public routes that don't require authentication
             '/users/authenticate',
             '/api/registration',
-            '/api/transaction',
             '/api/getAssetDetails',
             '/transaction/types',
             /^\/transaction\/fields\/.*/,
             /^\/transaction\/seller\/.*/,
-            /^\/transaction\/send\/.*/,
-            '/transaction/fields/*'
-        ]
+            /^\/transaction\/send\/.*/        ]
     });
 }

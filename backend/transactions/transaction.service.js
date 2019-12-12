@@ -12,6 +12,11 @@ module.exports = {
   getSellerWallet
 };
 
+/*
+  getTypes - get all transaction types from database
+  FROM - transaction_type
+  return any => array({type_name, type_display})
+*/
 async function getTypes() {
   try {
     return await db_conf.db.any("SELECT type_name, type_display FROM transaction_type;");
@@ -20,6 +25,13 @@ async function getTypes() {
   }
 }
 
+/*
+  getFields - get all fields for selected transaction type name from database
+  params
+    - transactionTypeName - transaction type name for selected transaction type
+  FROM - transaction_type_field
+  return any => array({field_name, field_display})
+*/
 async function getFields(transactionTypeName) {
   try {
     return await db_conf.db.any(`SELECT ttf.field_name, ttf.field_display FROM transaction_type_field ttf
@@ -31,6 +43,14 @@ async function getFields(transactionTypeName) {
   }
 }
 
+/*
+  TODO: implement user selection
+  getSellerWallet - get seller wallet address for selected transaction type name and selected user from database
+  params
+    - transactionTypeName - transaction type name for selected transaction type
+  FROM - user_transaction
+  return any => array({wallet_address})
+*/
 async function getSellerWallet(transactionTypeName) {
   // hardcoded for user with id 1
   const sellerId = 1;
