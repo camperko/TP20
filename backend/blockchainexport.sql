@@ -219,7 +219,8 @@ ALTER SEQUENCE public.user_account_user_account_id_seq OWNED BY public.user_acco
 CREATE TABLE public.user_transaction (
     user_trans_id integer NOT NULL,
     user_account_fk integer,
-    trans_type_fk integer
+    trans_type_fk integer,
+    wallet_address character varying
 );
 
 
@@ -294,6 +295,8 @@ ALTER TABLE ONLY public.user_transaction ALTER COLUMN user_trans_id SET DEFAULT 
 --
 
 COPY public.account_type (account_type_id, account_type) FROM stdin;
+1	admin
+2	seller
 \.
 
 
@@ -310,7 +313,13 @@ COPY public.transaction_log (trans_log_id, sender_trans_type_fk, receiver_trans_
 --
 
 COPY public.transaction_type (trans_type_id, type_name, type_display, is_active, create_date, trans_fee, url, currency) FROM stdin;
-1	T1	Transaction type n. 1	t	2019-11-18 22:28:55.095932	0.0002	https://btc.com/	BTC
+1	BTC	Bitcoin	t	2019-11-18 22:28:55.095932	0.0002	https://btc.com/	BTC
+2	ETH	Ethereum	t	2019-11-18 22:28:55.095932	0.0002	https://google.com/	ETH
+3	LTC	Litecoin	t	2019-11-18 22:28:55.095932	0.0002	https://google.com/	LTC
+4	ETC	Ethereum Classic	t	2019-11-18 22:28:55.095932	0.0002	https://google.com/	ETC
+5	BCH	Bitcoin Cash	t	2019-11-18 22:28:55.095932	0.0002	https://google.com/	BCH
+6	DOGE	Dogecoin	t	2019-11-18 22:28:55.095932	0.0002	https://google.com/	DOGE
+7	DASH	Dash	t	2019-11-18 22:28:55.095932	0.0002	https://google.com/	DASH
 \.
 
 
@@ -319,9 +328,20 @@ COPY public.transaction_type (trans_type_id, type_name, type_display, is_active,
 --
 
 COPY public.transaction_type_field (trans_type_field_id, trans_type_fk, field_name, field_display, is_active, create_date, validators, is_required, field_order) FROM stdin;
-1	1	Whatever	This should display as 1st field	t	2019-11-18 22:28:55.095141	\N	f	1
-2	1	Dummy	This should display as 3rd field	t	2019-11-18 22:28:55.095141	\N	f	3
-3	1	Another	This should display as 2nd field	t	2019-11-18 22:28:55.095141	\N	f	2
+1	1	address	BTC - Address	t	2019-11-18 22:28:55.095141	\N	t	1
+2	1	wif	BTC - WIF	t	2019-11-18 22:28:55.095141	\N	t	2
+3	2	address	ETH - Address	t	2019-11-18 22:28:55.095141	\N	t	1
+4	2	wif	ETH - WIF	t	2019-11-18 22:28:55.095141	\N	t	2
+5	3	address	LTC - Address	t	2019-11-18 22:28:55.095141	\N	t	1
+6	3	wif	LTC - WIF	t	2019-11-18 22:28:55.095141	\N	t	2
+7	4	address	ETC - Address	t	2019-11-18 22:28:55.095141	\N	t	1
+8	4	wif	ETC - WIF	t	2019-11-18 22:28:55.095141	\N	t	2
+9	5	address	BCH - Address	t	2019-11-18 22:28:55.095141	\N	t	1
+10	5	wif	BCH - WIF	t	2019-11-18 22:28:55.095141	\N	t	2
+11	6	address	DOGE - Address	t	2019-11-18 22:28:55.095141	\N	t	1
+12	6	wif	DOGE - WIF	t	2019-11-18 22:28:55.095141	\N	t	2
+13	7	address	DASH - Address	t	2019-11-18 22:28:55.095141	\N	t	1
+14	7	wif	DASH - WIF	t	2019-11-18 22:28:55.095141	\N	t	2
 \.
 
 
@@ -330,6 +350,7 @@ COPY public.transaction_type_field (trans_type_field_id, trans_type_fk, field_na
 --
 
 COPY public.user_account (user_account_id, account_type_fk, username, userpassword, is_active, create_date) FROM stdin;
+1	2	test-seller	test-seller	t	2019-11-18 22:28:55.095932
 \.
 
 
@@ -337,7 +358,8 @@ COPY public.user_account (user_account_id, account_type_fk, username, userpasswo
 -- Data for Name: user_transaction; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.user_transaction (user_trans_id, user_account_fk, trans_type_fk) FROM stdin;
+COPY public.user_transaction (user_trans_id, user_account_fk, trans_type_fk, wallet_address) FROM stdin;
+1	1	1	miaRyqZqPAUTyoPrrd9zXdr8CXhpgjL71J
 \.
 
 
