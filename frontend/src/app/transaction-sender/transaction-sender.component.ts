@@ -60,8 +60,8 @@ export class TransactionSenderComponent implements OnInit {
   changeFields() {
     this.transactionSenderService.getTransactionFields(this.selectedType).subscribe(
       data => {
-        this.inputFields = data;
-        this.formInputs = [data];
+        this.inputFields = JSON.parse(JSON.stringify(data));
+        this.formInputs = [JSON.parse(JSON.stringify(this.inputFields))];
         this.walletsInputs = [1];
         this.getSellerWallet();
       },
@@ -122,7 +122,7 @@ export class TransactionSenderComponent implements OnInit {
         }
       },
       error => this.error = error
-    )
+    );
   }
 
   /*

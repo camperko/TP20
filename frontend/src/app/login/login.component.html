@@ -1,37 +1,39 @@
 <app-navigation></app-navigation>
 <main>
     <div class="col-md-6 offset-md-3 mt-5 background-color">
-    <div class="alert alert-info">
-        Username: test<br />
-        Password: test
-    </div>
-    <div class="card">
-        <h4 class="card-header">Sign in</h4>
-        <div class="card-body">
-            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-                <div class="md-form">
-                    <mdb-icon fas icon="user-alt" class="prefix"></mdb-icon>
-                    <label class="label" for="username">Username</label>
-                    <input mdbInput id="form2" type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
-                    <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-                        <div *ngIf="f.username.errors.required">Username is required</div>
+        <div class="alert alert-info">
+            Username: test<br />
+            Password: test
+        </div>
+        <div class="card">
+            <h4 class="card-header">Sign in</h4>
+            <div class="card-body">
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                    <div class="md-form">
+                        <mdb-icon fas icon="user-alt" class="prefix"></mdb-icon>
+                        <label class="label" for="username">Username</label>
+                        <input mdbInput id="username" type="text" formControlName="username" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+                        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                            <div *ngIf="f.username.errors.required">Username is required</div>
+                        </div>
                     </div>
-                </div>
-                <div class="md-form">
-                    <mdb-icon fas icon="lock" class="prefix"></mdb-icon>
-                    <label class="label" for="password">Password</label>
-                    <input mdbInput type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                        <div *ngIf="f.password.errors.required">Password is required</div>
+                    <div class="md-form">
+                        <mdb-icon fas icon="lock" class="prefix"></mdb-icon>
+                        <label class="label" for="password">Password</label>
+                        <input mdbInput type="password" id="password" formControlName="password" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                            <div *ngIf="f.password.errors.required">Password is required</div>
+                        </div>
                     </div>
-                </div>
-                <button mdbBtn [disabled]="loading" class="btn btn-info btn-block my-4">
-                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                    Login
-                </button>
-                <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
-            </form>
+                    <button mdbBtn [disabled]="loading" class="btn btn-info btn-block my-4">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Login
+                    </button>
+                    <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 </main>
