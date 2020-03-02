@@ -179,3 +179,5 @@ app.route('/api/getAssetDetails').get((req,res) => {
   }));
   console.log("asset details");
 });
+
+module.exports = app;
