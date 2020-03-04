@@ -4,7 +4,7 @@
   "description": "Json file for blockchain gateway",
   "main": "server.js",
   "scripts": {
-    "test": "block_test",
+    "test": "jest",
     "start": "node server.js"
   },
   "keywords": [
@@ -26,5 +26,15 @@
     "request-ip": "^2.1.3",
     "rotating-file-stream": "^2.0.2",
     "winston": "^3.2.1"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  },
+  "devDependencies": {
+    "jest": "^25.1.0",
+    "supertest": "^4.0.2"
   }
 }
