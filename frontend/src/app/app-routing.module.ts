@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationFormComponent },
   { path: 'transaction', component: MainContextComponent },
+  { path: 'transaction/:merchantId/:orderId/:price', component: MainContextComponent },
   { path: '', component: HomeComponent },
   // otherwise redirect to home
   { path: '**', redirectTo: '' }

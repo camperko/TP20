@@ -51,17 +51,15 @@ async function getFields(transactionTypeName) {
   FROM - user_transaction
   return any => array({wallet_address})
 */
-async function getSellerWallet(transactionTypeName) {
-  // hardcoded for user with id 1
-  const sellerId = 1;
+async function getSellerWallet(transactionTypeName, merchant_id) {
   try {
-    return await db_conf.db.any(`SELECT ut.wallet_address FROM user_transaction ut
-                                  JOIN user_account ua ON (ua.user_account_id = ut.user_account_fk)
-                                  JOIN transaction_type tt ON (tt.trans_type_id = ut.trans_type_fk)
-                                  WHERE ua.user_account_id = $1
-                                  AND tt.type_name = $2`,
-                                  [sellerId, transactionTypeName]);
+    return db_conf.db.any(`SELECT ut.wallet_address FROM user_transaction ut
+      JOIN user_account ua ON (ua.user_account_id = ut.user_account_fk)
+      JOIN transaction_type tt ON (tt.trans_type_id = ut.trans_type_fk)
+      WHERE ua.user_account_id = $1
+      AND tt.type_name = $2`,
+      [merchant_id, transactionTypeName]);
   } catch (error) {
-    console.log(error);
+    return 'failed';
   }
 }
