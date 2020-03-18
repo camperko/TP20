@@ -397,3 +397,27 @@ Error: An error occurred
     at Server.emit (events.js:210:5)
     at emitListeningNT (net.js:1334:10)
     at processTicksAndRejections (internal/process/task_queues.js:79:21)
+2020-03-18T23:30:49.355Z error: uncaughtException: listen EADDRINUSE: address already in use :::8080
+Error: listen EADDRINUSE: address already in use :::8080
+    at Server.setupListenHandle [as _listen2] (net.js:1300:14)
+    at listenInCluster (net.js:1348:12)
+    at Server.listen (net.js:1436:7)
+    at Function.listen (C:\Users\daxne\Desktop\skola\TP\Team-project\blockchain-gateway\backend\node_modules\express\lib\application.js:618:24)
+    at Object.<anonymous> (C:\Users\daxne\Desktop\skola\TP\Team-project\blockchain-gateway\backend\server.js:90:5)
+    at Module._compile (internal/modules/cjs/loader.js:956:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:973:10)
+    at Module.load (internal/modules/cjs/loader.js:812:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:724:14)
+    at Function.Module.runMain (internal/modules/cjs/loader.js:1025:10)
+2020-03-18T23:30:53.259Z error: uncaughtException: listen EADDRINUSE: address already in use :::8080
+Error: listen EADDRINUSE: address already in use :::8080
+    at Server.setupListenHandle [as _listen2] (net.js:1300:14)
+    at listenInCluster (net.js:1348:12)
+    at Server.listen (net.js:1436:7)
+    at Function.listen (C:\Users\daxne\Desktop\skola\TP\Team-project\blockchain-gateway\backend\node_modules\express\lib\application.js:618:24)
+    at Object.<anonymous> (C:\Users\daxne\Desktop\skola\TP\Team-project\blockchain-gateway\backend\server.js:90:5)
+    at Module._compile (internal/modules/cjs/loader.js:956:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:973:10)
+    at Module.load (internal/modules/cjs/loader.js:812:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:724:14)
+    at Function.Module.runMain (internal/modules/cjs/loader.js:1025:10)

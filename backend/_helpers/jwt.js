@@ -13,7 +13,7 @@ function jwt() {
             '/api/getAssetDetails',
             '/transaction/types',
             /^\/transaction\/fields\/.*/,
-            /^\/transaction\/seller\/.*/,
+            /^\/transaction\/seller=.*\/type=.*/,
             /^\/transaction\/send\/.*/        ]
     });
 }
