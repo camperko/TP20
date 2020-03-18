@@ -19,5 +19,10 @@ steps:
 - script: |
     cd ../frontend
     npm install
-  displayName: 'Installfrontend'
+  displayName: 'Install frontend'
+
+- script: |
+    cd ../backend
+    npm test
+  displayName: 'Test'
 
