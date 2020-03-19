@@ -28,6 +28,7 @@ import { HomeSellerComponent } from './home-seller/home-seller.component';
 import { NavigationSellerComponent } from './navigation-seller/navigation-seller.component';
 import { NavigationTransparentComponent } from './navigation-transparent/navigation-transparent.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { MatTableModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
     MDBBootstrapModule.forRoot(),
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    MatTableModule
   ],
   providers: [
     TransactionSenderService,
