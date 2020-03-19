@@ -201,3 +201,5 @@ async function getAssetDetails() {
     console.log(error);
   }
 }
+
+module.exports = app;
