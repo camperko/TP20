@@ -28,6 +28,11 @@ import { HomeSellerComponent } from './home-seller/home-seller.component';
 import { NavigationSellerComponent } from './navigation-seller/navigation-seller.component';
 import { NavigationTransparentComponent } from './navigation-transparent/navigation-transparent.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
+import { MatTableModule } from '@angular/material';
+import { MatPaginatorModule } from '@angular/material';
+import { TransactionHistoryService } from './transaction-history/transaction-history.service';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -42,7 +47,8 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
     HomeComponent,
     HomeSellerComponent,
     NavigationSellerComponent,
-    NavigationTransparentComponent
+    NavigationTransparentComponent,
+    TransactionHistoryComponent
   ],
   imports: [
     MatFormFieldModule,
@@ -53,7 +59,10 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
     MDBBootstrapModule.forRoot(),
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [
     TransactionSenderService,
@@ -63,7 +72,8 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
     // provider used to create fake backend
     //fakeBackendProvider
     RegistrationFormService,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TransactionHistoryService
   ],
   bootstrap: [AppComponent]
 })

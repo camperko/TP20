@@ -180,4 +180,36 @@ app.route('/api/getAssetDetails').get((req,res) => {
   console.log("asset details");
 });
 
+// get list of seller's transactions
+app.route('/api/transaction').post((req, res) => {
+  console.log('/api/transaction');
+  var sellerID = req.body.sellerID;
+  (async () => {
+    let data = await getSellerTransactions(sellerID);
+    res.send(JSON.stringify({
+      data: data
+    }));
+  })();
+});
+
+async function getSellerTransactions(sellerID) {
+  console.log('getSellerTransactions');
+  try {
+    let data = await db_conf.db.any(`SELECT
+    tl.sender_price AS sender_price,
+    ttS.currency AS sender_currency,
+    tl.receiver_price AS receiver_price,
+    ttR.currency AS receiver_currency,
+    tl.is_successful AS is_successful
+    FROM transaction_log tl
+    JOIN transaction_type ttS ON ttS.trans_type_id = tl.sender_trans_type_fk
+    JOIN transaction_type ttR ON ttR.trans_type_id = tl.receiver_trans_type_fk
+    JOIN user_transaction utR ON utR.trans_type_fk = ttS.trans_type_id
+    WHERE utR.user_account_fk = $1`, [sellerID]);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 module.exports = app;
