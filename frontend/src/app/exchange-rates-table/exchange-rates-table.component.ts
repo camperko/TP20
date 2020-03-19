@@ -5,6 +5,15 @@ Exchange rates table
 */
 import { Component, OnInit } from '@angular/core';
 import { ExchangeRatesTableService } from './exchange-rates-table.service';
+import { MatTableDataSource } from '@angular/material';
+
+export interface ExchangeRatesRow {
+  currency: string;
+  price: string;
+  change: string;
+  high: string;
+  low: string;
+}
 
 @Component({
   selector: 'app-exchange-rates-table',
@@ -12,21 +21,22 @@ import { ExchangeRatesTableService } from './exchange-rates-table.service';
   styleUrls: ['./exchange-rates-table.component.sass']
 })
 export class ExchangeRatesTableComponent implements OnInit {
-  error;
-  assetDetails: any;
+  displayedColumns: string[] = ['currency', 'price', 'change', 'high', 'low'];
+  dataSource = new MatTableDataSource<ExchangeRatesRow>();
+  error: any;
 
   constructor(private exchangeRatesTableService: ExchangeRatesTableService) { }
 
   ngOnInit() {
     this.getAssetDetails();
-    //setInterval(()=> { this.getAssetDetails() }, 240000);
+    setInterval(()=> { this.getAssetDetails() }, 4000);
   }
 
   getAssetDetails() {
     this.exchangeRatesTableService.getAssetDetails().subscribe(
       data => {
-        this.assetDetails = data.data;
-        console.log("asset details : " + this.assetDetails);
+        this.dataSource = new MatTableDataSource<ExchangeRatesRow>(data.data);
+        console.log(data.data);
       },
       error => this.error
     );

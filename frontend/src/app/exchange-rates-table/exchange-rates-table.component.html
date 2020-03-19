@@ -1,19 +1,32 @@
 <div class="tableContainer">
-  <table id="tableID" class="scrollTable">
-    <thead class="fixedHeader">
-      <tr>
-        <th>Currency</th>
-        <th>Price</th>
-        <th>Net Change</th>
-      </tr>
-    </thead>
-    <tbody class="scrollContent">
-      <tr *ngFor="let item of assetDetails">
-        <td>{{ item.payload.assetId }}</td>
-        <td>{{ item.payload.price | number:'1.2-2' }}</td>
-        <td  [ngClass]="{'color-green': item.payload.change > 0, 'color-red': item.payload.change < 0}">{{ item.payload.change | number:'1.2-2' }}</td>
-        <!--<td ng-style="{background-color: changeColor}">{{ item.payload.change | number:'1.2-2' }}</td>-->
-      </tr>
-    </tbody>
+  <table mat-table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="currency">
+      <th mat-header-cell *matHeaderCellDef> CURRENCY </th>
+      <td mat-cell *matCellDef="let item"> {{item.pair.slice(0, 3)}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef> PRICE </th>
+      <td mat-cell *matCellDef="let item"> ${{item.ask | number:'1.2-3'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="change">
+      <th mat-header-cell *matHeaderCellDef> CHANGE (TODAY) </th>
+      <td mat-cell *matCellDef="let item" [ngClass]="{'color-white': (item.ask - item.rawData.open) === '0', 'color-green': item.ask > item.rawData.open, 'color-red': item.ask < item.rawData.open}"> ${{(item.ask - item.rawData.open) | number:'1.2-3'}} ({{(item.ask - item.rawData.open)/(item.rawData.open)*100 | number:'1.2-3'}}%) </td>
+    </ng-container>
+
+    <ng-container matColumnDef="high">
+      <th mat-header-cell *matHeaderCellDef> 24H HIGH </th>
+      <td mat-cell *matCellDef="let item"> ${{item.high | number:'1.2-3'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="low">
+      <th mat-header-cell *matHeaderCellDef> 24H LOW </th>
+      <td mat-cell *matCellDef="let item"> ${{item.low | number:'1.2-3'}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 </div>

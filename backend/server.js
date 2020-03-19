@@ -8,6 +8,10 @@ const util = require('util');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
+const coinTicker = require('coin-ticker');
+var cryptoapis = require("./cryptoapis");
+var tickerData = []; // coinTicker exchange rates data
+var exchangePairs = ['BTC_USD', 'ETH_USD', 'BCH_USD', 'LTC_USD', 'XRP_USD'];
 
 // MORGAN LOGGER SETUP
 // set directory and name of .log file
@@ -172,10 +176,28 @@ app.route('/api/registration').post((req, res) => {
   })();
 });
 
+// Get content for the exchange rates table
 app.route('/api/getAssetDetails').get((req,res) => {
-  res.setHeader('Content-type', 'application/json');
-  res.send(JSON.stringify({
-    data: cryptoapis.assetDetails
-  }));
-  console.log("asset details");
+  console.log("Getting asset details...");
+  (async () => {
+    await getAssetDetails();
+    console.log(tickerData);
+    res.send(JSON.stringify({
+      data: tickerData
+    }));
+  })();
 });
+
+async function getAssetDetails() {
+  try {
+    tickerData = [];
+    //console.log(exchangePairs.length);
+    for(var i = 0; i < exchangePairs.length; i++) {
+          let exchangeRate = await coinTicker('bitstamp', exchangePairs[i]);
+          //console.log(exchangeRate);
+          tickerData.push(exchangeRate);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
