@@ -2,9 +2,6 @@ const request = require('supertest')
 const server = require('../server')
 const db_conf = require('../database_conf');
 
-const username = 'testuser';
-const password = 'testpassword';
-
 //delete user from database
 async function deleteUser(username, db) {
   console.log("Spustam mazanie");
@@ -25,7 +22,7 @@ async function deleteUser(username, db) {
 describe('registration test', () => {
 
   afterAll(() => {
-    return deleteUser(username, db_conf.db_test);
+    return deleteUser("testuser", db_conf.db_test);
   });
 
   afterAll(function(done) {
@@ -38,8 +35,8 @@ describe('registration test', () => {
     const res = await request(server)
       .post('/api/registration')
       .send({
-        username: username,
-        password: password,
+        username: "testuser",
+        password: "testpassword",
         dbS: "test",      })
     expect(res.statusCode).toEqual(200)
     expect(res.text).toBe('{\"value\":\"success\"}')
