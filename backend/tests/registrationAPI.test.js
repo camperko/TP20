@@ -1,5 +1,5 @@
 const request = require('supertest')
-const app = require('../server')
+const server = require('../server')
 const db_conf = require('../database_conf');
 
 const username = 'testuser';
@@ -27,9 +27,15 @@ describe('registration test', () => {
   afterAll(() => {
     return deleteUser(username, db_conf.db_test);
   });
+
+  afterAll(function(done) {
+    server.close(done);
+  });
+
   //console.log(typeof db);
   it('should create a new user', async () => {
-    const res = await request(app)
+    console.log("server2: " + server);
+    const res = await request(server)
       .post('/api/registration')
       .send({
         username: username,
@@ -39,20 +45,4 @@ describe('registration test', () => {
     expect(res.text).toBe('{\"value\":\"success\"}')
   })
 
-  //deleteUser(username, db_conf.db_test);
-
 })
-
-//deleteUser(username, db_conf.db_test);
-/*describe('login test', () => {
-  it('should login before registered user', async () => {
-    const res = await request(app)
-      .post('/authenticate')
-      .send({
-        username: username,
-        password: password,
-        db: db,      })
-    expect(res.statusCode).toEqual(200)
-    expect(res.text).toBe('{\"value\":\"success\"}')
-  })
-})*/

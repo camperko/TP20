@@ -89,7 +89,7 @@ app.use('/transaction', require('./transactions/transaction.controller'));
 // global error handler
 app.use(errorHandler);
 
-app.listen(8080, () => {
+const server = app.listen(8080, () => {
   console.log('Server started!');
 
   // try to throw errors to see if winston logger works
@@ -212,4 +212,5 @@ app.route('/api/getAssetDetails').get((req,res) => {
   console.log("asset details");
 });
 
-module.exports = app;
+//module.exports = app;
+module.exports =  server;
