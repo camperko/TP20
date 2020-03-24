@@ -14,7 +14,7 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./transaction-history.component.sass']
 })
 export class TransactionHistoryComponent implements OnInit {
-  displayedColumns: string[] = ['index', 'sender_price', 'sender_currency', 'receiver_price', 'receiver_currency', 'is_successful'];
+  displayedColumns: string[] = ['index', 'sender_price', 'sender_currency', 'receiver_price', 'receiver_currency', 'is_successful', 'datetime'];
   dataSource = new MatTableDataSource<TransactionRow>();
   error: any;
 
@@ -37,9 +37,11 @@ export class TransactionHistoryComponent implements OnInit {
 }
 
 export interface TransactionRow {
+  id: number;
   sender_price: number;
   sender_currency: string;
   receiver_price: number;
   receiver_currency: string;
   is_successful: boolean;
+  datetime: string;
 }

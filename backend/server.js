@@ -194,11 +194,13 @@ app.route('/api/sellersTransactions').post((req, res) => {
 async function getSellerTransactions(sellerID) {
   try {
     let data = await db_conf.db.any(`SELECT
+    tl.trans_log_id AS id,
     tl.sender_price AS sender_price,
     ttS.currency AS sender_currency,
     tl.receiver_price AS receiver_price,
     ttR.currency AS receiver_currency,
-    tl.is_successful AS is_successful
+    tl.is_successful AS is_successful,
+    split_part(tl.timestamp::varchar, '.', 1) AS datetime
     FROM transaction_log tl
     JOIN transaction_type ttS ON ttS.trans_type_id = tl.sender_trans_type_fk
     JOIN transaction_type ttR ON ttR.trans_type_id = tl.receiver_trans_type_fk
@@ -231,6 +233,7 @@ async function getSellerTransactionsSummary(sellerID, option) {
     column = 'NOT tl.is_successful';
     condition = 'false';
   }
+  // create different SQL query for succesful and unsuccessful transactions
   try {
     let data = await db_conf.db.any(`SELECT
     sum(tl.receiver_price) AS total_price,
