@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class TransactionHistoryService {
+export class TransactionHistorySummaryService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -14,7 +14,7 @@ export class TransactionHistoryService {
   };
   constructor(private http: HttpClient) { }
 
-  getTransactions(data): Observable<any> {
-    return this.http.post<any>('http://localhost:8080/api/sellersTransactions', JSON.stringify(data), this.httpOptions);
+  getTransactionsSummary(data): Observable<any> {
+    return this.http.post<any>('http://localhost:8080/api/sellersTransactionsSummary', JSON.stringify(data), this.httpOptions);
   }
 }
