@@ -188,6 +188,76 @@ app.route('/api/getAssetDetails').get((req,res) => {
   })();
 });
 
+// get list of seller's transactions 
+app.route('/api/sellersTransactions').post((req, res) => {
+  var sellerID = req.body.sellerID;
+  (async () => {
+    let data = await getSellerTransactions(sellerID);
+    res.send(JSON.stringify({
+      data: data
+    }));
+  })();
+});
+
+async function getSellerTransactions(sellerID) {
+  try {
+    let data = await db_conf.db.any(`SELECT
+    tl.trans_log_id AS id,
+    tl.sender_price AS sender_price,
+    ttS.currency AS sender_currency,
+    tl.receiver_price AS receiver_price,
+    ttR.currency AS receiver_currency,
+    tl.is_successful AS is_successful,
+    split_part(tl.timestamp::varchar, '.', 1) AS datetime
+    FROM transaction_log tl
+    JOIN transaction_type ttS ON ttS.trans_type_id = tl.sender_trans_type_fk
+    JOIN transaction_type ttR ON ttR.trans_type_id = tl.receiver_trans_type_fk
+    WHERE tl.user_account_id_fk = $1`, [sellerID]);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// get list of seller's transactions summary
+app.route('/api/sellersTransactionsSummary').post((req, res) => {
+  var sellerID = req.body.sellerID;
+  var option = req.body.option;
+  (async () => {
+    let data = await getSellerTransactionsSummary(sellerID, option);
+    res.send(JSON.stringify({
+      data: data
+    }));
+  })();
+});
+
+async function getSellerTransactionsSummary(sellerID, option) {
+  var column, condition;
+  if (option === 'successful') {
+    column = 'tl.is_successful';
+    condition = 'true';
+  }
+  if (option === 'unsuccessful') {
+    column = 'NOT tl.is_successful';
+    condition = 'false';
+  }
+  // create different SQL query for succesful and unsuccessful transactions
+  try {
+    let data = await db_conf.db.any(`SELECT
+    sum(tl.receiver_price) AS total_price,
+    ttR.currency AS currency,
+    count(CASE WHEN ` + column + ` THEN 1 END) AS transaction_count
+    FROM transaction_log tl
+    JOIN transaction_type ttS ON ttS.trans_type_id = tl.sender_trans_type_fk
+    JOIN transaction_type ttR ON ttR.trans_type_id = tl.receiver_trans_type_fk
+    WHERE tl.user_account_id_fk = $1 AND tl.is_successful = ` + condition + ` 
+    GROUP BY ttR.trans_type_id, tl.is_successful`, [sellerID]);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 async function getAssetDetails() {
   try {
     tickerData = [];

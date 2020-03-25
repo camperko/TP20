@@ -65,7 +65,9 @@ CREATE TABLE public.transaction_log (
     sender_price numeric,
     receiver_price numeric,
     is_successful boolean,
-    hash character varying
+    hash character varying,
+    user_account_id_fk integer,
+    "timestamp" timestamp without time zone
 );
 
 
@@ -304,7 +306,14 @@ COPY public.account_type (account_type_id, account_type) FROM stdin;
 -- Data for Name: transaction_log; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.transaction_log (trans_log_id, sender_trans_type_fk, receiver_trans_type_fk, sender_price, receiver_price, is_successful, hash) FROM stdin;
+COPY public.transaction_log (trans_log_id, sender_trans_type_fk, receiver_trans_type_fk, sender_price, receiver_price, is_successful, hash, user_account_id_fk, "timestamp") FROM stdin;
+1	1	2	0.123	0.456	t	asdfghjk	1	2004-10-19 10:23:54.12345
+2	1	3	0.0099	0.5	f	kjhgfds	1	2020-03-03 10:10:02.12345
+3	1	3	0.354	0.96	t	sdfg	1	2020-03-13 18:18:32.12345
+4	1	3	0.006	0.00001	t	uhygtfre	1	2020-02-03 17:10:52.12345
+5	1	4	1.558	0.25	f	tg	1	2020-03-05 00:00:56.12345
+6	1	5	10.86	5.32	f	oiuyt	1	2019-12-10 06:08:43.12345
+7	1	5	10.1010	5.555	t	sdfghj	2	2020-03-03 10:11:01.12345
 \.
 
 
@@ -351,6 +360,7 @@ COPY public.transaction_type_field (trans_type_field_id, trans_type_fk, field_na
 
 COPY public.user_account (user_account_id, account_type_fk, username, userpassword, is_active, create_date) FROM stdin;
 1	2	test-seller	test-seller	t	2019-11-18 22:28:55.095932
+2	2	veron	password	t	2019-11-18 22:28:55.095932
 \.
 
 
