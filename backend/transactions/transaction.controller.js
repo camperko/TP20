@@ -16,7 +16,7 @@ const cryptoapis = require('../cryptoapis');
 */
 router.get('/types', getTypes);
 router.get('/fields/:type_name', getFields);
-router.get('/seller/:type_name', getSellerWallet);
+router.get('/seller=:merchant_id/type=:type_name', getSellerWallet);
 router.post('/send/:type_name', sendTransaction);
 
 
@@ -138,7 +138,13 @@ function sendTransaction(req, res, next) {
     - type_name - identifier for selected transaction type
 */
 function getSellerWallet(req, res, next) {
-  transactionService.getSellerWallet(req.params.type_name)
-      .then(wallet => res.json(wallet))
+  transactionService.getSellerWallet(req.params.type_name, req.params.merchant_id)
+      .then(walletRet => {
+        if(walletRet === 'failed' || walletRet.length === 0) {
+          res.json({wallet: 'failed'});
+        } else {
+          res.json({wallet: walletRet[0].wallet_address});
+        }
+      })
       .catch(err => next(err));
 }

@@ -29,7 +29,6 @@ import { NavigationSellerComponent } from './navigation-seller/navigation-seller
 import { NavigationTransparentComponent } from './navigation-transparent/navigation-transparent.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
-import { MatTableModule } from '@angular/material';
 import { MatPaginatorModule } from '@angular/material';
 import { TransactionHistoryService } from './transaction-history/transaction-history.service';
 import { MatSortModule } from '@angular/material/sort';
@@ -38,6 +37,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule, MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { TransactionHistorySummaryComponent } from './transaction-history-summary/transaction-history-summary.component';
 import { TransactionHistorySummaryService } from './transaction-history-summary/transaction-history-summary.service';
+import { MatTableModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -66,12 +66,12 @@ import { TransactionHistorySummaryService } from './transaction-history-summary/
     BrowserAnimationsModule,
     ReactiveFormsModule,
     AngularFontAwesomeModule,
-    MatTableModule,
     MatPaginatorModule,
     MatSortModule,
     MatInputModule,
     MatSelectModule,
-    MatRadioModule
+    MatRadioModule,
+    MatTableModule
   ],
   providers: [
     TransactionSenderService,
