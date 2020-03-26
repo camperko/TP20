@@ -17,4 +17,8 @@ import { Observable } from 'rxjs';
     postDataToServer(data): Observable<any> {
       return this.http.post<any>('http://localhost:8080/api/registration', JSON.stringify(data), this.httpOptions);
     }
+
+    sendToken(token){
+      return this.http.post<any>('http://localhost:8080/api/token_validate', {recaptcha: token});
+    }
   }

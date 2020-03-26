@@ -23,11 +23,11 @@
             <h4 class="card-header">Registration details</h4>
             <div class="card-body">
 
-                <form class="form" (ngSubmit)="sendData()">
+                <form class="form" [formGroup]="registrationForm" (ngSubmit)="sendData()">
                     <!-- Meno-->
                     <div class="md-form">
                         <mdb-icon fas icon="user-alt" class="prefix"></mdb-icon>
-                        <input mdbInput type="text" id="form1" class="form-control" name="username" [(ngModel)]="username">
+                        <input mdbInput type="text" id="form1" class="form-control" name="username" formControlName="username">
                         <label for="form1">Username</label>
                         <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
                             At least 3 characters
@@ -35,7 +35,7 @@
                     </div>
                     <div class="md-form">
                         <mdb-icon fas icon="lock" class="prefix"></mdb-icon>
-                        <input mdbInput type="password" id="form2" class="form-control" name="password" [(ngModel)]="password">
+                        <input mdbInput type="password" id="form2" class="form-control" name="password" formControlName="password">
                         <label for="form2">Enter password</label>
                         <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
                             At least 8 characters
@@ -43,14 +43,21 @@
                     </div>
                     <div class="md-form">
                         <mdb-icon fas icon="lock" class="prefix"></mdb-icon>
-                        <input mdbInput type="password" id="form3" class="form-control" name="repPassword" [(ngModel)]="repPassword">
+                        <input mdbInput type="password" id="form3" class="form-control" name="repPassword" formControlName="repPassword">
                         <label for="form3">Re-enter password</label>
                     </div>
                     <div class="cbox custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" id="defaultUnchecked" [checked]="chckbox" (change)="chckbox = !chckbox" (click)="chckbox ?  chckbox : basicModal.show()">
                         <label class="custom-control-label" for="defaultUnchecked">Accept the Terms of service</label>
                     </div>
-
+                    <div class="cbox">
+                        <div class="recaptchaWrapper" style="transform:scale(0.77); transform-origin:0 0;">
+                            <re-captcha (resolved)="resolved($event)" 
+                                    formControlName="recaptchaReactive" 
+                                    siteKey="6Lfm0t4UAAAAAHTa7LK2bHGJj51rOPbspZDl9OSQ">  
+                            </re-captcha>
+                        </div>
+                    </div>
                     <button mdbBtn type="submit" class="btn btn-info btn-block my-4">Sign up</button>
                     <hr>
                 </form>

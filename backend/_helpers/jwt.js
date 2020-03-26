@@ -11,6 +11,7 @@ function jwt() {
             '/users/authenticate',
             '/api/registration',
             '/api/getAssetDetails',
+            '/api/token_validate',
             '/transaction/types',
             /^\/transaction\/fields\/.*/,
             /^\/transaction\/seller\/.*/,

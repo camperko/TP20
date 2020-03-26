@@ -28,6 +28,7 @@ import { HomeSellerComponent } from './home-seller/home-seller.component';
 import { NavigationSellerComponent } from './navigation-seller/navigation-seller.component';
 import { NavigationTransparentComponent } from './navigation-transparent/navigation-transparent.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,9 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
     MDBBootstrapModule.forRoot(),
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    RecaptchaModule,  //this is the recaptcha main module
+    RecaptchaFormsModule //this is the module for form incase form validation
   ],
   providers: [
     TransactionSenderService,
