@@ -55,8 +55,8 @@ import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     AngularFontAwesomeModule,
-    RecaptchaModule,  //this is the recaptcha main module
-    RecaptchaFormsModule //this is the module for form incase form validation
+    RecaptchaModule,
+    RecaptchaFormsModule
   ],
   providers: [
     TransactionSenderService,
