@@ -1,24 +1,6 @@
 <app-navigation></app-navigation>
 <main>
     <div class="col-md-6 offset-md-3 mt-5 background-color">
-        <div *ngIf="validationPwd" class="alert alert-warning">
-            {{validationPwd}}
-            <button type="button" (click)="validationPwd = ''" class="close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div *ngIf="regFail" class="alert alert-danger">
-            {{regFail}}
-            <button type="button" (click)="regFail = ''" class="close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div *ngIf="regSuccess" class="alert alert-success">
-            {{regSuccess}}
-            <button type="button" (click)="regSuccess = ''" class="close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
         <div class="card">
             <h4 class="card-header">Registration details</h4>
             <div class="card-body">
@@ -59,6 +41,24 @@
                         </div>
                     </div>
                     <button mdbBtn type="submit" class="btn btn-info btn-block my-4">Sign up</button>
+                    <div *ngIf="validationPwd" class="alert alert-warning">
+                        {{validationPwd}}
+                        <button type="button" (click)="validationPwd = ''" class="close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div *ngIf="regFail" class="alert alert-danger">
+                        {{regFail}}
+                        <button type="button" (click)="regFail = ''" class="close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div *ngIf="regSuccess" class="alert alert-success">
+                        {{regSuccess}}
+                        <button type="button" (click)="regSuccess = ''" class="close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                     <hr>
                 </form>
             </div>
