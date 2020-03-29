@@ -9,9 +9,8 @@ function jwt() {
         path: [
             // public routes that don't require authentication
             '/users/authenticate',
-            '/users/registration',
+            '/api/registration',
             '/api/getAssetDetails',
-            '/api/token_validate',
             '/transaction/types',
             /^\/transaction\/fields\/.*/,
             /^\/transaction\/seller=.*\/type=.*/,

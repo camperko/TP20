@@ -8,19 +8,14 @@ const util = require('util');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
-const request = require("request");
 const coinTicker = require('coin-ticker');
 var cryptoapis = require("./cryptoapis");
 var tickerData = []; // coinTicker exchange rates data
 var exchangePairs = ['BTC_USD', 'ETH_USD', 'BCH_USD', 'LTC_USD', 'XRP_USD'];
 
-
-app.use(cors());
 // MORGAN LOGGER SETUP
 // set directory and name of .log file
-var accessLogStream = fs.createWriteStream(path.join('./logs', 'access.log'), {
-  flags: 'a'
-});
+var accessLogStream = fs.createWriteStream(path.join('./logs', 'access.log'), { flags: 'a' });
 // function to generate unique request id
 app.use(function requestId(req, res, next) {
   req.id = uuid.v4();
@@ -31,8 +26,8 @@ morgan.token('requestID', function (req) {
   return req.id;
 })
 // setup morgan reqHeaders token
-morgan.token('reqHeaders', function (req, res) {
-  return JSON.stringify(req.headers);
+morgan.token('reqHeaders', function(req, res) {
+   return JSON.stringify(req.headers);
 });
 // define log format
 // :date[iso] = the current date and time in UTC
@@ -44,20 +39,11 @@ morgan.token('reqHeaders', function (req, res) {
 // :status = the status code of the response
 // :res[content-length] = the content lenght of response
 // :response-time = the time between the request coming into morgan and when the response headers are written, in milliseconds
-app.use(morgan(':date[iso] :requestID :remote-addr :reqHeaders :method :url :status :res[content-length] :response-time ms', {
-  stream: accessLogStream
-}));
+app.use(morgan(':date[iso] :requestID :remote-addr :reqHeaders :method :url :status :res[content-length] :response-time ms', { stream: accessLogStream }));
 
 // WINSTON LOGGER SETUP
-const {
-  createLogger,
-  transports,
-  format
-} = require('winston');
-const {
-  combine,
-  timestamp
-} = format;
+const { createLogger, transports, format } = require('winston');
+const { combine, timestamp } = format;
 const logform = require('logform');
 // define log format
 const winstonConsoleFormat = logform.format.combine(
@@ -72,11 +58,8 @@ const logger = createLogger({
   // set exception logging
   exceptionHandlers: [
     // set directory and name of .log file
-    new transports.File({
-      filename: path.join('./logs', '/exceptions.log'),
-      timestamp: true
-    })
-  ],
+    new transports.File({ filename: path.join('./logs', '/exceptions.log'), timestamp: true })
+  ],  
   exitOnError: false // winston will handle uncaught exceptions
 });
 
@@ -94,9 +77,7 @@ var corsOptions = {
   optionSuccessStatus: 200
 }
 
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
 
@@ -142,46 +123,57 @@ app.listen(8080, () => {
   //getTransactionTypeFields(1);
 });
 
-app.post('/api/token_validate', (req, res) => {
-
-  let token = req.body.recaptcha;
-  const secretKey = "6Lfm0t4UAAAAAD3E2NdgfHFCIYvbFuxNcXfzm2em"; //the secret key from your google admin console;
-
-  //token validation url is URL: https://www.google.com/recaptcha/api/siteverify 
-  // METHOD used is: POST
-  
-  const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}&remoteip=${req.connection.remoteAddress}`
-
-  //note that remoteip is the users ip address and it is optional
-  // in node req.connection.remoteAddress gives the users ip address
-
-  if (token === null || token === undefined) {
-    res.status(201).send({
-      success: false,
-      message: "Token is empty or invalid"
-    })
-    return console.log("token empty");
-  }
-  
-  request(url, function (err, response, body) {
-    //the body is the data that contains success message
-    body = JSON.parse(body);
-    //check if the validation failed
-    //console.log(body.success);
-    if (body.success !== undefined && !body.success) {
-      res.send({
-        success: false,
-        'message': "recaptcha failed"
-      });
-      return console.log("failed")
+// do a single select to the database with specific username
+// return true if found, else return false
+async function findUser(username) {
+  try {
+    let data = await db_conf.db.any('SELECT user_account_id FROM user_account WHERE username = $1', [username]);
+    //console.log(data);
+    if (Object.keys(data).length) {
+      return true;
+    } else {
+      return false;
     }
-    //if passed response success message to client
-    console.log("captcha succesfull");
-    res.send({
-      "success": true,
-      'message': "recaptcha passed"
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+//create a new user in database
+function addUser(username, password) {
+  db_conf.db.any('INSERT INTO user_account(username, userpassword, is_active, create_date)'
+    + 'VALUES($1, $2, $3, $4)', [username, password, true, new Date()])
+    .then(() => {
+      console.log("User successfully added!");
+    })
+    .catch(error => {
+      console.log("Fail! Adding unsuccessfull!");
     });
-  })
+}
+
+//method to receive data from client
+app.route('/api/registration').post((req, res) => {
+  console.log('Request of registration accepted!');
+  var username = req.body.username;
+  var password = req.body.password;
+
+  (async () => {
+    // chceck whether is specific user already in database
+    // if he is, return fail for new user registration
+    // if he is not, add new user to database and return success
+    if (await findUser(username)) {
+      console.log("User already exists!");
+      res.send(JSON.stringify({
+        value: 'fail'
+      }));
+    } else {
+      addUser(username, password);
+      // console.log("User added!");
+      res.send(JSON.stringify({
+        value: 'success'
+      }));
+    }
+  })();
 });
 
 // Get content for the exchange rates table

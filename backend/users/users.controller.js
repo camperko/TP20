@@ -5,7 +5,6 @@ const userService = require('./user.service');
 // routes
 router.post('/authenticate', authenticate);
 router.get('/', getAll);
-router.post('/registration', registration);
 
 module.exports = router;
 
@@ -19,10 +18,4 @@ function getAll(req, res, next) {
     userService.getAll()
         .then(users => res.json(users))
         .catch(err => next(err));
-}
-
-function registration(req, res){
-    userService.registration(req.body)
-        .then(data => data ? res.send(JSON.stringify({value: 'success'})) : res.send(JSON.stringify({value: 'fail'})))
-        .catch(err => console.log(err));
 }
