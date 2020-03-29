@@ -8,8 +8,6 @@ const util = require('util');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
-const bcrypt = require('bcrypt');
-const saltRounds = 12;
 const request = require("request");
 
 app.use(cors());
@@ -139,64 +137,6 @@ app.listen(8080, () => {
   //getTransactionTypeFields(1);
 });
 
-// do a single select to the database with specific username
-// return true if found, else return false
-async function findUser(username) {
-  try {
-    let data = await db_conf.db.any('SELECT user_account_id FROM user_account WHERE username = $1', [username]);
-    //console.log(data);
-    if (Object.keys(data).length) {
-      return true;
-    } else {
-      return false;
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-//create a new user in database
-function addUser(username, pwHash) {
-  db_conf.db.any('INSERT INTO user_account(username, userpassword, is_active, create_date)' +
-      'VALUES($1, $2, $3, $4)', [username, pwHash, true, new Date()])
-    .then(() => {
-      console.log("User successfully added!");
-    })
-    .catch(error => {
-      console.log("Fail! Adding unsuccessfull!");
-    });
-}
-
-//method to receive data from client
-app.route('/api/registration').post((req, res) => {
-  console.log('Request of registration accepted!');
-  var username = req.body.username;
-  var password = req.body.password;
-
-  (async () => {
-    // chceck whether is specific user already in database
-    // if he is, return fail for new user registration
-    // if he is not, add new user to database and return success
-    if (await findUser(username)) {
-      console.log("User already exists!");
-      res.send(JSON.stringify({
-        value: 'fail'
-      }));
-    } else {
-      bcrypt
-        .hash(password, saltRounds).then(hash => {
-          addUser(username, hash);
-        })
-        .catch(err => console.log(err));
-
-      // console.log("User added!");
-      res.send(JSON.stringify({
-        value: 'success'
-      }));
-    }
-  })();
-});
-
 app.route('/api/getAssetDetails').get((req, res) => {
   res.setHeader('Content-type', 'application/json');
   res.send(JSON.stringify({
@@ -244,6 +184,5 @@ app.post('/api/token_validate', (req, res) => {
       "success": true,
       'message': "recaptcha passed"
     });
-
   })
 });

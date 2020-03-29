@@ -9,7 +9,8 @@ const saltRounds = 10;
 
 module.exports = {
     authenticate,
-    getAll
+    getAll,
+    registration
 };
 
 async function authenticate({ username, password}){
@@ -45,4 +46,50 @@ async function getAll() {
         const { password, ...userWithoutPassword } = u;
         return userWithoutPassword;
     });
+}
+
+// do a single select to the database with specific username
+// return true if found, else return false
+async function findUser(username) {
+    try {
+      let data = await db_conf.db.any('SELECT user_account_id FROM user_account WHERE username = $1', [username]);
+      //console.log(data);
+      if (Object.keys(data).length) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  //create a new user in database
+function addUser(username, pwHash) {
+    db_conf.db.any('INSERT INTO user_account(username, userpassword, is_active, create_date)' +
+        'VALUES($1, $2, $3, $4)', [username, pwHash, true, new Date()])
+      .then(() => {
+        console.log("User successfully added!");
+      })
+      .catch(error => {
+        console.log("Fail! Adding unsuccessfull!");
+      });
+  }
+
+async function registration({username, password}){
+    console.log('Request of registration accepted!');
+
+    if (await findUser(username)) {
+        console.log("User already exists!");
+        return false;
+      } else {
+        bcrypt
+          .hash(password, saltRounds).then(hash => {
+            addUser(username, hash);
+          })
+          .catch(err => {console.log(err); return false});
+  
+        // console.log("User added!");
+        return true;
+      }
 }

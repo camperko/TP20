@@ -14,8 +14,8 @@ import { Observable } from 'rxjs';
     };
     constructor(private http: HttpClient) { }
 
-    postDataToServer(data): Observable<any> {
-      return this.http.post<any>('http://localhost:8080/api/registration', JSON.stringify(data), this.httpOptions);
+    postDataToServer(username: string, password: string): Observable<any> {
+      return this.http.post<any>('http://localhost:8080/users/registration', {username, password});
     }
 
     sendToken(token){
