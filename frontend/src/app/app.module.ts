@@ -67,8 +67,8 @@ import { MatTableModule } from '@angular/material';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     AngularFontAwesomeModule,
-    RecaptchaModule,  //this is the recaptcha main module
-    RecaptchaFormsModule //this is the module for form incase form validation
+    RecaptchaModule,
+    RecaptchaFormsModule,
     MatPaginatorModule,
     MatSortModule,
     MatInputModule,
