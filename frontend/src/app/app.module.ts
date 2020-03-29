@@ -28,6 +28,7 @@ import { HomeSellerComponent } from './home-seller/home-seller.component';
 import { NavigationSellerComponent } from './navigation-seller/navigation-seller.component';
 import { NavigationTransparentComponent } from './navigation-transparent/navigation-transparent.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 import { MatPaginatorModule } from '@angular/material';
 import { TransactionHistoryService } from './transaction-history/transaction-history.service';
@@ -66,6 +67,8 @@ import { MatTableModule } from '@angular/material';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     AngularFontAwesomeModule,
+    RecaptchaModule,  //this is the recaptcha main module
+    RecaptchaFormsModule //this is the module for form incase form validation
     MatPaginatorModule,
     MatSortModule,
     MatInputModule,

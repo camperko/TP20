@@ -3,6 +3,7 @@ import { RegistrationFormService } from './registration-form.service';
 import { format } from 'url';
 import { Response } from 'selenium-webdriver/http';
 import { discardPeriodicTasks } from '@angular/core/testing';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-registration-form',
@@ -10,41 +11,46 @@ import { discardPeriodicTasks } from '@angular/core/testing';
   styleUrls: ['./registration-form.component.sass']
 })
 
-//This component is used for registration form
-//and it's inputs validations. If the inputs are not valid
-//warning alerts are shown. If inputs are valid, they are
-//sent to the server for new user verification. Depending on the response
-//from server, different alert messagess are shown(success / fail).
+// This component is used for registration form
+// and it's inputs validations. If the inputs are not valid
+// warning alerts are shown. If inputs are valid, they are
+// sent to the server for new user verification. Depending on the response
+// from server, different alert messagess are shown(success / fail).
 
 export class RegistrationFormComponent implements OnInit {
 
-  username;
+  registrationForm: FormGroup;
   error;
   validationPwd = '';
   regFail = '';
   regSuccess = '';
-  password;
-  repPassword;
   chckbox: boolean = false;
+  captcha: boolean = false;
   constructor(private messageService: RegistrationFormService) { }
 
   ngOnInit() {
-    this.username = '';
-    this.password = '';
-    this.repPassword = '';
+    this.registrationForm = new FormGroup({
+      username: new FormControl(''),
+      password: new FormControl(''),
+      repPassword: new FormControl(''),
+      recaptchaReactive: new FormControl()
+    });
+    // this.username = '';
+    // this.password = '';
+    // this.repPassword = '';
   }
 
   // method used to send data to server
   sendData() {
 
-    if(this.chckbox === false){
+    if (this.chckbox === false) {
       this.regFail = '';
       this.regSuccess = '';
       this.validationPwd = 'You must agree with the terms of service!';
       return;
     }
     // validation for the username
-    if(this.username.length < 3){
+    if (this.registrationForm.controls.username.value.length < 3) {
       this.regFail = '';
       this.regSuccess = '';
       this.validationPwd = 'Username is too short. Minimal lenght is 3 characters!';
@@ -52,7 +58,7 @@ export class RegistrationFormComponent implements OnInit {
     }
 
     // validation, whether passowrd contains >= 8 characters
-    if(this.password.length < 8){
+    if (this.registrationForm.controls.password.value.length < 8) {
       this.regFail = '';
       this.regSuccess = '';
       this.validationPwd = 'Password is too short. Minimal lenght is 8 characters!';
@@ -60,27 +66,32 @@ export class RegistrationFormComponent implements OnInit {
     }
    
     // validation, whether password and repeat password inputs are equal
-    if (this.password !== this.repPassword) {
+    if (this.registrationForm.controls.password.value !== this.registrationForm.controls.repPassword.value) {
       this.regFail = '';
       this.regSuccess = '';
       this.validationPwd = 'Passwords do not match. Please re-enter them!';
       return;
     }
+    if (!this.captcha) {
+      this.validationPwd = '';
+      this.regSuccess = '';
+      this.regFail = 'Captcha authenification required!';
+      return;
+    }
     this.validationPwd = '';
-    let data = {username: this.username,
-                password: this.password };
     // use of registration-form service to send data to the server
-    this.messageService.postDataToServer(data).subscribe(
+    this.messageService.postDataToServer(this.registrationForm.controls.username.value,
+                                        this.registrationForm.controls.password.value).subscribe(
       response => {
         // getting the response from server
-        if(Object.values(response)[0] === 'success'){
+        if (Object.values(response)[0] === 'success') {
           this.regSuccess = 'Registration successful!';
           this.validationPwd = '';
           this.regFail = '';
         }
        
-        if(Object.values(response)[0] === 'fail'){
-          this.regFail = 'Registration failed! Please change you username!';
+        if (Object.values(response)[0] === 'fail') {
+          this.regFail = 'Registration failed! Please change your username!';
           this.validationPwd = '';
           this.regSuccess = '';
         }
@@ -88,5 +99,25 @@ export class RegistrationFormComponent implements OnInit {
       error => this.error
     );
     console.log('Registration data sent');
+  }
+
+  async resolved(captchaResponse: string, res) {
+    console.log(`Resolved response token: ${captchaResponse}`);
+    await this.sendTokenToBackend(captchaResponse);
+  }
+
+  // function to send the token to the node server
+  sendTokenToBackend(tok) {
+  // calling the service and passing the token to the service
+  this.messageService.sendToken(tok).subscribe(
+    data => {
+      console.log(data);
+      this.captcha = data.success;
+    },
+    err => {
+      console.log(err);
+    },
+    () => {}
+  );
   }
 }
