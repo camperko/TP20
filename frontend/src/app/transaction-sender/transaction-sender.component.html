@@ -19,57 +19,60 @@
   Form for transaction
   On submit execute sendForm()
  -->
-<form (ngSubmit)="sendForm()" #form="ngForm">
-  <div class="container">
-    <div *ngFor="let formInput of formInputs; index as j" class="row">
-      <!--
+<form (ngSubmit)="sendForm()" #form="ngForm" class="form">
+  <div *ngFor="let formInput of formInputs; index as j" class="row">
+    <!--
         Print current row index
       -->
-      <div class="col my-auto">
-        <h5 class="index-number">
-          <b>{{j + 1}}</b>
-        </h5>
-      </div>
-      <!--
+    <div class="col my-auto">
+      <h5 class="index-number">
+        <b>{{j + 1}}</b>
+      </h5>
+    </div>
+    <!--
         Show fields of selected transaction type
         Mapped by formInput[index].value
       -->
-      <div *ngFor="let field of formInput; index as i" class="col-4">
-          <div class="md-form">
-              <input mdbInput type="text" class="form-control" name="{{ field.field_name }}" [(ngModel)]="field.value">
-              <label for="form1" class="">{{ field.field_display }}</label>
-          </div>
+    <div *ngFor="let field of formInput; index as i" class="col-4">
+      <div class="md-form">
+        <input mdbInput type="text" id="form-{{j}}-{{i}}" class="form-control" name="{{ field.field_name }}"
+          [(ngModel)]="field.value" [ngModelOptions] = "{ standalone: true }">
+        <label for="form-{{j}}-{{i}}" class="">{{ field.field_display }}</label>
       </div>
-      <!--
+    </div>
+    <!--
         Show input for current row
         Mapped by walletsInputs[index]
       -->
-      <div class="col-2">
-        <div class="md-form">
-          <input mdbInput type="number" id="value-{{j}}" class="form-control" name="value-{{j}}" [(ngModel)]="walletsInputs[j]">
-          <label for="form1" class="">Input in satoshi</label>
-        </div>
+    <div class="col-2">
+      <div class="md-form">
+        <input mdbInput type="number" id="value-{{j}}" class="form-control" name="value-{{j}}"
+          [(ngModel)]="walletsInputs[j]">
+        <label for="form1" class="label">Input in satoshi</label>
       </div>
-      <!--
+    </div>
+    <!--
         Placeholders for plus sign
       -->
-      <div *ngIf="formInputs.length > j + 1" class="col my-auto"></div>
-      <!--
+    <div *ngIf="formInputs.length > j + 1" class="col my-auto"></div>
+    <!--
         Plus sign
         On click execute addInputRow()
       -->
-      <fa *ngIf="formInputs.length === j + 1" name="plus-circle" class="col my-auto plus-sign" (click)="addInputRow()"></fa>
-      <!--
+    <fa *ngIf="formInputs.length === j + 1" name="plus-circle" class="col my-auto plus-sign" (click)="addInputRow()">
+    </fa>
+    <!--
         Placeholders for minus sign
       -->
-      <div *ngIf="formInputs.length === 1" class="col my-auto"></div>
-      <!--
-        Plus sign
+    <div *ngIf="formInputs.length === 1" class="col my-auto"></div>
+    <!--
+        Minus sign
         On click execute removeInputRow() with current index
       -->
-      <fa *ngIf="formInputs.length !== 1" name="minus-circle" class="col my-auto minus-sign" (click)="removeInputRow(j)"></fa>
-    </div>
+    <fa *ngIf="formInputs.length !== 1" name="minus-circle" class="col my-auto minus-sign" (click)="removeInputRow(j)">
+    </fa>
   </div>
+
   <div class="border-top my-3"></div>
   <div class="container">
     <div class="row">
@@ -80,8 +83,9 @@
       -->
       <div class="col-6">
         <div class="md-form">
-          <input mdbInput type="text" id="seller" class="form-control" name="seller_wallet" [(ngModel)]="sellerWallet" disabled>
-          <label for="form1" class="">Seller wallet</label>
+          <input mdbInput type="text" id="seller" class="form-control" name="seller_wallet" [(ngModel)]="sellerWallet"
+            disabled>
+          <label for="seller" class="label">Seller wallet</label>
         </div>
       </div>
       <!--
@@ -90,8 +94,8 @@
       -->
       <div class="col-2">
         <div class="md-form">
-          <input mdbInput type="number" id="price" class="form-control" name="price" [(ngModel)]="price">
-          <label for="form1" class="">Price</label>
+          <input mdbInput type="number" id="price" class="form-control" name="price" [(ngModel)]="price" disabled>
+          <label for="price" class="label">Price</label>
         </div>
       </div>
       <!--
@@ -101,7 +105,7 @@
       <div class="col-2">
         <div class="md-form">
           <input mdbInput type="number" id="fees" class="form-control" name="fees" [(ngModel)]="fees">
-          <label for="form1" class="">Fees in satoshi</label>
+          <label for="fees" class="label">Fees in satoshi</label>
         </div>
       </div>
       <!--
@@ -111,7 +115,7 @@
       <div class="col-2">
         <div class="md-form">
           <input mdbInput type="number" id="feeWallet" class="form-control" name="feeWallet" [(ngModel)]="feeWallet">
-          <label for="form1" class="">Fee wallet order</label>
+          <label for="feeWallet" class="label">Fee wallet order</label>
         </div>
       </div>
     </div>
