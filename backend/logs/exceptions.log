@@ -397,223 +397,27 @@ Error: An error occurred
     at Server.emit (events.js:210:5)
     at emitListeningNT (net.js:1334:10)
     at processTicksAndRejections (internal/process/task_queues.js:79:21)
-2020-02-27T08:19:20.417Z error: uncaughtException: missing ) after argument list
-C:\Users\emble\Desktop\teamak\TP20\backend\users\user.service.js:26
-                            console.log('podpod';)
-                                        ^^^^^^^^
-
-SyntaxError: missing ) after argument list
-    at Module._compile (internal/modules/cjs/loader.js:892:18)
-    at Object.Module._extensions..js (internal/modules/cjs/loader.js:973:10)
-    at Module.load (internal/modules/cjs/loader.js:812:32)
-    at Function.Module._load (internal/modules/cjs/loader.js:724:14)
-    at Module.require (internal/modules/cjs/loader.js:849:19)
-    at require (internal/modules/cjs/helpers.js:74:18)
-    at Object.<anonymous> (C:\Users\emble\Desktop\teamak\TP20\backend\users\users.controller.js:3:21)
+2020-03-18T23:30:49.355Z error: uncaughtException: listen EADDRINUSE: address already in use :::8080
+Error: listen EADDRINUSE: address already in use :::8080
+    at Server.setupListenHandle [as _listen2] (net.js:1300:14)
+    at listenInCluster (net.js:1348:12)
+    at Server.listen (net.js:1436:7)
+    at Function.listen (C:\Users\daxne\Desktop\skola\TP\Team-project\blockchain-gateway\backend\node_modules\express\lib\application.js:618:24)
+    at Object.<anonymous> (C:\Users\daxne\Desktop\skola\TP\Team-project\blockchain-gateway\backend\server.js:90:5)
     at Module._compile (internal/modules/cjs/loader.js:956:30)
     at Object.Module._extensions..js (internal/modules/cjs/loader.js:973:10)
     at Module.load (internal/modules/cjs/loader.js:812:32)
-2020-02-27T08:19:41.737Z error: uncaughtException: missing ) after argument list
-C:\Users\emble\Desktop\teamak\TP20\backend\users\user.service.js:26
-                            console.log('podpod';)
-                                        ^^^^^^^^
-
-SyntaxError: missing ) after argument list
-    at Module._compile (internal/modules/cjs/loader.js:892:18)
-    at Object.Module._extensions..js (internal/modules/cjs/loader.js:973:10)
-    at Module.load (internal/modules/cjs/loader.js:812:32)
     at Function.Module._load (internal/modules/cjs/loader.js:724:14)
-    at Module.require (internal/modules/cjs/loader.js:849:19)
-    at require (internal/modules/cjs/helpers.js:74:18)
-    at Object.<anonymous> (C:\Users\emble\Desktop\teamak\TP20\backend\users\users.controller.js:3:21)
+    at Function.Module.runMain (internal/modules/cjs/loader.js:1025:10)
+2020-03-18T23:30:53.259Z error: uncaughtException: listen EADDRINUSE: address already in use :::8080
+Error: listen EADDRINUSE: address already in use :::8080
+    at Server.setupListenHandle [as _listen2] (net.js:1300:14)
+    at listenInCluster (net.js:1348:12)
+    at Server.listen (net.js:1436:7)
+    at Function.listen (C:\Users\daxne\Desktop\skola\TP\Team-project\blockchain-gateway\backend\node_modules\express\lib\application.js:618:24)
+    at Object.<anonymous> (C:\Users\daxne\Desktop\skola\TP\Team-project\blockchain-gateway\backend\server.js:90:5)
     at Module._compile (internal/modules/cjs/loader.js:956:30)
     at Object.Module._extensions..js (internal/modules/cjs/loader.js:973:10)
     at Module.load (internal/modules/cjs/loader.js:812:32)
-2020-02-27T08:29:55.360Z error: uncaughtException: Identifier 'daco' has already been declared
-C:\Users\emble\Desktop\teamak\TP20\backend\users\user.service.js:28
-                            var daco = userData.userpassword;
-                                ^
-
-SyntaxError: Identifier 'daco' has already been declared
-    at Module._compile (internal/modules/cjs/loader.js:892:18)
-    at Object.Module._extensions..js (internal/modules/cjs/loader.js:973:10)
-    at Module.load (internal/modules/cjs/loader.js:812:32)
     at Function.Module._load (internal/modules/cjs/loader.js:724:14)
-    at Module.require (internal/modules/cjs/loader.js:849:19)
-    at require (internal/modules/cjs/helpers.js:74:18)
-    at Object.<anonymous> (C:\Users\emble\Desktop\teamak\TP20\backend\users\users.controller.js:3:21)
-    at Module._compile (internal/modules/cjs/loader.js:956:30)
-    at Object.Module._extensions..js (internal/modules/cjs/loader.js:973:10)
-    at Module.load (internal/modules/cjs/loader.js:812:32)
-2020-02-27T08:30:36.723Z error: uncaughtException: Identifier 'daco' has already been declared
-C:\Users\emble\Desktop\teamak\TP20\backend\users\user.service.js:28
-                            var daco = userData.userpassword;
-                                ^
-
-SyntaxError: Identifier 'daco' has already been declared
-    at Module._compile (internal/modules/cjs/loader.js:892:18)
-    at Object.Module._extensions..js (internal/modules/cjs/loader.js:973:10)
-    at Module.load (internal/modules/cjs/loader.js:812:32)
-    at Function.Module._load (internal/modules/cjs/loader.js:724:14)
-    at Module.require (internal/modules/cjs/loader.js:849:19)
-    at require (internal/modules/cjs/helpers.js:74:18)
-    at Object.<anonymous> (C:\Users\emble\Desktop\teamak\TP20\backend\users\users.controller.js:3:21)
-    at Module._compile (internal/modules/cjs/loader.js:956:30)
-    at Object.Module._extensions..js (internal/modules/cjs/loader.js:973:10)
-    at Module.load (internal/modules/cjs/loader.js:812:32)
-2020-02-27T08:30:56.931Z error: uncaughtException: Identifier 'daco' has already been declared
-C:\Users\emble\Desktop\teamak\TP20\backend\users\user.service.js:29
-                            const { daco, ...userWithoutPassword } = user;
-                                    ^
-
-SyntaxError: Identifier 'daco' has already been declared
-    at Module._compile (internal/modules/cjs/loader.js:892:18)
-    at Object.Module._extensions..js (internal/modules/cjs/loader.js:973:10)
-    at Module.load (internal/modules/cjs/loader.js:812:32)
-    at Function.Module._load (internal/modules/cjs/loader.js:724:14)
-    at Module.require (internal/modules/cjs/loader.js:849:19)
-    at require (internal/modules/cjs/helpers.js:74:18)
-    at Object.<anonymous> (C:\Users\emble\Desktop\teamak\TP20\backend\users\users.controller.js:3:21)
-    at Module._compile (internal/modules/cjs/loader.js:956:30)
-    at Object.Module._extensions..js (internal/modules/cjs/loader.js:973:10)
-    at Module.load (internal/modules/cjs/loader.js:812:32)
-2020-02-29T17:22:12.052Z error: uncaughtException: missing ) after argument list
-C:\Users\emble\Desktop\teamak\TP20\backend\users\users.controller.js:14
-            console.log(user);
-                            ^
-
-SyntaxError: missing ) after argument list
-    at Module._compile (internal/modules/cjs/loader.js:892:18)
-    at Object.Module._extensions..js (internal/modules/cjs/loader.js:973:10)
-    at Module.load (internal/modules/cjs/loader.js:812:32)
-    at Function.Module._load (internal/modules/cjs/loader.js:724:14)
-    at Module.require (internal/modules/cjs/loader.js:849:19)
-    at require (internal/modules/cjs/helpers.js:74:18)
-    at Object.<anonymous> (C:\Users\emble\Desktop\teamak\TP20\backend\server.js:86:19)
-    at Module._compile (internal/modules/cjs/loader.js:956:30)
-    at Object.Module._extensions..js (internal/modules/cjs/loader.js:973:10)
-    at Module.load (internal/modules/cjs/loader.js:812:32)
-2020-02-29T17:23:34.650Z error: uncaughtException: missing ) after argument list
-C:\Users\emble\Desktop\teamak\TP20\backend\users\users.controller.js:14
-            console.log(user);
-                            ^
-
-SyntaxError: missing ) after argument list
-    at Module._compile (internal/modules/cjs/loader.js:892:18)
-    at Object.Module._extensions..js (internal/modules/cjs/loader.js:973:10)
-    at Module.load (internal/modules/cjs/loader.js:812:32)
-    at Function.Module._load (internal/modules/cjs/loader.js:724:14)
-    at Module.require (internal/modules/cjs/loader.js:849:19)
-    at require (internal/modules/cjs/helpers.js:74:18)
-    at Object.<anonymous> (C:\Users\emble\Desktop\teamak\TP20\backend\server.js:86:19)
-    at Module._compile (internal/modules/cjs/loader.js:956:30)
-    at Object.Module._extensions..js (internal/modules/cjs/loader.js:973:10)
-    at Module.load (internal/modules/cjs/loader.js:812:32)
-2020-03-18T19:06:58.311Z error: uncaughtException: data is not defined
-ReferenceError: data is not defined
-    at Request._callback (C:\Users\emble\Desktop\teamak\TP20\backend\server.js:234:40)
-    at Request.self.callback (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:185:22)
-    at Request.emit (events.js:210:5)
-    at Request.<anonymous> (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:1154:10)
-    at Request.emit (events.js:210:5)
-    at IncomingMessage.<anonymous> (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:1076:12)
-    at Object.onceWrapper (events.js:299:28)
-    at IncomingMessage.emit (events.js:215:7)
-    at endReadableNT (_stream_readable.js:1183:12)
-    at processTicksAndRejections (internal/process/task_queues.js:80:21)
-2020-03-18T19:13:55.387Z error: uncaughtException: data is not defined
-ReferenceError: data is not defined
-    at Request._callback (C:\Users\emble\Desktop\teamak\TP20\backend\server.js:234:40)
-    at Request.self.callback (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:185:22)
-    at Request.emit (events.js:210:5)
-    at Request.<anonymous> (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:1154:10)
-    at Request.emit (events.js:210:5)
-    at IncomingMessage.<anonymous> (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:1076:12)
-    at Object.onceWrapper (events.js:299:28)
-    at IncomingMessage.emit (events.js:215:7)
-    at endReadableNT (_stream_readable.js:1183:12)
-    at processTicksAndRejections (internal/process/task_queues.js:80:21)
-2020-03-18T19:14:59.060Z error: uncaughtException: data is not defined
-ReferenceError: data is not defined
-    at Request._callback (C:\Users\emble\Desktop\teamak\TP20\backend\server.js:234:40)
-    at Request.self.callback (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:185:22)
-    at Request.emit (events.js:210:5)
-    at Request.<anonymous> (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:1154:10)
-    at Request.emit (events.js:210:5)
-    at IncomingMessage.<anonymous> (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:1076:12)
-    at Object.onceWrapper (events.js:299:28)
-    at IncomingMessage.emit (events.js:215:7)
-    at endReadableNT (_stream_readable.js:1183:12)
-    at processTicksAndRejections (internal/process/task_queues.js:80:21)
-2020-03-18T19:16:02.407Z error: uncaughtException: data is not defined
-ReferenceError: data is not defined
-    at Request._callback (C:\Users\emble\Desktop\teamak\TP20\backend\server.js:234:40)
-    at Request.self.callback (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:185:22)
-    at Request.emit (events.js:210:5)
-    at Request.<anonymous> (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:1154:10)
-    at Request.emit (events.js:210:5)
-    at IncomingMessage.<anonymous> (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:1076:12)
-    at Object.onceWrapper (events.js:299:28)
-    at IncomingMessage.emit (events.js:215:7)
-    at endReadableNT (_stream_readable.js:1183:12)
-    at processTicksAndRejections (internal/process/task_queues.js:80:21)
-2020-03-18T19:17:06.356Z error: uncaughtException: data is not defined
-ReferenceError: data is not defined
-    at Request._callback (C:\Users\emble\Desktop\teamak\TP20\backend\server.js:234:40)
-    at Request.self.callback (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:185:22)
-    at Request.emit (events.js:210:5)
-    at Request.<anonymous> (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:1154:10)
-    at Request.emit (events.js:210:5)
-    at IncomingMessage.<anonymous> (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:1076:12)
-    at Object.onceWrapper (events.js:299:28)
-    at IncomingMessage.emit (events.js:215:7)
-    at endReadableNT (_stream_readable.js:1183:12)
-    at processTicksAndRejections (internal/process/task_queues.js:80:21)
-2020-03-18T19:19:19.484Z error: uncaughtException: data is not defined
-ReferenceError: data is not defined
-    at Request._callback (C:\Users\emble\Desktop\teamak\TP20\backend\server.js:234:40)
-    at Request.self.callback (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:185:22)
-    at Request.emit (events.js:210:5)
-    at Request.<anonymous> (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:1154:10)
-    at Request.emit (events.js:210:5)
-    at IncomingMessage.<anonymous> (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:1076:12)
-    at Object.onceWrapper (events.js:299:28)
-    at IncomingMessage.emit (events.js:215:7)
-    at endReadableNT (_stream_readable.js:1183:12)
-    at processTicksAndRejections (internal/process/task_queues.js:80:21)
-2020-03-18T19:20:40.040Z error: uncaughtException: data is not defined
-ReferenceError: data is not defined
-    at Request._callback (C:\Users\emble\Desktop\teamak\TP20\backend\server.js:234:40)
-    at Request.self.callback (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:185:22)
-    at Request.emit (events.js:210:5)
-    at Request.<anonymous> (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:1154:10)
-    at Request.emit (events.js:210:5)
-    at IncomingMessage.<anonymous> (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:1076:12)
-    at Object.onceWrapper (events.js:299:28)
-    at IncomingMessage.emit (events.js:215:7)
-    at endReadableNT (_stream_readable.js:1183:12)
-    at processTicksAndRejections (internal/process/task_queues.js:80:21)
-2020-03-18T19:24:35.842Z error: uncaughtException: data is not defined
-ReferenceError: data is not defined
-    at Request._callback (C:\Users\emble\Desktop\teamak\TP20\backend\server.js:235:17)
-    at Request.self.callback (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:185:22)
-    at Request.emit (events.js:210:5)
-    at Request.<anonymous> (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:1154:10)
-    at Request.emit (events.js:210:5)
-    at IncomingMessage.<anonymous> (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:1076:12)
-    at Object.onceWrapper (events.js:299:28)
-    at IncomingMessage.emit (events.js:215:7)
-    at endReadableNT (_stream_readable.js:1183:12)
-    at processTicksAndRejections (internal/process/task_queues.js:80:21)
-2020-03-18T19:28:10.834Z error: uncaughtException: data is not defined
-ReferenceError: data is not defined
-    at Request._callback (C:\Users\emble\Desktop\teamak\TP20\backend\server.js:235:17)
-    at Request.self.callback (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:185:22)
-    at Request.emit (events.js:210:5)
-    at Request.<anonymous> (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:1154:10)
-    at Request.emit (events.js:210:5)
-    at IncomingMessage.<anonymous> (C:\Users\emble\Desktop\teamak\TP20\backend\node_modules\request\request.js:1076:12)
-    at Object.onceWrapper (events.js:299:28)
-    at IncomingMessage.emit (events.js:215:7)
-    at endReadableNT (_stream_readable.js:1183:12)
-    at processTicksAndRejections (internal/process/task_queues.js:80:21)
+    at Function.Module.runMain (internal/modules/cjs/loader.js:1025:10)

@@ -58,8 +58,8 @@ export class TransactionSenderService {
     method:
       - http.get - /transaction/seller/{typeName}
   */
-  getSellerWallet(typeName): Observable<any> {
-    return this.http.get<any>('http://localhost:8080/transaction/seller/' + typeName);
+  getSellerWallet(typeName: string, merchantId: string): Observable<any> {
+    return this.http.get<any>('http://localhost:8080/transaction/seller=' + merchantId + '/type=' + typeName);
   }
 
   /*

@@ -25,6 +25,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { TransactionSenderService } from './transaction-sender.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-transaction-sender',
@@ -42,14 +43,28 @@ export class TransactionSenderComponent implements OnInit {
   feeWallet;
   fees;
   walletsInputs;
-  constructor(private transactionSenderService: TransactionSenderService) { }
+  merchantId: string;
+  orderId: string;
+  priceBackend: number;
+  constructor(private transactionSenderService: TransactionSenderService, private route: ActivatedRoute) { }
 
   /*
     ngOnInit - void function
       - init view for transactions, get all transaction types from backend
   */
   ngOnInit() {
-    this.getTransactionTypes();
+    this.route.paramMap.subscribe(params => {
+      this.merchantId = params.get('merchantId');
+      this.orderId = params.get('orderId');
+      this.priceBackend = parseInt(params.get('price'), 10);
+      this.getTransactionTypes();
+    });
+    if (this.priceBackend !== undefined && !isNaN(this.priceBackend)) {
+      this.price = this.priceBackend;
+    } else {
+      // TODO: redirect
+      alert('Bad price!');
+    }
   }
 
   /*
@@ -60,8 +75,8 @@ export class TransactionSenderComponent implements OnInit {
   changeFields() {
     this.transactionSenderService.getTransactionFields(this.selectedType).subscribe(
       data => {
-        this.inputFields = data;
-        this.formInputs = [data];
+        this.inputFields = JSON.parse(JSON.stringify(data));
+        this.formInputs = [JSON.parse(JSON.stringify(this.inputFields))];
         this.walletsInputs = [1];
         this.getSellerWallet();
       },
@@ -101,7 +116,7 @@ export class TransactionSenderComponent implements OnInit {
         this.transactionTypes = response;
         this.selectedType = response[0].type_name;
         this.walletsInputs = [1];
-        this.getSellerWallet();
+        // this.getSellerWallet(merchantId);
         this.changeFields();
       },
       error => this.error = error
@@ -113,16 +128,17 @@ export class TransactionSenderComponent implements OnInit {
       - fill this.sellerWallet which represents seller wallet address in selected transaction type based on this.selectedType
   */
   getSellerWallet() {
-    this.transactionSenderService.getSellerWallet(this.selectedType).subscribe(
+    this.transactionSenderService.getSellerWallet(this.selectedType, this.merchantId).subscribe(
       data => {
-        if (data.length > 0) {
-          this.sellerWallet = data[0].wallet_address;
+        if (data.wallet !== 'failed') {
+          this.sellerWallet = data.wallet;
         } else {
+          alert('Non existing merchant!');
           this.sellerWallet = '';
         }
       },
       error => this.error = error
-    )
+    );
   }
 
   /*
@@ -171,7 +187,7 @@ export class TransactionSenderComponent implements OnInit {
       alert('Non existing wallet in selected currency for seller!');
       return false;
     }
-    if (this.price === undefined || this.price === null || this.price <= 0 || this.price === '') {
+    if (this.priceBackend === undefined || this.priceBackend === null || this.priceBackend <= 0) {
       alert('Fill non-negative price!');
       return false;
     }
@@ -203,13 +219,21 @@ export class TransactionSenderComponent implements OnInit {
       return false;
     }
     const inputs = [];
+    let priceSum = 0;
     this.walletsInputs.forEach((input, index) => {
       if (input === undefined || input === null || input <= 0 || input === '') {
         inputs.push(index + 1);
+      } else {
+        priceSum += input;
       }
     });
     if (inputs.length > 0) {
       alert('Fill inputs on rows: ' + inputs + '!');
+      return false;
+    }
+    if (priceSum !== (this.priceBackend + this.fees)) {
+      alert('Input ' + priceSum + ' is not equal to price of order ' + this.priceBackend + ' with fees ' + this.fees + '!' + '\n'
+        + 'Missing value is ' + (this.priceBackend + this.fees - priceSum));
       return false;
     }
     return true;

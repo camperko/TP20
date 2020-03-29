@@ -1,0 +1,23 @@
+
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- develop/backend*
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: |
+    cd backend
+    npm install
+  displayName: 'Install backend'
+
+- script: |
+    cd ../frontend
+    npm install
+  displayName: 'Installfrontend'
+

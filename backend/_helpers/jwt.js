@@ -14,7 +14,7 @@ function jwt() {
             '/api/token_validate',
             '/transaction/types',
             /^\/transaction\/fields\/.*/,
-            /^\/transaction\/seller\/.*/,
+            /^\/transaction\/seller=.*\/type=.*/,
             /^\/transaction\/send\/.*/        ]
     });
 }
