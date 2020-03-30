@@ -64,6 +64,8 @@ const logger = createLogger({
 });
 
 var db_conf = require("./database_conf");
+var db = db_conf.db;
+var db_test = db_conf.db_test;
 const jwt = require('./_helpers/jwt');
 const errorHandler = require('./_helpers/error-handler');
 var cryptoapis = require("./cryptoapis");
@@ -91,7 +93,7 @@ app.use('/transaction', require('./transactions/transaction.controller'));
 // global error handler
 app.use(errorHandler);
 
-app.listen(8080, () => {
+const server = app.listen(8080, () => {
   console.log('Server started!');
 
   // try to throw errors to see if winston logger works
@@ -125,9 +127,9 @@ app.listen(8080, () => {
 
 // do a single select to the database with specific username
 // return true if found, else return false
-async function findUser(username) {
+async function findUser(username, db) {
   try {
-    let data = await db_conf.db.any('SELECT user_account_id FROM user_account WHERE username = $1', [username]);
+    let data = await db.any('SELECT user_account_id FROM user_account WHERE username = $1', [username]);
     //console.log(data);
     if (Object.keys(data).length) {
       return true;
@@ -140,34 +142,64 @@ async function findUser(username) {
 }
 
 //create a new user in database
-function addUser(username, password) {
-  db_conf.db.any('INSERT INTO user_account(username, userpassword, is_active, create_date)'
-    + 'VALUES($1, $2, $3, $4)', [username, password, true, new Date()])
+function addUser(username, password, db) {
+  db.any('INSERT INTO user_account(username, userpassword, account_type_fk, is_active, create_date)'
+    + 'VALUES($1, $2, $3, $4, $5)', [username, password, 2, true, new Date()])
     .then(() => {
       console.log("User successfully added!");
+      //deleteUser(username, db);
     })
     .catch(error => {
       console.log("Fail! Adding unsuccessfull!");
     });
 }
 
+//delete user from database
+async function deleteUser(username, db) {
+  try {
+    let data = await db.any('SELECT user_account_id FROM user_account WHERE username = $1', [username]);
+    //console.log(data);
+    if (Object.keys(data).length) {
+      db.any('DELETE FROM user_account WHERE username = $1', [username]);
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 //method to receive data from client
 app.route('/api/registration').post((req, res) => {
   console.log('Request of registration accepted!');
+  var database;
   var username = req.body.username;
   var password = req.body.password;
+  var dbS = req.body.dbS;
+  
+  console.log(dbS);
+
+  if (dbS == "test")
+  {
+    database = db_test;
+  }
+  else
+  {
+    database = db;
+  }
 
   (async () => {
     // chceck whether is specific user already in database
     // if he is, return fail for new user registration
     // if he is not, add new user to database and return success
-    if (await findUser(username)) {
+    if (await findUser(username, database)) {
       console.log("User already exists!");
       res.send(JSON.stringify({
         value: 'fail'
       }));
     } else {
-      addUser(username, password);
+      addUser(username, password, database);
       // console.log("User added!");
       res.send(JSON.stringify({
         value: 'success'
@@ -273,3 +305,5 @@ async function getAssetDetails() {
 }
 
 module.exports = app;
+module.exports =  server;
+
