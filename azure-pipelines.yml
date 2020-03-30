@@ -5,7 +5,7 @@
 # https://aka.ms/yaml
 
 trigger:
-- feature_112
+- develop
 
 pool:
   vmImage: 'ubuntu-latest'
