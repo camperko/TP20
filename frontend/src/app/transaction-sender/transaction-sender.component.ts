@@ -132,16 +132,15 @@ export class TransactionSenderComponent implements OnInit {
       - fill this.sellerWallet which represents seller wallet address in selected transaction type based on this.selectedType
   */
   getSellerWallet() {
-    this.transactionSenderService.getSellerWallet(this.selectedType, this.merchantId).subscribe(
-      data => {
-        if (data.wallet !== 'failed') {
-          this.sellerWallet = data.wallet;
-        } else {
-          alert('Non existing merchant!');
-          this.sellerWallet = '';
-        }
-      },
-      error => this.error = error
+    this.transactionSenderService.getSellerWallet(this.selectedType, this.merchantId).subscribe(data => {
+      if (data.wallet !== 'failed') {
+        this.sellerWallet = data.wallet;
+      } else {
+        alert('Non existing merchant!');
+        this.sellerWallet = '';
+      }
+    },
+    error => this.error = error
     );
   }
 
@@ -238,7 +237,7 @@ export class TransactionSenderComponent implements OnInit {
       alert('Fill inputs on rows: ' + inputs + '!');
       return false;
     }
-    if (priceSum !== (this.priceBackend + this.fees)) {
+    if (priceSum !== (this.priceBackend)) {
       alert('Input ' + priceSum + ' is not equal to price of order ' + this.priceBackend + ' with fees ' + this.fees + '!' + '\n'
         + 'Missing value is ' + (this.priceBackend + this.fees - priceSum));
       return false;

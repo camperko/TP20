@@ -30,7 +30,28 @@ import { HomeSellerComponent } from './home-seller/home-seller.component';
 import { NavigationSellerComponent } from './navigation-seller/navigation-seller.component';
 import { NavigationTransparentComponent } from './navigation-transparent/navigation-transparent.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
-import { MatTableModule } from '@angular/material';
+import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
+import { MatPaginatorModule } from '@angular/material';
+import { TransactionHistoryService } from './transaction-history/transaction-history.service';
+import { MatSortModule } from '@angular/material/sort';
+import { MatRadioModule, MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
+import { TransactionHistorySummaryComponent } from './transaction-history-summary/transaction-history-summary.component';
+import { TransactionHistorySummaryService } from './transaction-history-summary/transaction-history-summary.service';
+import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
+import {
+    MatButtonModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatIconModule, MatInputModule,
+    MatListModule, MatSelectModule,
+    MatTableModule,
+    MatTooltipModule
+} from '@angular/material';
+import { SellerSettingsComponent } from './seller-settings/seller-settings.component';
+import {FlexModule} from '@angular/flex-layout';
+import { DeleteDialogComponent } from './seller-settings/dialogs/delete-dialog/delete-dialog.component';
+import { CreateDialogComponent } from './seller-settings/dialogs/create-dialog/create-dialog.component';
+import { EditDialogComponent } from './seller-settings/dialogs/edit-dialog/edit-dialog.component';
 
 @NgModule({
   declarations: [
@@ -45,30 +66,60 @@ import { MatTableModule } from '@angular/material';
     HomeComponent,
     HomeSellerComponent,
     NavigationSellerComponent,
-    NavigationTransparentComponent
+    NavigationTransparentComponent,
+    TransactionHistoryComponent,
+    TransactionHistorySummaryComponent,
+    NavigationTransparentComponent,
+    SellerSettingsComponent,
+    DeleteDialogComponent,
+    CreateDialogComponent,
+    EditDialogComponent
   ],
-  imports: [
-    MatFormFieldModule,
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    MDBBootstrapModule.forRoot(),
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    AngularFontAwesomeModule,
-    MatTableModule
-  ],
+    imports: [
+        MatFormFieldModule,
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule,
+        MDBBootstrapModule.forRoot(),
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        AngularFontAwesomeModule,
+        MatTableModule,
+        MatButtonModule,
+        MatIconModule,
+        MatTooltipModule,
+        MatListModule,
+        FlexModule,
+        MatCheckboxModule,
+        MatDialogModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatInputModule,
+        MatSelectModule,
+        MatRadioModule,
+        MatTableModule,
+        RecaptchaModule,
+        RecaptchaFormsModule
+    ],
+    entryComponents: [
+      DeleteDialogComponent,
+      EditDialogComponent,
+      CreateDialogComponent
+    ],
   providers: [
     TransactionSenderService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: { color: 'accent' }},
 
     // provider used to create fake backend
-    //fakeBackendProvider
+    // fakeBackendProvider
     RegistrationFormService,
     ReactiveFormsModule,
-    CookieService
+    CookieService,
+    TransactionHistoryService,
+    TransactionHistorySummaryService
   ],
   bootstrap: [AppComponent]
 })

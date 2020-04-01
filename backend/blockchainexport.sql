@@ -220,7 +220,8 @@ CREATE TABLE public.user_transaction (
     user_trans_id integer NOT NULL,
     user_account_fk integer,
     trans_type_fk integer,
-    wallet_address character varying
+    wallet_address character varying,
+    is_primary boolean
 );
 
 
@@ -350,7 +351,7 @@ COPY public.transaction_type_field (trans_type_field_id, trans_type_fk, field_na
 --
 
 COPY public.user_account (user_account_id, account_type_fk, username, userpassword, is_active, create_date) FROM stdin;
-1	2	test-seller	test-seller	t	2019-11-18 22:28:55.095932
+1	\N	test	$2b$10$bd0T9loE0u7dGTzKDk310evmYoSPhx0RKWwW522OgLq5/K.1w5KlG	t	2020-04-01 21:03:54.396
 \.
 
 
@@ -358,8 +359,8 @@ COPY public.user_account (user_account_id, account_type_fk, username, userpasswo
 -- Data for Name: user_transaction; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.user_transaction (user_trans_id, user_account_fk, trans_type_fk, wallet_address) FROM stdin;
-1	1	1	miaRyqZqPAUTyoPrrd9zXdr8CXhpgjL71J
+COPY public.user_transaction (user_trans_id, user_account_fk, trans_type_fk, wallet_address, is_primary) FROM stdin;
+5	1	1	miaRyqZqPAUTyoPrrd9zXdr8CXhpgjL71J	t
 \.
 
 
@@ -388,21 +389,21 @@ SELECT pg_catalog.setval('public.transaction_type_field_trans_type_field_id_seq'
 -- Name: transaction_type_trans_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.transaction_type_trans_type_id_seq', 1, false);
+SELECT pg_catalog.setval('public.transaction_type_trans_type_id_seq', 1, true);
 
 
 --
 -- Name: user_account_user_account_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.user_account_user_account_id_seq', 1, false);
+SELECT pg_catalog.setval('public.user_account_user_account_id_seq', 2, true);
 
 
 --
 -- Name: user_transaction_user_trans_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.user_transaction_user_trans_id_seq', 1, false);
+SELECT pg_catalog.setval('public.user_transaction_user_trans_id_seq', 5, true);
 
 
 --
