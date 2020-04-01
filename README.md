@@ -28,20 +28,20 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Drop database
 
-Run `dropdb -U postgres blockchain` to drop the current database.
+Run `dropdb -U postgres blockchain` to drop the current database.  
 Run `dropdb -U postgres blockchain_test` to drop the test database.
 
 ## Create database
 
-Run `createdb -h localhost -p 5432 -U postgres -E utf8 blockchain` to create new database.
+Run `createdb -h localhost -p 5432 -U postgres -E utf8 blockchain` to create new database.  
 For test database `createdb -h localhost -p 5432 -U postgres -E utf8 blockchain_test` from backend folder.
 
 ## Import database
 
-Run `psql -d blockchain -U postgres -f blockchainexport.sql` from backend folder.
+Run `psql -d blockchain -U postgres -f blockchainexport.sql` from backend folder.  
 For test database `psql -d blockchain_test -U postgres -f blockchaintestexport.sql` from backend folder.
 
 ## Export database
 
-Run `pg_dump --encoding utf8 -U postgres -d blockchain -f blockchainexport.sql` from backend folder.
+Run `pg_dump --encoding utf8 -U postgres -d blockchain -f blockchainexport.sql` from backend folder.  
 For test database `run pg_dump --encoding utf8 -U postgres -d blockchain_test -f blockchaintestexport.sql` from backend folder.

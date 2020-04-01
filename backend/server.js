@@ -65,6 +65,8 @@ const logger = createLogger({
 });
 
 var db_conf = require("./database_conf");
+var db = db_conf.db;
+var db_test = db_conf.db_test;
 const jwt = require('./_helpers/jwt');
 const errorHandler = require('./_helpers/error-handler');
 var cryptoapis = require("./cryptoapis");
@@ -92,7 +94,7 @@ app.use('/transaction', require('./transactions/transaction.controller'));
 // global error handler
 app.use(errorHandler);
 
-app.listen(8080, () => {
+const server = app.listen(8080, () => {
   console.log('Server started!');
 
   // try to throw errors to see if winston logger works
@@ -263,3 +265,5 @@ app.post('/api/token_validate', (req, res) => {
 });
 
 module.exports = app;
+module.exports =  server;
+
