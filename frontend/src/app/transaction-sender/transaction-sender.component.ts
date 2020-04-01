@@ -157,7 +157,9 @@ export class TransactionSenderComponent implements OnInit {
       price: this.price,
       fees: this.fees,
       fee_wallet: this.feeWallet,
-      wallets_inputs: this.walletsInputs
+      wallets_inputs: this.walletsInputs,
+      merchantId: this.merchantId,
+      orderId: this.orderId
     };
     this.transactionSenderService.sendForm(this.selectedType, data).subscribe(
       response => {
@@ -231,7 +233,7 @@ export class TransactionSenderComponent implements OnInit {
       alert('Fill inputs on rows: ' + inputs + '!');
       return false;
     }
-    if (priceSum !== (this.priceBackend + this.fees)) {
+    if (priceSum !== (this.priceBackend)) {
       alert('Input ' + priceSum + ' is not equal to price of order ' + this.priceBackend + ' with fees ' + this.fees + '!' + '\n'
         + 'Missing value is ' + (this.priceBackend + this.fees - priceSum));
       return false;
