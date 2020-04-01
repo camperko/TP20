@@ -38,6 +38,7 @@ import { MatRadioModule, MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/rad
 import { TransactionHistorySummaryComponent } from './transaction-history-summary/transaction-history-summary.component';
 import { TransactionHistorySummaryService } from './transaction-history-summary/transaction-history-summary.service';
 import { MatTableModule } from '@angular/material';
+import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 
 @NgModule({
   declarations: [
@@ -66,17 +67,14 @@ import { MatTableModule } from '@angular/material';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     AngularFontAwesomeModule,
-<<<<<<< HEAD
-    RecaptchaModule,
-    RecaptchaFormsModule,
-=======
->>>>>>> parent of 6599fed... Merge pull request #24 from camperko/feature_106
     MatPaginatorModule,
     MatSortModule,
     MatInputModule,
     MatSelectModule,
     MatRadioModule,
-    MatTableModule
+    MatTableModule,
+    RecaptchaModule,
+    RecaptchaFormsModule
   ],
   providers: [
     TransactionSenderService,
