@@ -14,6 +14,13 @@ function jwt() {
             '/transaction/types',
             /^\/transaction\/fields\/.*/,
             /^\/transaction\/seller=.*\/type=.*/,
-            /^\/transaction\/send\/.*/        ]
+            /^\/transaction\/send\/.*/,
+            /^\/seller\/.*\/wallets/,
+            /^\/seller\/.*\/wallet\/create/,
+            /^\/seller\/wallet\/delete\/.*/,
+            /^\/seller\/wallet\/update\/.*/,
+            /^\/seller\/.*\/wallet\/update\/primary/,
+            /^\/seller\/wallet\/unset_primary/
+        ]
     });
 }

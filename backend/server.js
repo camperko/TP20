@@ -87,6 +87,7 @@ app.use(jwt());
 // api routes
 app.use('/users', require('./users/users.controller'));
 app.use('/transaction', require('./transactions/transaction.controller'));
+app.use('/seller', require('./seller/seller.controller'));
 
 // global error handler
 app.use(errorHandler);
@@ -178,10 +179,8 @@ app.route('/api/registration').post((req, res) => {
 
 // Get content for the exchange rates table
 app.route('/api/getAssetDetails').get((req,res) => {
-  console.log("Getting asset details...");
   (async () => {
     await getAssetDetails();
-    console.log(tickerData);
     res.send(JSON.stringify({
       data: tickerData
     }));

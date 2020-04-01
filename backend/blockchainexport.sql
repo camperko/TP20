@@ -220,7 +220,8 @@ CREATE TABLE public.user_transaction (
     user_trans_id integer NOT NULL,
     user_account_fk integer,
     trans_type_fk integer,
-    wallet_address character varying
+    wallet_address character varying,
+    is_primary boolean
 );
 
 
@@ -351,6 +352,8 @@ COPY public.transaction_type_field (trans_type_field_id, trans_type_fk, field_na
 
 COPY public.user_account (user_account_id, account_type_fk, username, userpassword, is_active, create_date) FROM stdin;
 1	2	test-seller	test-seller	t	2019-11-18 22:28:55.095932
+2	\N	testtest	testtest	t	2020-02-24 16:47:59.186
+3	\N	test	testtest	t	2020-03-25 20:22:29.046
 \.
 
 
@@ -358,8 +361,10 @@ COPY public.user_account (user_account_id, account_type_fk, username, userpasswo
 -- Data for Name: user_transaction; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.user_transaction (user_trans_id, user_account_fk, trans_type_fk, wallet_address) FROM stdin;
-1	1	1	miaRyqZqPAUTyoPrrd9zXdr8CXhpgjL71J
+COPY public.user_transaction (user_trans_id, user_account_fk, trans_type_fk, wallet_address, is_primary) FROM stdin;
+1	1	1	miaRyqZqPAUTyoPrrd9zXdr8CXhpgjL71J	f
+4	1	2	nejaka penazenka ftw!!!???	f
+10	1	3	jebat	t
 \.
 
 
@@ -388,21 +393,21 @@ SELECT pg_catalog.setval('public.transaction_type_field_trans_type_field_id_seq'
 -- Name: transaction_type_trans_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.transaction_type_trans_type_id_seq', 1, false);
+SELECT pg_catalog.setval('public.transaction_type_trans_type_id_seq', 1, true);
 
 
 --
 -- Name: user_account_user_account_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.user_account_user_account_id_seq', 1, false);
+SELECT pg_catalog.setval('public.user_account_user_account_id_seq', 3, true);
 
 
 --
 -- Name: user_transaction_user_trans_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.user_transaction_user_trans_id_seq', 1, false);
+SELECT pg_catalog.setval('public.user_transaction_user_trans_id_seq', 10, true);
 
 
 --
