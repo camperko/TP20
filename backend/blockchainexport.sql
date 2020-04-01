@@ -65,9 +65,7 @@ CREATE TABLE public.transaction_log (
     sender_price numeric,
     receiver_price numeric,
     is_successful boolean,
-    hash character varying,
-    user_account_id_fk integer,
-    "timestamp" timestamp without time zone
+    hash character varying
 );
 
 
@@ -307,14 +305,7 @@ COPY public.account_type (account_type_id, account_type) FROM stdin;
 -- Data for Name: transaction_log; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.transaction_log (trans_log_id, sender_trans_type_fk, receiver_trans_type_fk, sender_price, receiver_price, is_successful, hash, user_account_id_fk, "timestamp") FROM stdin;
-1	1	2	0.123	0.456	t	asdfghjk	1	2004-10-19 10:23:54.12345
-2	1	3	0.0099	0.5	f	kjhgfds	1	2020-03-03 10:10:02.12345
-3	1	3	0.354	0.96	t	sdfg	1	2020-03-13 18:18:32.12345
-4	1	3	0.006	0.00001	t	uhygtfre	1	2020-02-03 17:10:52.12345
-5	1	4	1.558	0.25	f	tg	1	2020-03-05 00:00:56.12345
-6	1	5	10.86	5.32	f	oiuyt	1	2019-12-10 06:08:43.12345
-7	1	5	10.1010	5.555	t	sdfghj	2	2020-03-03 10:11:01.12345
+COPY public.transaction_log (trans_log_id, sender_trans_type_fk, receiver_trans_type_fk, sender_price, receiver_price, is_successful, hash) FROM stdin;
 \.
 
 
@@ -360,8 +351,7 @@ COPY public.transaction_type_field (trans_type_field_id, trans_type_fk, field_na
 --
 
 COPY public.user_account (user_account_id, account_type_fk, username, userpassword, is_active, create_date) FROM stdin;
-1	2	test-seller	test-seller	t	2019-11-18 22:28:55.095932
-2	2	veron	password	t	2019-11-18 22:28:55.095932
+1	\N	test	$2b$10$bd0T9loE0u7dGTzKDk310evmYoSPhx0RKWwW522OgLq5/K.1w5KlG	t	2020-04-01 21:03:54.396
 \.
 
 
@@ -369,8 +359,8 @@ COPY public.user_account (user_account_id, account_type_fk, username, userpasswo
 -- Data for Name: user_transaction; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.user_transaction (user_trans_id, user_account_fk, trans_type_fk, wallet_address) FROM stdin;
-1	1	1	miaRyqZqPAUTyoPrrd9zXdr8CXhpgjL71J
+COPY public.user_transaction (user_trans_id, user_account_fk, trans_type_fk, wallet_address, is_primary) FROM stdin;
+5	1	1	miaRyqZqPAUTyoPrrd9zXdr8CXhpgjL71J	t
 \.
 
 
@@ -406,14 +396,14 @@ SELECT pg_catalog.setval('public.transaction_type_trans_type_id_seq', 1, true);
 -- Name: user_account_user_account_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.user_account_user_account_id_seq', 3, true);
+SELECT pg_catalog.setval('public.user_account_user_account_id_seq', 2, true);
 
 
 --
 -- Name: user_transaction_user_trans_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.user_transaction_user_trans_id_seq', 10, true);
+SELECT pg_catalog.setval('public.user_transaction_user_trans_id_seq', 5, true);
 
 
 --

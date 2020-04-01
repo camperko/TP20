@@ -18,6 +18,7 @@ export class SellerSettingsComponent implements OnInit {
       private sellerSettingsService: SellerSettingsService, private transactionSenderService: TransactionSenderService,
       public dialog: MatDialog
   ) {
+    this.sellerWallets = [];
     this.sellerSettingsService.getSellerWallets().subscribe(data => {
       if (data.wallets !== 'failed') {
         this.sellerWallets = data.wallets;

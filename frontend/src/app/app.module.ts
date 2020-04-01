@@ -66,7 +66,7 @@ import { EditDialogComponent } from './seller-settings/dialogs/edit-dialog/edit-
     NavigationSellerComponent,
     NavigationTransparentComponent,
     TransactionHistoryComponent,
-    TransactionHistorySummaryComponent
+    TransactionHistorySummaryComponent,
     NavigationTransparentComponent,
     SellerSettingsComponent,
     DeleteDialogComponent,
