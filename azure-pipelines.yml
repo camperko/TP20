@@ -5,7 +5,7 @@
 # https://aka.ms/yaml
 
 trigger:
-- develop/backend*
+- develop
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -14,10 +14,8 @@ steps:
 - script: |
     cd backend
     npm install
-  displayName: 'Install backend'
+    npm test
+  displayName: 'Install backend and test'
 
-- script: |
-    cd ../frontend
-    npm install
-  displayName: 'Installfrontend'
+
 

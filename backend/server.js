@@ -12,6 +12,7 @@ const coinTicker = require('coin-ticker');
 var cryptoapis = require("./cryptoapis");
 var tickerData = []; // coinTicker exchange rates data
 var exchangePairs = ['BTC_USD', 'ETH_USD', 'BCH_USD', 'LTC_USD', 'XRP_USD'];
+const request = require("request");
 
 // MORGAN LOGGER SETUP
 // set directory and name of .log file
@@ -64,6 +65,8 @@ const logger = createLogger({
 });
 
 var db_conf = require("./database_conf");
+var db = db_conf.db;
+var db_test = db_conf.db_test;
 const jwt = require('./_helpers/jwt');
 const errorHandler = require('./_helpers/error-handler');
 var cryptoapis = require("./cryptoapis");
@@ -92,7 +95,7 @@ app.use('/seller', require('./seller/seller.controller'));
 // global error handler
 app.use(errorHandler);
 
-app.listen(8080, () => {
+const server = app.listen(8080, () => {
   console.log('Server started!');
 
   // try to throw errors to see if winston logger works
@@ -124,68 +127,87 @@ app.listen(8080, () => {
   //getTransactionTypeFields(1);
 });
 
-// do a single select to the database with specific username
-// return true if found, else return false
-async function findUser(username) {
-  try {
-    let data = await db_conf.db.any('SELECT user_account_id FROM user_account WHERE username = $1', [username]);
-    //console.log(data);
-    if (Object.keys(data).length) {
-      return true;
-    } else {
-      return false;
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-//create a new user in database
-function addUser(username, password) {
-  db_conf.db.any('INSERT INTO user_account(username, userpassword, is_active, create_date)'
-    + 'VALUES($1, $2, $3, $4)', [username, password, true, new Date()])
-    .then(() => {
-      console.log("User successfully added!");
-    })
-    .catch(error => {
-      console.log("Fail! Adding unsuccessfull!");
-    });
-}
-
-//method to receive data from client
-app.route('/api/registration').post((req, res) => {
-  console.log('Request of registration accepted!');
-  var username = req.body.username;
-  var password = req.body.password;
-
-  (async () => {
-    // chceck whether is specific user already in database
-    // if he is, return fail for new user registration
-    // if he is not, add new user to database and return success
-    if (await findUser(username)) {
-      console.log("User already exists!");
-      res.send(JSON.stringify({
-        value: 'fail'
-      }));
-    } else {
-      addUser(username, password);
-      // console.log("User added!");
-      res.send(JSON.stringify({
-        value: 'success'
-      }));
-    }
-  })();
-});
-
 // Get content for the exchange rates table
 app.route('/api/getAssetDetails').get((req,res) => {
+  console.log("Getting asset details...");
   (async () => {
     await getAssetDetails();
+    console.log(tickerData);
     res.send(JSON.stringify({
       data: tickerData
     }));
   })();
 });
+
+// get list of seller's transactions
+app.route('/api/sellersTransactions').post((req, res) => {
+  var sellerID = req.body.sellerID;
+  (async () => {
+    let data = await getSellerTransactions(sellerID);
+    res.send(JSON.stringify({
+      data: data
+    }));
+  })();
+});
+
+async function getSellerTransactions(sellerID) {
+  try {
+    let data = await db_conf.db.any(`SELECT
+    tl.trans_log_id AS id,
+    tl.sender_price AS sender_price,
+    ttS.currency AS sender_currency,
+    tl.receiver_price AS receiver_price,
+    ttR.currency AS receiver_currency,
+    tl.is_successful AS is_successful,
+    split_part(tl.timestamp::varchar, '.', 1) AS datetime
+    FROM transaction_log tl
+    JOIN transaction_type ttS ON ttS.trans_type_id = tl.sender_trans_type_fk
+    JOIN transaction_type ttR ON ttR.trans_type_id = tl.receiver_trans_type_fk
+    WHERE tl.user_account_id_fk = $1`, [sellerID]);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// get list of seller's transactions summary
+app.route('/api/sellersTransactionsSummary').post((req, res) => {
+  var sellerID = req.body.sellerID;
+  var option = req.body.option;
+  (async () => {
+    let data = await getSellerTransactionsSummary(sellerID, option);
+    res.send(JSON.stringify({
+      data: data
+    }));
+  })();
+});
+
+async function getSellerTransactionsSummary(sellerID, option) {
+  var column, condition;
+  if (option === 'successful') {
+    column = 'tl.is_successful';
+    condition = 'true';
+  }
+  if (option === 'unsuccessful') {
+    column = 'NOT tl.is_successful';
+    condition = 'false';
+  }
+  // create different SQL query for succesful and unsuccessful transactions
+  try {
+    let data = await db_conf.db.any(`SELECT
+    sum(tl.receiver_price) AS total_price,
+    ttR.currency AS currency,
+    count(CASE WHEN ` + column + ` THEN 1 END) AS transaction_count
+    FROM transaction_log tl
+    JOIN transaction_type ttS ON ttS.trans_type_id = tl.sender_trans_type_fk
+    JOIN transaction_type ttR ON ttR.trans_type_id = tl.receiver_trans_type_fk
+    WHERE tl.user_account_id_fk = $1 AND tl.is_successful = ` + condition + ` 
+    GROUP BY ttR.trans_type_id, tl.is_successful`, [sellerID]);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 async function getAssetDetails() {
   try {
@@ -201,4 +223,48 @@ async function getAssetDetails() {
   }
 }
 
+app.post('/api/token_validate', (req, res) => {
+
+  let token = req.body.recaptcha;
+  const secretKey = "6Lfm0t4UAAAAAD3E2NdgfHFCIYvbFuxNcXfzm2em"; //the secret key from your google admin console;
+
+  //token validation url is URL: https://www.google.com/recaptcha/api/siteverify
+  // METHOD used is: POST
+
+  const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}&remoteip=${req.connection.remoteAddress}`
+
+  //note that remoteip is the users ip address and it is optional
+  // in node req.connection.remoteAddress gives the users ip address
+
+  if (token === null || token === undefined) {
+    res.status(201).send({
+      success: false,
+      message: "Token is empty or invalid"
+    })
+    return console.log("token empty");
+  }
+
+  request(url, function (err, response, body) {
+    //the body is the data that contains success message
+    body = JSON.parse(body);
+    //check if the validation failed
+    //console.log(body.success);
+    if (body.success !== undefined && !body.success) {
+      res.send({
+        success: false,
+        'message': "recaptcha failed"
+      });
+      return console.log("failed")
+    }
+    //if passed response success message to client
+    console.log("captcha succesfull");
+    res.send({
+      "success": true,
+      'message': "recaptcha passed"
+    });
+  })
+});
+
 module.exports = app;
+module.exports =  server;
+

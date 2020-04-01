@@ -28,6 +28,14 @@ import { HomeSellerComponent } from './home-seller/home-seller.component';
 import { NavigationSellerComponent } from './navigation-seller/navigation-seller.component';
 import { NavigationTransparentComponent } from './navigation-transparent/navigation-transparent.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
+import { MatPaginatorModule } from '@angular/material';
+import { TransactionHistoryService } from './transaction-history/transaction-history.service';
+import { MatSortModule } from '@angular/material/sort';
+import { MatRadioModule, MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
+import { TransactionHistorySummaryComponent } from './transaction-history-summary/transaction-history-summary.component';
+import { TransactionHistorySummaryService } from './transaction-history-summary/transaction-history-summary.service';
+import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 import {
     MatButtonModule,
     MatCheckboxModule,
@@ -57,6 +65,9 @@ import { EditDialogComponent } from './seller-settings/dialogs/edit-dialog/edit-
     HomeSellerComponent,
     NavigationSellerComponent,
     NavigationTransparentComponent,
+    TransactionHistoryComponent,
+    TransactionHistorySummaryComponent
+    NavigationTransparentComponent,
     SellerSettingsComponent,
     DeleteDialogComponent,
     CreateDialogComponent,
@@ -80,8 +91,14 @@ import { EditDialogComponent } from './seller-settings/dialogs/edit-dialog/edit-
         FlexModule,
         MatCheckboxModule,
         MatDialogModule,
+        MatPaginatorModule,
+        MatSortModule,
         MatInputModule,
-        MatSelectModule
+        MatSelectModule,
+        MatRadioModule,
+        MatTableModule,
+        RecaptchaModule,
+        RecaptchaFormsModule
     ],
     entryComponents: [
       DeleteDialogComponent,
@@ -92,11 +109,14 @@ import { EditDialogComponent } from './seller-settings/dialogs/edit-dialog/edit-
     TransactionSenderService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: { color: 'accent' }},
 
     // provider used to create fake backend
     // fakeBackendProvider
     RegistrationFormService,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TransactionHistoryService,
+    TransactionHistorySummaryService
   ],
   bootstrap: [AppComponent]
 })

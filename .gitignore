@@ -30,7 +30,7 @@ chrome-profiler-events*.json
 speed-measure-plugin*.json
 
 # IDEs and editors
-/forntend/.idea
+/frontend/.idea
 /backend/.idea
 .project
 .classpath
@@ -57,6 +57,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+/backend/logs/*
 
 # System Files
 .DS_Store
