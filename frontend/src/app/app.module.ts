@@ -8,6 +8,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { CookieService } from 'ngx-cookie-service';
+
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers';
 
@@ -115,6 +117,7 @@ import { EditDialogComponent } from './seller-settings/dialogs/edit-dialog/edit-
     // fakeBackendProvider
     RegistrationFormService,
     ReactiveFormsModule,
+    CookieService,
     TransactionHistoryService,
     TransactionHistorySummaryService
   ],
