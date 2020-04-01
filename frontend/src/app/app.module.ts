@@ -8,6 +8,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { CookieService } from 'ngx-cookie-service';
+
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers';
 
@@ -65,7 +67,8 @@ import { MatTableModule } from '@angular/material';
     // provider used to create fake backend
     //fakeBackendProvider
     RegistrationFormService,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CookieService
   ],
   bootstrap: [AppComponent]
 })
