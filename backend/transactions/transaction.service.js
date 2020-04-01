@@ -19,7 +19,7 @@ module.exports = {
 */
 async function getTypes() {
   try {
-    return await db_conf.db.any("SELECT type_name, type_display FROM transaction_type;");
+    return await db_conf.db.any("SELECT trans_type_id, type_name, type_display FROM transaction_type;");
   } catch (error) {
     console.log(error);
   }

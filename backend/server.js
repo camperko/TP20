@@ -90,6 +90,7 @@ app.use(jwt());
 // api routes
 app.use('/users', require('./users/users.controller'));
 app.use('/transaction', require('./transactions/transaction.controller'));
+app.use('/seller', require('./seller/seller.controller'));
 
 // global error handler
 app.use(errorHandler);
@@ -138,7 +139,7 @@ app.route('/api/getAssetDetails').get((req,res) => {
   })();
 });
 
-// get list of seller's transactions 
+// get list of seller's transactions
 app.route('/api/sellersTransactions').post((req, res) => {
   var sellerID = req.body.sellerID;
   (async () => {
@@ -227,9 +228,9 @@ app.post('/api/token_validate', (req, res) => {
   let token = req.body.recaptcha;
   const secretKey = "6Lfm0t4UAAAAAD3E2NdgfHFCIYvbFuxNcXfzm2em"; //the secret key from your google admin console;
 
-  //token validation url is URL: https://www.google.com/recaptcha/api/siteverify 
+  //token validation url is URL: https://www.google.com/recaptcha/api/siteverify
   // METHOD used is: POST
-  
+
   const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}&remoteip=${req.connection.remoteAddress}`
 
   //note that remoteip is the users ip address and it is optional
@@ -242,7 +243,7 @@ app.post('/api/token_validate', (req, res) => {
     })
     return console.log("token empty");
   }
-  
+
   request(url, function (err, response, body) {
     //the body is the data that contains success message
     body = JSON.parse(body);
