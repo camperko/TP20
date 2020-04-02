@@ -26,6 +26,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TransactionSenderService } from './transaction-sender.service';
 import { ActivatedRoute } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-transaction-sender',
@@ -46,7 +47,10 @@ export class TransactionSenderComponent implements OnInit {
   merchantId: string;
   orderId: string;
   priceBackend: number;
-  constructor(private transactionSenderService: TransactionSenderService, private route: ActivatedRoute) { }
+  constructor(
+    private transactionSenderService: TransactionSenderService,
+    private route: ActivatedRoute,
+    private cookieService: CookieService) { }
 
   /*
     ngOnInit - void function
@@ -128,16 +132,15 @@ export class TransactionSenderComponent implements OnInit {
       - fill this.sellerWallet which represents seller wallet address in selected transaction type based on this.selectedType
   */
   getSellerWallet() {
-    this.transactionSenderService.getSellerWallet(this.selectedType, this.merchantId).subscribe(
-      data => {
-        if (data.wallet !== 'failed') {
-          this.sellerWallet = data.wallet;
-        } else {
-          alert('Non existing merchant!');
-          this.sellerWallet = '';
-        }
-      },
-      error => this.error = error
+    this.transactionSenderService.getSellerWallet(this.selectedType, this.merchantId).subscribe(data => {
+      if (data.wallet !== 'failed') {
+        this.sellerWallet = data.wallet;
+      } else {
+        alert('Non existing merchant!');
+        this.sellerWallet = '';
+      }
+    },
+    error => this.error = error
     );
   }
 
@@ -163,6 +166,9 @@ export class TransactionSenderComponent implements OnInit {
     };
     this.transactionSenderService.sendForm(this.selectedType, data).subscribe(
       response => {
+        for (var i = 1; i < data.input_wallets.length + 1; i++){
+          this.cookieService.set(i +  '.' + data.input_wallets[i - 1][0].field_display, data.input_wallets[i - 1][0].value);
+        }
         alert(response.message);
       },
       error => {

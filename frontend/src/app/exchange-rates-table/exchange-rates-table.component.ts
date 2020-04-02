@@ -29,14 +29,13 @@ export class ExchangeRatesTableComponent implements OnInit {
 
   ngOnInit() {
     this.getAssetDetails();
-    setInterval(()=> { this.getAssetDetails() }, 4000);
+    setInterval(() => this.getAssetDetails(), 4000);
   }
 
   getAssetDetails() {
     this.exchangeRatesTableService.getAssetDetails().subscribe(
       data => {
         this.dataSource = new MatTableDataSource<ExchangeRatesRow>(data.data);
-        console.log(data.data);
       },
       error => this.error
     );
