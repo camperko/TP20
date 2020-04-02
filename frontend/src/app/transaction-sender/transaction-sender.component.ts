@@ -160,7 +160,9 @@ export class TransactionSenderComponent implements OnInit {
       price: this.price,
       fees: this.fees,
       fee_wallet: this.feeWallet,
-      wallets_inputs: this.walletsInputs
+      wallets_inputs: this.walletsInputs,
+      merchantId: this.merchantId,
+      orderId: this.orderId
     };
     this.transactionSenderService.sendForm(this.selectedType, data).subscribe(
       response => {
