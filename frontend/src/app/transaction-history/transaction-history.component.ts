@@ -3,6 +3,7 @@ import { TransactionHistoryService } from './transaction-history.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { CookieService } from 'ngx-cookie-service';
 
 
 /**
@@ -21,10 +22,12 @@ export class TransactionHistoryComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private transactionHistoryService: TransactionHistoryService) { }
+  constructor(
+    private transactionHistoryService: TransactionHistoryService,
+    private cookieService: CookieService) { }
 
   ngOnInit() {
-    let data = {sellerID: 1};
+    let data = {sellerID: this.cookieService.get('id')};
     this.transactionHistoryService.getTransactions(data).subscribe(
       response => {
         this.dataSource = new MatTableDataSource<TransactionRow>(response.data);

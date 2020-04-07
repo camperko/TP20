@@ -315,7 +315,6 @@ COPY public.transaction_log (trans_log_id, sender_trans_type_fk, receiver_trans_
 4	1	3	0.006	0.00001	t	uhygtfre	1	2020-02-03 17:10:52.12345	\N
 5	1	4	1.558	0.25	f	tg	1	2020-03-05 00:00:56.12345	\N
 6	1	5	10.86	5.32	f	oiuyt	1	2019-12-10 06:08:43.12345	\N
-7	1	5	10.1010	5.555	t	sdfghj	2	2020-03-03 10:11:01.12345	\N
 8	1	1	1.0	2.0	t	somehash	1	2020-03-28 19:07:03.026247	\N
 9	1	1	0.00001358	0.00001004	t	f95b6a1c4d592826eefcd8479280d9b6f0897c80c719c0296e02e97f6b45fb8b	\N	2020-03-30 22:42:17.22329	\N
 10	1	1	1.0	2.0	t	somehash	1	2020-03-30 23:57:54.932629	\N
@@ -330,6 +329,7 @@ COPY public.transaction_log (trans_log_id, sender_trans_type_fk, receiver_trans_
 19	1	1	10000.000004989999	9999.99999999	f	\N	1	2020-04-01 21:08:04.622319	505
 20	1	1	10000.00000498	9999.99999998	f	\N	1	2020-04-01 21:09:14.945305	506
 21	1	1	10000.00000497	9999.99999997	f	\N	1	2020-04-01 21:12:19.036906	506
+7	1	5	10.1010	5.555	t	sdfghj	3	2020-03-03 10:11:01.12345	\N
 \.
 
 
@@ -376,6 +376,7 @@ COPY public.transaction_type_field (trans_type_field_id, trans_type_fk, field_na
 
 COPY public.user_account (user_account_id, account_type_fk, username, userpassword, is_active, create_date) FROM stdin;
 1	\N	test	$2b$10$bd0T9loE0u7dGTzKDk310evmYoSPhx0RKWwW522OgLq5/K.1w5KlG	t	2020-04-01 21:03:54.396
+3	\N	veron	$2b$10$BdqSNyt2AMSDohSf.bM9d.0oZsQl5uflvomUOhx7pFjZX46CgM4rK	t	2020-04-04 16:29:24.961
 \.
 
 
@@ -384,7 +385,9 @@ COPY public.user_account (user_account_id, account_type_fk, username, userpasswo
 --
 
 COPY public.user_transaction (user_trans_id, user_account_fk, trans_type_fk, wallet_address, is_primary) FROM stdin;
-5	1	1	miaRyqZqPAUTyoPrrd9zXdr8CXhpgjL71J	t
+5	1	1	miaRyqZqPAUTyoPrrd9zXdr8CXhpgjL71J	f
+6	1	3	asdfghjkl	f
+7	1	2	zsxdfghjk	t
 \.
 
 
@@ -420,14 +423,14 @@ SELECT pg_catalog.setval('public.transaction_type_trans_type_id_seq', 1, true);
 -- Name: user_account_user_account_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.user_account_user_account_id_seq', 2, true);
+SELECT pg_catalog.setval('public.user_account_user_account_id_seq', 3, true);
 
 
 --
 -- Name: user_transaction_user_trans_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.user_transaction_user_trans_id_seq', 5, true);
+SELECT pg_catalog.setval('public.user_transaction_user_trans_id_seq', 7, true);
 
 
 --
