@@ -4,7 +4,7 @@
         <div fxFlex="2.5"></div>
         <mat-form-field fxFlex="25">
             <mat-label>Currency</mat-label>
-            <mat-select [(ngModel)]="currentWallet.type_name">
+            <mat-select [(ngModel)]="currentWallet.type_name" (selectionChange) = "checkExistingWallets()">
                 <mat-option *ngFor="let currency of data.currencies" [value]="currency.type_name">
                     {{currency.type_display + '(' + currency.type_name + ')'}}
                 </mat-option>
@@ -19,9 +19,11 @@
         <mat-checkbox fxFlex="10" class="primary-checkbox" [(ngModel)]="currentWallet.is_primary">Primary</mat-checkbox>
         <div fxFlex="2.5"></div>
     </div>
-
+    <div class="alert alert-danger" role="alert" *ngIf="alreadyExists">
+        Wallet of selected type already exists!
+    </div>
 </div>
 <div mat-dialog-actions>
     <button mat-button (click)="onClose()">Cancel</button>
-    <button mat-button [mat-dialog-close]="currentWallet" cdkFocusInitial>Create</button>
+    <button mat-button [mat-dialog-close]="currentWallet" cdkFocusInitial [disabled]="alreadyExists">Create</button>
 </div>
