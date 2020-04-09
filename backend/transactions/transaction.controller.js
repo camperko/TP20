@@ -125,14 +125,14 @@ function sendTransaction(req, res, next) {
     try{
       var data = await cryptoapis.newTransaction(client.transaction, inputs, output, fee, wifs);
       if(data === undefined || data === null || data.payload === null || data.payload === undefined) {
-        res.status(400).json({message: 'Sending payment to blockchain failed. Make sure, u have enough resources in wallets. Message: ' + data.meta.error.message});
+        res.status(400).json({message: 'Sending payment to blockchain failed. ' + data.meta.error.message});
         transactionService.logTransaction(network, network, parseFloat(price) + parseFloat(fees), price, false, null, merchantId, orderId);
       } else {
         res.status(200).json({message: 'Sending payment to blockchain successful. TxID: ' + data.payload.txid});
         transactionService.logTransaction(network, network, parseFloat(price) + parseFloat(fees), price, true, data.payload.txid, merchantId, orderId);
       }
     } catch (error) {
-      res.status(400).json({message: 'Sending payment to blockchain failed. Make sure, u have enough resources in wallets. Message: E ' + JSON.stringify(error)});
+      res.status(400).json({message: 'Sending payment to blockchain failed. ' + error.meta.error.message});
       transactionService.logTransaction(network, network, parseFloat(price) + parseFloat(fees), price, false, null, merchantId, orderId);
     }
   }) ();
