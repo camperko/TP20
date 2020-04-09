@@ -129,10 +129,8 @@ const server = app.listen(8080, () => {
 
 // Get content for the exchange rates table
 app.route('/api/getAssetDetails').get((req,res) => {
-  console.log("Getting asset details...");
   (async () => {
     await getAssetDetails();
-    console.log(tickerData);
     res.send(JSON.stringify({
       data: tickerData
     }));

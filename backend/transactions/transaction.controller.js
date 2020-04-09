@@ -18,6 +18,7 @@ router.get('/types', getTypes);
 router.get('/fields/:type_name', getFields);
 router.get('/seller=:merchant_id/type=:type_name', getSellerWallet);
 router.post('/send/:type_name', sendTransaction);
+router.get('/primary/:merchant_id', getPrimaryWalletType);
 
 
 module.exports = router;
@@ -153,5 +154,11 @@ function getSellerWallet(req, res, next) {
           res.json({wallet: walletRet[0].wallet_address});
         }
       })
+      .catch(err => next(err));
+}
+
+function getPrimaryWalletType(req, res, next) {
+  transactionService.getPrimaryWalletType(req.params.merchant_id)
+      .then(db_response => res.json({primary: db_response}))
       .catch(err => next(err));
 }
