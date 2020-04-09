@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {TransactionSenderService} from '@app/transaction-sender/transaction-sender.service';
+import {CookieService} from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,16 +13,15 @@ export class SellerSettingsService {
       'Content-Type': 'application/json'
     })
   };
-  merchantId: number;
-
+  merchantId: string;
   transactionTypes = [];
 
-  constructor(private http: HttpClient, private transactionSenderService: TransactionSenderService) {
+  constructor(private http: HttpClient, private transactionSenderService: TransactionSenderService,
+              private cookieService: CookieService) {
+    this.merchantId = this.cookieService.get('id');
     this.transactionSenderService.getTransactionTypes().subscribe(data => {
       this.transactionTypes = data;
     });
-    // TODO: by cookies
-    this.merchantId = 1;
   }
 
   getSellerWallets(): Observable<any> {
@@ -58,7 +58,7 @@ export class SellerSettingsService {
   unsetPrimaryWallet(walletId: number): Observable<any> {
     const data = {
       wallet_id: walletId
-    }
+    };
     return this.http.put<any>('http://localhost:8080/seller/wallet/unset_primary', JSON.stringify(data), this.httpOptions);
   }
 }
