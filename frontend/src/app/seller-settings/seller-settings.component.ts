@@ -60,7 +60,8 @@ export class SellerSettingsComponent implements OnInit {
       width: '1000px',
       data: {
         currencies: this.sellerSettingsService.transactionTypes,
-        wallet: currentWallet
+        wallet: currentWallet,
+        wallets: this.sellerWallets
       }
     });
 
@@ -91,7 +92,8 @@ export class SellerSettingsComponent implements OnInit {
     const createDialogRef = this.dialog.open(CreateDialogComponent, {
       width: '1000px',
       data: {
-        currencies: this.sellerSettingsService.transactionTypes
+        currencies: this.sellerSettingsService.transactionTypes,
+        wallets: this.sellerWallets
       }
     });
 
