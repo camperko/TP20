@@ -68,7 +68,7 @@ async function getSellerWallet(transactionTypeName, merchant_id) {
 
 async function getPrimaryWalletType(merchant_id) {
   try {
-    return db_conf.db.one(`SELECT tt.type_name FROM transaction_type tt
+    return db_conf.db.any(`SELECT tt.type_name FROM transaction_type tt
       JOIN user_transaction ut ON ut.trans_type_fk = tt.trans_type_id
       WHERE ut.user_account_fk = $1 
       AND ut.is_primary = true`,

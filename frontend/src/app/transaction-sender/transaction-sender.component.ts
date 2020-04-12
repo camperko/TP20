@@ -119,8 +119,8 @@ export class TransactionSenderComponent implements OnInit {
       response => {
         this.transactionTypes = response;
         this.transactionSenderService.getSellerPrimaryWallet(this.merchantId).subscribe(data => {
-          if (data.primary !== 'failed') {
-            this.selectedType = data.primary.type_name;
+          if (data.primary !== 'failed' && data.primary.length !== 0) {
+            this.selectedType = data.primary[0].type_name;
           } else {
             this.selectedType = response[0].type_name;
           }
@@ -141,7 +141,7 @@ export class TransactionSenderComponent implements OnInit {
       if (data.wallet !== 'failed') {
         this.sellerWallet = data.wallet;
       } else {
-        alert('Non existing merchant!');
+        alert('Non existing merchant or wallet in currency not exists!');
         this.sellerWallet = '';
       }
     },
