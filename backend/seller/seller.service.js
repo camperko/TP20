@@ -1,4 +1,6 @@
 var db_conf = require("../database_conf");
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 module.exports = {
     getSellerWallets,
@@ -6,7 +8,10 @@ module.exports = {
     deleteWallet,
     updateWallet,
     setPrimaryWallet,
-    unsetPrimary
+    unsetPrimary,
+    changeEmail,
+    changePassword,
+    getEmail
 };
 
 async function getSellerWallets(merchant_id) {
@@ -73,6 +78,41 @@ async function unsetPrimary(user_trans_id) {
             SET is_primary = false
             WHERE user_trans_id = $1`,
             [user_trans_id]);
+    } catch (error) {
+        return 'failed';
+    }
+}
+
+async function changeEmail(merchant_id, email) {
+    try {
+        return db_conf.db.result(`UPDATE user_account
+            SET email = $1
+            WHERE user_account_id = $2`,
+            [email, merchant_id]);
+    } catch (error) {
+        return 'failed';
+    }
+}
+
+async function changePassword(merchant_id, userpassword) {
+    try {
+        bcrypt.hash(userpassword, saltRounds)
+            .then(hash => {
+                return db_conf.db.result(`UPDATE user_account
+                    SET userpassword = $1
+                    WHERE user_account_id = $2`,
+                    [hash, merchant_id]);
+            });
+    } catch (error) {
+        return 'failed';
+    }
+}
+
+async function getEmail(merchant_id) {
+    try {
+        return db_conf.db.one(`SELECT email FROM user_account
+            WHERE user_account_id = $1`,
+            [merchant_id]);
     } catch (error) {
         return 'failed';
     }

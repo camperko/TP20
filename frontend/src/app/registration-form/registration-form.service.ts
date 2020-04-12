@@ -14,11 +14,11 @@ import { Observable } from 'rxjs';
     };
     constructor(private http: HttpClient) { }
 
-    postDataToServer(username: string, password: string): Observable<any> {
-      return this.http.post<any>('http://localhost:8080/users/registration', {username, password});
+    postDataToServer(username: string, email: string, password: string): Observable<any> {
+      return this.http.post<any>('http://localhost:8080/users/registration', {username, email, password});
     }
 
-    sendToken(token){
+    sendToken(token) {
       return this.http.post<any>('http://localhost:8080/api/token_validate', {recaptcha: token});
     }
   }

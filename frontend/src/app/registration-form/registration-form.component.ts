@@ -1,8 +1,5 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RegistrationFormService } from './registration-form.service';
-import { format } from 'url';
-import { Response } from 'selenium-webdriver/http';
-import { discardPeriodicTasks } from '@angular/core/testing';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -23,13 +20,15 @@ export class RegistrationFormComponent implements OnInit {
   validationPwd = '';
   regFail = '';
   regSuccess = '';
-  chckbox: boolean = false;
-  captcha: boolean = false;
+  chckbox = false;
+  captcha = false;
   constructor(private messageService: RegistrationFormService) { }
 
   ngOnInit() {
     this.registrationForm = new FormGroup({
       username: new FormControl(''),
+      email: new FormControl(''),
+      repEmail: new FormControl(''),
       password: new FormControl(''),
       repPassword: new FormControl(''),
       recaptchaReactive: new FormControl()
@@ -52,7 +51,7 @@ export class RegistrationFormComponent implements OnInit {
     if (this.registrationForm.controls.username.value.length < 3) {
       this.regFail = '';
       this.regSuccess = '';
-      this.validationPwd = 'Username is too short. Minimal lenght is 3 characters!';
+      this.validationPwd = 'Username is too short. Minimal length is 3 characters!';
       return;
     }
 
@@ -60,10 +59,17 @@ export class RegistrationFormComponent implements OnInit {
     if (this.registrationForm.controls.password.value.length < 8) {
       this.regFail = '';
       this.regSuccess = '';
-      this.validationPwd = 'Password is too short. Minimal lenght is 8 characters!';
+      this.validationPwd = 'Password is too short. Minimal length is 8 characters!';
       return;
     }
-   
+
+    const regex = new RegExp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-z]{2,4}$');
+    if (!regex.test(this.registrationForm.controls.email.value)) {
+      this.regFail = '';
+      this.regSuccess = '';
+      this.validationPwd = 'Bad format of entered email!';
+      return;
+    }
     // validation, whether password and repeat password inputs are equal
     if (this.registrationForm.controls.password.value !== this.registrationForm.controls.repPassword.value) {
       this.regFail = '';
@@ -71,15 +77,22 @@ export class RegistrationFormComponent implements OnInit {
       this.validationPwd = 'Passwords do not match. Please re-enter them!';
       return;
     }
+    if (this.registrationForm.controls.email.value !== this.registrationForm.controls.repEmail.value) {
+      this.regFail = '';
+      this.regSuccess = '';
+      this.validationPwd = 'Emails do not match. Please re-enter them!';
+      return;
+    }
     if (!this.captcha) {
       this.validationPwd = '';
       this.regSuccess = '';
-      this.regFail = 'Captcha authenification required!';
+      this.regFail = 'Captcha authentification required!';
       return;
     }
     this.validationPwd = '';
     // use of registration-form service to send data to the server
     this.messageService.postDataToServer(this.registrationForm.controls.username.value,
+                                        this.registrationForm.controls.email.value,
                                         this.registrationForm.controls.password.value).subscribe(
       response => {
         // getting the response from server
@@ -88,7 +101,6 @@ export class RegistrationFormComponent implements OnInit {
           this.validationPwd = '';
           this.regFail = '';
         }
-       
         if (Object.values(response)[0] === 'fail') {
           this.regFail = 'Registration failed! Please change your username!';
           this.validationPwd = '';
