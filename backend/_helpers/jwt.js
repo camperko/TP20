@@ -17,6 +17,7 @@ function jwt() {
             /^\/transaction\/send\/.*/,
             '/api/token_validate',
             /^\/transaction\/send\/.*/,
+            /^\/transaction\/primary\/.*/,
             /^\/seller\/.*\/wallets/,
             /^\/seller\/.*\/wallet\/create/,
             /^\/seller\/wallet\/delete\/.*/,
