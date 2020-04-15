@@ -66,11 +66,6 @@ import { MatTableModule } from '@angular/material';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     AngularFontAwesomeModule,
-<<<<<<< HEAD
-    RecaptchaModule,
-    RecaptchaFormsModule,
-=======
->>>>>>> parent of 6599fed... Merge pull request #24 from camperko/feature_106
     MatPaginatorModule,
     MatSortModule,
     MatInputModule,

@@ -31,7 +31,6 @@ describe('registration test', () => {
 
   //console.log(typeof db);
   it('should create a new user', async () => {
-    console.log("server2: " + server);
     const res = await request(server)
       .post('/api/registration')
       .send({
