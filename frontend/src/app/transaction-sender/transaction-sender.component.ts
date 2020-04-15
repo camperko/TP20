@@ -72,6 +72,28 @@ export class TransactionSenderComponent implements OnInit {
   }
 
   /*
+    redirectForFailure - void function
+      - method is called when transaction is not successful
+      - redirects buyer back to e-shop
+  */
+  redirectForFailure(){
+    window.open(
+      'http://localhost:8081/blockchain-e-shop_failure.html',
+    );
+  }
+
+  /*
+    redirectForSuccess - void function
+      - method is called when transaction is successful
+      - redirects buyer back to e-shop
+  */
+  redirectForSuccess(){
+    window.open(
+      'http://localhost:8081/blockchain-e-shop_success.html',
+    );
+  }
+
+  /*
     changeFields - void function
       - method is called when transaction type is changed
       - change input fields for selected transaction types and seller wallet address
@@ -175,9 +197,11 @@ export class TransactionSenderComponent implements OnInit {
           this.cookieService.set(i +  '.' + data.input_wallets[i - 1][0].field_display, data.input_wallets[i - 1][0].value);
         }
         alert(response.message);
+        this.redirectForSuccess();
       },
       error => {
         alert(error);
+        this.redirectForFailure();
       }
     );
   }
