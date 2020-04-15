@@ -9,6 +9,9 @@ router.delete('/wallet/delete/:wallet_id', deleteWallet);
 router.put('/wallet/update/:wallet_id', updateWallet);
 router.put('/:merchant_id/wallet/update/primary', setPrimaryWallet);
 router.put('/wallet/unset_primary', unsetPrimary);
+router.put('/:merchant_id/update/email', changeEmail);
+router.put('/:merchant_id/update/password', changePassword);
+router.get('/:merchant_id/email', getEmail);
 
 module.exports = router;
 
@@ -55,5 +58,26 @@ function unsetPrimary(req, res, next) {
     sellerService.unsetPrimary(req.body.wallet_id)
         .then(db_response => {
             db_response === 'failed' ? res.json({unsetPrimary: 'failed'}) : res.json({unsetPrimary: 'success'});
+        }).catch(err => next(err));
+}
+
+function changeEmail(req, res, next) {
+    sellerService.changeEmail(req.params.merchant_id, req.body.email)
+        .then(db_response => {
+            db_response === 'failed' ? res.json({changeEmail: 'failed'}) : res.json({changeEmail: 'success'});
+        }).catch(err => next(err));
+}
+
+function changePassword(req, res, next) {
+    sellerService.changePassword(req.params.merchant_id, req.body.userpassword)
+        .then(db_response => {
+            db_response === 'failed' ? res.json({changePassword: 'failed'}) : res.json({changePassword: 'success'});
+        }).catch(err => next(err));
+}
+
+function getEmail(req, res, next) {
+    sellerService.getEmail(req.params.merchant_id)
+        .then(db_response => {
+            db_response === 'failed' ? res.json({email: 'failed'}) : res.json({email: db_response.email});
         }).catch(err => next(err));
 }

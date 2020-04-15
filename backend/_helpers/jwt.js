@@ -23,7 +23,10 @@ function jwt() {
             /^\/seller\/wallet\/delete\/.*/,
             /^\/seller\/wallet\/update\/.*/,
             /^\/seller\/.*\/wallet\/update\/primary/,
-            /^\/seller\/wallet\/unset_primary/
+            /^\/seller\/wallet\/unset_primary/,
+            /^\/seller\/.*\/update\/email/,
+            /^\/seller\/.*\/update\/password/,
+            /^\/seller\/.*\/email/
         ]
     });
 }

@@ -5,7 +5,6 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 // users hardcoded for simplicity, store in a db for production applications
-//const users = [{ id: 1, username: 'test', password: 'test' }];
 
 module.exports = {
     authenticate,
@@ -66,9 +65,9 @@ async function findUser(username) {
   }
 
   //create a new user in database
-function addUser(username, pwHash) {
-    db_conf.db.any('INSERT INTO user_account(username, userpassword, is_active, create_date)' +
-        'VALUES($1, $2, $3, $4)', [username, pwHash, true, new Date()])
+function addUser(username, email, pwHash) {
+    db_conf.db.any('INSERT INTO user_account(username, userpassword, is_active, create_date, email)' +
+        'VALUES($1, $2, $3, $4, $5)', [username, pwHash, true, new Date(), email])
       .then(() => {
         console.log("User successfully added!");
       })
@@ -77,7 +76,7 @@ function addUser(username, pwHash) {
       });
   }
 
-async function registration({username, password}){
+async function registration({username, email, password}){
     console.log('Request of registration accepted!');
 
     if (await findUser(username)) {
@@ -86,7 +85,7 @@ async function registration({username, password}){
       } else {
         bcrypt
           .hash(password, saltRounds).then(hash => {
-            addUser(username, hash);
+            addUser(username, email, hash);
           })
           .catch(err => {console.log(err); return false});
   
