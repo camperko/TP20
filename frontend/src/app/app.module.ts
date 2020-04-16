@@ -52,6 +52,10 @@ import {FlexModule} from '@angular/flex-layout';
 import { DeleteDialogComponent } from './seller-settings/dialogs/delete-dialog/delete-dialog.component';
 import { CreateDialogComponent } from './seller-settings/dialogs/create-dialog/create-dialog.component';
 import { EditDialogComponent } from './seller-settings/dialogs/edit-dialog/edit-dialog.component';
+import { ExchangeRatesChartComponent } from './exchange-rates-chart/exchange-rates-chart.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { TransactionHistoryStatisticsComponent } from './transaction-history-statistics/transaction-history-statistics.component';
+import { TransactionHistoryStatisticsService } from './transaction-history-statistics/transaction-history-statistics.service';
 
 @NgModule({
   declarations: [
@@ -73,7 +77,9 @@ import { EditDialogComponent } from './seller-settings/dialogs/edit-dialog/edit-
     SellerSettingsComponent,
     DeleteDialogComponent,
     CreateDialogComponent,
-    EditDialogComponent
+    EditDialogComponent,
+    ExchangeRatesChartComponent,
+    TransactionHistoryStatisticsComponent
   ],
     imports: [
         MatFormFieldModule,
@@ -100,7 +106,8 @@ import { EditDialogComponent } from './seller-settings/dialogs/edit-dialog/edit-
         MatRadioModule,
         MatTableModule,
         RecaptchaModule,
-        RecaptchaFormsModule
+        RecaptchaFormsModule,
+        NgxChartsModule
     ],
     entryComponents: [
       DeleteDialogComponent,
@@ -119,7 +126,8 @@ import { EditDialogComponent } from './seller-settings/dialogs/edit-dialog/edit-
     ReactiveFormsModule,
     CookieService,
     TransactionHistoryService,
-    TransactionHistorySummaryService
+    TransactionHistorySummaryService,
+    TransactionHistoryStatisticsService
   ],
   bootstrap: [AppComponent]
 })

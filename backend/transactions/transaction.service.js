@@ -11,7 +11,8 @@ module.exports = {
   getTypes,
   getFields,
   getSellerWallet,
-  logTransaction
+  logTransaction,
+  getCountByHour
 };
 
 /*
@@ -110,5 +111,29 @@ async function logTransaction(sender_trans_type_name, receiver_trans_type_name, 
     [sender_trans_type_name, receiver_trans_type_name, sender_price, receiver_price, is_successful, hash, user_account_id_fk, order_id]);
   } catch (error) {
     return 'failed';
+  }
+}
+
+async function getCountByHour(user_account_id_fk) {
+  try {
+    return await db_conf.db.any(`
+    WITH generated_hours AS (
+      SELECT generate_series(
+        date_trunc('hour', now()) - '1 day'::interval,
+        date_trunc('hour', now()),
+        '1 hour'::interval
+      ) AS hour_tmp
+    )
+    SELECT
+    DISTINCT date_part('hour', generated_hours.hour_tmp) AS hour,
+    COUNT(transaction_log.user_account_id_fk)
+    FROM generated_hours
+    LEFT JOIN transaction_log ON date_part('hour', transaction_log.timestamp) = date_part('hour', generated_hours.hour_tmp)
+    AND user_account_id_fk = $1
+    GROUP BY hour
+    ORDER BY hour ASC
+    `, [user_account_id_fk]);
+  } catch (error) {
+    console.log(error);
   }
 }

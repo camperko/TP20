@@ -4,6 +4,7 @@
   getFields - get all fields for selected transaction type
   getSellerWallet - get seller wallet for selected transaction type
   sendTransaction - send transaction to the net
+  getCountByHour - get transaction counts per hour of day
 */
 
 const express = require('express');
@@ -18,6 +19,7 @@ router.get('/types', getTypes);
 router.get('/fields/:type_name', getFields);
 router.get('/seller=:merchant_id/type=:type_name', getSellerWallet);
 router.post('/send/:type_name', sendTransaction);
+router.get('/countByHour/:sellerID', getCountByHour);
 
 
 module.exports = router;
@@ -153,5 +155,17 @@ function getSellerWallet(req, res, next) {
           res.json({wallet: walletRet[0].wallet_address});
         }
       })
+      .catch(err => next(err));
+}
+
+/*
+  getCountByHour - return transaction counts per hour of day
+  url - /getCountByHour/:sellerID
+  params
+    - sellerID - seller identifier
+*/
+function getCountByHour(req, res, next) {
+  transactionService.getCountByHour(req.params.sellerID)
+      .then(fields => res.json(fields))
       .catch(err => next(err));
 }
