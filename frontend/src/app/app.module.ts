@@ -51,6 +51,7 @@ import { CreateDialogComponent } from './seller-settings/dialogs/create-dialog/c
 import { EditDialogComponent } from './seller-settings/dialogs/edit-dialog/edit-dialog.component';
 import { ChangeEmailComponent } from './seller-settings/dialogs/change-email/change-email.component';
 import { ChangePasswordComponent } from './seller-settings/dialogs/change-password/change-password.component';
+import { PopUpDialogComponent } from './dialogs/pop-up-dialog/pop-up-dialog.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { ChangePasswordComponent } from './seller-settings/dialogs/change-passwo
     CreateDialogComponent,
     EditDialogComponent,
     ChangeEmailComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    PopUpDialogComponent
   ],
     imports: [
         MatFormFieldModule,
@@ -108,7 +110,8 @@ import { ChangePasswordComponent } from './seller-settings/dialogs/change-passwo
         EditDialogComponent,
         CreateDialogComponent,
         ChangeEmailComponent,
-        ChangePasswordComponent
+        ChangePasswordComponent,
+        PopUpDialogComponent
     ],
   providers: [
     TransactionSenderService,

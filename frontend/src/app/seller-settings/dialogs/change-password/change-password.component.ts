@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialogRef} from '@angular/material';
+import {SellerSettingsService} from '@app/seller-settings/seller-settings.service';
 
 @Component({
   selector: 'app-change-password',
@@ -7,12 +8,14 @@ import {MatDialogRef} from '@angular/material';
   styleUrls: ['./change-password.component.sass']
 })
 export class ChangePasswordComponent implements OnInit {
+  oldPassword: string;
   newPassword: string;
   newPasswordRep: string;
   matchingPasswords = true;
   passwordLength = true;
+  wrongPassword = false;
 
-  constructor(public dialogRef: MatDialogRef<ChangePasswordComponent>) {
+  constructor(public dialogRef: MatDialogRef<ChangePasswordComponent>, private sellerSettingsService: SellerSettingsService) {
     this.newPasswordRep = '';
     this.newPassword = '';
   }
@@ -33,7 +36,13 @@ export class ChangePasswordComponent implements OnInit {
     } else {
       this.passwordLength = true;
     }
-    this.dialogRef.close(this.newPassword);
+    this.sellerSettingsService.checkPassword(this.oldPassword).subscribe(response => {
+      if (response.checkPassword === 'success') {
+        this.dialogRef.close(this.newPassword);
+      } else {
+        this.wrongPassword = true;
+      }
+    });
   }
 
   onClose(): void {

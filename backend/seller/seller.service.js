@@ -11,7 +11,8 @@ module.exports = {
     unsetPrimary,
     changeEmail,
     changePassword,
-    getEmail
+    getEmail,
+    checkPassword
 };
 
 async function getSellerWallets(merchant_id) {
@@ -113,6 +114,17 @@ async function getEmail(merchant_id) {
         return db_conf.db.one(`SELECT email FROM user_account
             WHERE user_account_id = $1`,
             [merchant_id]);
+    } catch (error) {
+        return 'failed';
+    }
+}
+
+async function checkPassword(merchant_id, userpassword) {
+    try {
+        const stored_password = await db_conf.db.one(`SELECT userpassword FROM user_account WHERE user_account_id = $1`, [merchant_id]);
+        if (stored_password !== undefined) {
+            return await bcrypt.compare(userpassword, stored_password.userpassword);
+        }
     } catch (error) {
         return 'failed';
     }

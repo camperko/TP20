@@ -6,6 +6,7 @@ import {EditDialogComponent} from '@app/seller-settings/dialogs/edit-dialog/edit
 import {CreateDialogComponent} from '@app/seller-settings/dialogs/create-dialog/create-dialog.component';
 import {ChangeEmailComponent} from '@app/seller-settings/dialogs/change-email/change-email.component';
 import {ChangePasswordComponent} from '@app/seller-settings/dialogs/change-password/change-password.component';
+import {PopUpDialogComponent} from '@app/dialogs/pop-up-dialog/pop-up-dialog.component';
 
 @Component({
   selector: 'app-seller-settings',
@@ -187,7 +188,14 @@ export class SellerSettingsComponent implements OnInit {
 
   changePassword(newPassword: string): void {
     this.sellerSettingsService.changePassword(newPassword).subscribe(data => {
-      console.log(data);
+      if (data.changePassword === 'success') {
+        this.dialog.open(PopUpDialogComponent, {
+          width: '350px',
+          data: {
+            message: 'Password successfully changed!'
+          }
+        });
+      }
     });
   }
 }

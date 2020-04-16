@@ -81,6 +81,13 @@ export class SellerSettingsService {
     return this.http.put<any>('http://localhost:8080/seller/' + this.merchantId + '/update/email', JSON.stringify(data), this.httpOptions);
   }
 
+  checkPassword(password: string): Observable<any> {
+    const data = {
+      userpassword: password
+    };
+    return this.http.put<any>('http://localhost:8080/seller/' + this.merchantId + '/password', JSON.stringify(data), this.httpOptions);
+  }
+
   changePassword(password: string): Observable<any> {
     const data = {
       userpassword: password

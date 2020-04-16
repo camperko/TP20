@@ -12,6 +12,7 @@ router.put('/wallet/unset_primary', unsetPrimary);
 router.put('/:merchant_id/update/email', changeEmail);
 router.put('/:merchant_id/update/password', changePassword);
 router.get('/:merchant_id/email', getEmail);
+router.put('/:merchant_id/password', checkPassword);
 
 module.exports = router;
 
@@ -79,5 +80,12 @@ function getEmail(req, res, next) {
     sellerService.getEmail(req.params.merchant_id)
         .then(db_response => {
             db_response === 'failed' ? res.json({email: 'failed'}) : res.json({email: db_response.email});
+        }).catch(err => next(err));
+}
+
+function checkPassword(req, res, next) {
+    sellerService.checkPassword(req.params.merchant_id, req.body.userpassword)
+        .then(db_response => {
+            db_response ? res.json({checkPassword: 'success'}) : res.json({checkPassword: 'failed'});
         }).catch(err => next(err));
 }
