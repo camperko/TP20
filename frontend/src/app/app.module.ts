@@ -10,9 +10,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { CookieService } from 'ngx-cookie-service';
 
-// used to create fake backend
-import { fakeBackendProvider } from './_helpers';
-
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { FooterComponent } from './footer/footer.component';
@@ -52,6 +49,9 @@ import {FlexModule} from '@angular/flex-layout';
 import { DeleteDialogComponent } from './seller-settings/dialogs/delete-dialog/delete-dialog.component';
 import { CreateDialogComponent } from './seller-settings/dialogs/create-dialog/create-dialog.component';
 import { EditDialogComponent } from './seller-settings/dialogs/edit-dialog/edit-dialog.component';
+import { ChangeEmailComponent } from './seller-settings/dialogs/change-email/change-email.component';
+import { ChangePasswordComponent } from './seller-settings/dialogs/change-password/change-password.component';
+import { PopUpDialogComponent } from './dialogs/pop-up-dialog/pop-up-dialog.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +73,10 @@ import { EditDialogComponent } from './seller-settings/dialogs/edit-dialog/edit-
     SellerSettingsComponent,
     DeleteDialogComponent,
     CreateDialogComponent,
-    EditDialogComponent
+    EditDialogComponent,
+    ChangeEmailComponent,
+    ChangePasswordComponent,
+    PopUpDialogComponent
   ],
     imports: [
         MatFormFieldModule,
@@ -103,9 +106,12 @@ import { EditDialogComponent } from './seller-settings/dialogs/edit-dialog/edit-
         RecaptchaFormsModule
     ],
     entryComponents: [
-      DeleteDialogComponent,
-      EditDialogComponent,
-      CreateDialogComponent
+        DeleteDialogComponent,
+        EditDialogComponent,
+        CreateDialogComponent,
+        ChangeEmailComponent,
+        ChangePasswordComponent,
+        PopUpDialogComponent
     ],
   providers: [
     TransactionSenderService,
