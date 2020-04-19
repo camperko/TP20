@@ -10,6 +10,8 @@
 /frontend/.idea/codeStyles/codeStyleConfig.xml
 /frontend/.idea/codeStyles/Project.xml
 /frontend/.idea/inspectionProfiles/Project_Default.xml
+/blockchain-e-shop/.idea
+/blockchain-e-shop/node_modules
 
 # compiled output
 /backend/firstKeyPair.txt
