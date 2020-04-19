@@ -47,6 +47,10 @@ export class TransactionSenderComponent implements OnInit {
   merchantId: string;
   orderId: string;
   priceBackend: number;
+  redirectURLOnSuccess: string;
+  redirectURLOnFailure: string;
+  server: string;
+  protocol: string;
   constructor(
     private transactionSenderService: TransactionSenderService,
     private route: ActivatedRoute,
@@ -61,6 +65,10 @@ export class TransactionSenderComponent implements OnInit {
       this.merchantId = params.get('merchantId');
       this.orderId = params.get('orderId');
       this.priceBackend = parseInt(params.get('price'), 10);
+      this.redirectURLOnFailure = params.get('redirectURL1');
+      this.redirectURLOnSuccess = params.get('redirectURL2');
+      this.server = params.get('server');
+      this.protocol = params.get('protocol');
       this.getTransactionTypes();
     });
     if (this.priceBackend !== undefined && !isNaN(this.priceBackend)) {
@@ -77,9 +85,7 @@ export class TransactionSenderComponent implements OnInit {
       - redirects buyer back to e-shop
   */
   redirectForFailure(){
-    window.open(
-      'http://localhost:8081/blockchain-e-shop_failure.html',
-    );
+      location.href = this.protocol + '://' + this.server + '/' + this.redirectURLOnFailure
   }
 
   /*
@@ -88,9 +94,7 @@ export class TransactionSenderComponent implements OnInit {
       - redirects buyer back to e-shop
   */
   redirectForSuccess(){
-    window.open(
-      'http://localhost:8081/blockchain-e-shop_success.html',
-    );
+      location.href = this.protocol + '://' + this.server + '/' + this.redirectURLOnSuccess
   }
 
   /*
@@ -197,11 +201,19 @@ export class TransactionSenderComponent implements OnInit {
           this.cookieService.set(i +  '.' + data.input_wallets[i - 1][0].field_display, data.input_wallets[i - 1][0].value);
         }
         alert(response.message);
-        this.redirectForSuccess();
+        setTimeout(() => 
+        {
+          this.redirectForSuccess();
+        },
+        3000);
       },
       error => {
         alert(error);
-        this.redirectForFailure();
+        setTimeout(() => 
+        {
+          this.redirectForFailure();
+        },
+        3000);
       }
     );
   }
