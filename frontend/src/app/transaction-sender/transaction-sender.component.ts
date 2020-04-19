@@ -26,6 +26,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TransactionSenderService } from './transaction-sender.service';
 import { ActivatedRoute } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-transaction-sender',
@@ -46,7 +47,10 @@ export class TransactionSenderComponent implements OnInit {
   merchantId: string;
   orderId: string;
   priceBackend: number;
-  constructor(private transactionSenderService: TransactionSenderService, private route: ActivatedRoute) { }
+  constructor(
+    private transactionSenderService: TransactionSenderService,
+    private route: ActivatedRoute,
+    private cookieService: CookieService) { }
 
   /*
     ngOnInit - void function
@@ -114,10 +118,15 @@ export class TransactionSenderComponent implements OnInit {
     this.transactionSenderService.getTransactionTypes().subscribe(
       response => {
         this.transactionTypes = response;
-        this.selectedType = response[0].type_name;
-        this.walletsInputs = [1];
-        // this.getSellerWallet(merchantId);
-        this.changeFields();
+        this.transactionSenderService.getSellerPrimaryWallet(this.merchantId).subscribe(data => {
+          if (data.primary !== 'failed' && data.primary.length !== 0) {
+            this.selectedType = data.primary[0].type_name;
+          } else {
+            this.selectedType = response[0].type_name;
+          }
+          this.walletsInputs = [1];
+          this.changeFields();
+        });
       },
       error => this.error = error
     );
@@ -128,16 +137,15 @@ export class TransactionSenderComponent implements OnInit {
       - fill this.sellerWallet which represents seller wallet address in selected transaction type based on this.selectedType
   */
   getSellerWallet() {
-    this.transactionSenderService.getSellerWallet(this.selectedType, this.merchantId).subscribe(
-      data => {
-        if (data.wallet !== 'failed') {
-          this.sellerWallet = data.wallet;
-        } else {
-          alert('Non existing merchant!');
-          this.sellerWallet = '';
-        }
-      },
-      error => this.error = error
+    this.transactionSenderService.getSellerWallet(this.selectedType, this.merchantId).subscribe(data => {
+      if (data.wallet !== 'failed') {
+        this.sellerWallet = data.wallet;
+      } else {
+        alert('Non existing merchant or wallet in currency not exists!');
+        this.sellerWallet = '';
+      }
+    },
+    error => this.error = error
     );
   }
 
@@ -157,16 +165,25 @@ export class TransactionSenderComponent implements OnInit {
       price: this.price,
       fees: this.fees,
       fee_wallet: this.feeWallet,
-      wallets_inputs: this.walletsInputs
+      wallets_inputs: this.walletsInputs,
+      merchantId: this.merchantId,
+      orderId: this.orderId
     };
     this.transactionSenderService.sendForm(this.selectedType, data).subscribe(
       response => {
+        for (let i = 1; i < data.input_wallets.length + 1; i++) {
+          this.cookieService.set(i +  '.' + data.input_wallets[i - 1][0].field_display, data.input_wallets[i - 1][0].value);
+        }
         alert(response.message);
       },
       error => {
         alert(error);
       }
     );
+  }
+
+  getSellerPrimaryWallet() {
+    return this.transactionSenderService.getSellerPrimaryWallet(this.merchantId);
   }
 
   /*
@@ -231,7 +248,7 @@ export class TransactionSenderComponent implements OnInit {
       alert('Fill inputs on rows: ' + inputs + '!');
       return false;
     }
-    if (priceSum !== (this.priceBackend + this.fees)) {
+    if (priceSum !== (this.priceBackend)) {
       alert('Input ' + priceSum + ' is not equal to price of order ' + this.priceBackend + ' with fees ' + this.fees + '!' + '\n'
         + 'Missing value is ' + (this.priceBackend + this.fees - priceSum));
       return false;

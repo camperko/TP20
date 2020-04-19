@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>Wallet edit</h1>
+<div mat-dialog-content fxLayout="column">
+    <div fxLayout="row" fxFlex="100" fxFlexAlign="space-around center">
+        <div fxFlex="2.5"></div>
+        <mat-form-field fxFlex="25">
+            <mat-label>Currency</mat-label>
+            <mat-select [(ngModel)]="currentWallet.type_name" (selectionChange) = "checkExistingWallets()">
+                <mat-option *ngFor="let currency of data.currencies" [value]="currency.type_name">
+                    {{currency.type_display + '(' + currency.type_name + ')'}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div fxFlex="5"></div>
+        <mat-form-field fxFlex="50">
+            <mat-label>Wallet address</mat-label>
+            <input matInput [(ngModel)]="currentWallet.wallet_address">
+        </mat-form-field>
+        <div fxFlex="5"></div>
+        <mat-checkbox fxFlex="10" class="primary-checkbox" [(ngModel)]="currentWallet.is_primary">Primary</mat-checkbox>
+        <div fxFlex="2.5"></div>
+    </div>
+    <div class="alert alert-danger" role="alert" *ngIf="alreadyExists">
+        Wallet of selected type already exists!
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onClose()">Cancel</button>
+    <button mat-button [mat-dialog-close]="currentWallet" cdkFocusInitial [disabled]="alreadyExists">Save</button>
+</div>

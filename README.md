@@ -45,3 +45,7 @@ For test database `psql -d blockchain_test -U postgres -f blockchaintestexport.s
 
 Run `pg_dump --encoding utf8 -U postgres -d blockchain -f blockchainexport.sql` from backend folder.  
 For test database `run pg_dump --encoding utf8 -U postgres -d blockchain_test -f blockchaintestexport.sql` from backend folder.
+
+## Run e-shop
+
+`cd blockchain-e-shop` => `npm install http-server -g` => `http-server -p 8081`

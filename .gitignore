@@ -1,12 +1,25 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
+/backend/logs/access.log
+/backend/logs/exceptions.log
+/frontend/.idea/.gitignore
+/frontend/.idea/frontend.iml
+/frontend/.idea/misc.xml
+/frontend/.idea/modules.xml
+/frontend/.idea/vcs.xml
+/frontend/.idea/watcherTasks.xml
+/frontend/.idea/codeStyles/codeStyleConfig.xml
+/frontend/.idea/codeStyles/Project.xml
+/frontend/.idea/inspectionProfiles/Project_Default.xml
 
 # compiled output
 /backend/firstKeyPair.txt
 /frontend/dist
 /frontend/tmp
 /frontend/out-tsc
+/frontend/tslint.json
 # Only exists if Bazel was run
 /frontend/bazel-out
+
 
 # dependencies
 /frontend/node_modules

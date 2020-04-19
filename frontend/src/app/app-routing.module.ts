@@ -7,9 +7,11 @@ import { HomeComponent } from './home';
 import { HomeSellerComponent } from './home-seller';
 import { LoginComponent } from './login';
 import { AuthGuard } from './_helpers';
+import {SellerSettingsComponent} from '@app/seller-settings/seller-settings.component';
 
 const routes: Routes = [
   { path: 'user/home', component: HomeSellerComponent, canActivate: [AuthGuard] },
+  { path: 'user/settings', component: SellerSettingsComponent},
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationFormComponent },
   { path: 'transaction', component: MainContextComponent },

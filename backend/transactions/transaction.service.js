@@ -3,13 +3,16 @@
   getTypes - get all transaction types
   getFields - get all fields of selected transaction type
   getSellerWallet - get seller wallet by seller name and transaction type
+  logTransaction - insert transaction details into database
 */
 var db_conf = require("../database_conf");
 
 module.exports = {
   getTypes,
   getFields,
-  getSellerWallet
+  getSellerWallet,
+  logTransaction,
+  getPrimaryWalletType
 };
 
 /*
@@ -19,7 +22,7 @@ module.exports = {
 */
 async function getTypes() {
   try {
-    return await db_conf.db.any("SELECT type_name, type_display FROM transaction_type;");
+    return await db_conf.db.any("SELECT trans_type_id, type_name, type_display FROM transaction_type;");
   } catch (error) {
     console.log(error);
   }
@@ -44,7 +47,6 @@ async function getFields(transactionTypeName) {
 }
 
 /*
-  TODO: implement user selection
   getSellerWallet - get seller wallet address for selected transaction type name and selected user from database
   params
     - transactionTypeName - transaction type name for selected transaction type
@@ -59,6 +61,65 @@ async function getSellerWallet(transactionTypeName, merchant_id) {
       WHERE ua.user_account_id = $1
       AND tt.type_name = $2`,
       [merchant_id, transactionTypeName]);
+  } catch (error) {
+    return 'failed';
+  }
+}
+
+async function getPrimaryWalletType(merchant_id) {
+  try {
+    return db_conf.db.any(`SELECT tt.type_name FROM transaction_type tt
+      JOIN user_transaction ut ON ut.trans_type_fk = tt.trans_type_id
+      WHERE ut.user_account_fk = $1 
+      AND ut.is_primary = true`,
+        [merchant_id]);
+  } catch (error) {
+    return 'failed';
+  }
+}
+
+/*
+  logTransaction - insert transaction details into database
+  params
+    - transactionTypeName - transaction type name for selected transaction type
+    - sender_trans_type_name - the name of currency that customer used for payment
+    - receiver_trans_type_name - the name of currency that seller received
+    - sender_price - the amount of currency that customer paid
+    - receiver_price - the amount of currency that seller received
+    - is_successful - transaction status; true = successful, false = unsuccessful
+    - hash - transaction hash
+    - user_account_id_fk - seller ID
+    - order_id - seller order number
+  INTO - transaction_log
+  return any
+*/
+async function logTransaction(sender_trans_type_name, receiver_trans_type_name, sender_price, receiver_price, is_successful, hash, user_account_id_fk, order_id) {
+  try {
+    return db_conf.db.any(`INSERT INTO transaction_log
+    (
+      sender_trans_type_fk, 
+      receiver_trans_type_fk,
+      sender_price,
+      receiver_price,
+      is_successful,
+      hash,
+      user_account_id_fk,
+      timestamp,
+      order_id
+    )
+    VALUES
+    (
+      (SELECT trans_type_id FROM transaction_type WHERE type_name = $1), 
+      (SELECT trans_type_id FROM transaction_type WHERE type_name = $2), 
+      $3, 
+      $4, 
+      $5, 
+      $6, 
+      $7, 
+      now()::timestamp,
+      $8
+    )`,
+    [sender_trans_type_name, receiver_trans_type_name, sender_price, receiver_price, is_successful, hash, user_account_id_fk, order_id]);
   } catch (error) {
     return 'failed';
   }

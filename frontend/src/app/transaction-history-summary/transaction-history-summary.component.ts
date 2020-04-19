@@ -3,6 +3,7 @@ import { TransactionHistorySummaryService } from './transaction-history-summary.
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatRadioChange } from '@angular/material';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-transaction-history-summary',
@@ -18,13 +19,16 @@ export class TransactionHistorySummaryComponent implements OnInit {
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private transactionHistorySummaryService: TransactionHistorySummaryService) { }
+  constructor(
+    private transactionHistorySummaryService: TransactionHistorySummaryService,
+    private cookieService: CookieService) { }
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource<TransactionSummaryRow>(DUMMY);
     this.dataSource.sort = this.sort;
     this.selected = 'successful';
-    let data = {sellerID: 1, option: 'successful'};
+    let data = {
+      sellerID: this.cookieService.get('id'),
+      option: 'successful'};
     this.transactionHistorySummaryService.getTransactionsSummary(data).subscribe(
       response => {
         this.dataSource = new MatTableDataSource<TransactionSummaryRow>(response.data);
@@ -35,7 +39,9 @@ export class TransactionHistorySummaryComponent implements OnInit {
   }
 
   radioChange(event: MatRadioChange) {
-    let data = {sellerID: 1, option: event.value};
+    let data = {
+      sellerID: this.cookieService.get('id'),
+      option: event.value};
     this.transactionHistorySummaryService.getTransactionsSummary(data).subscribe(
       response => {
         this.dataSource = new MatTableDataSource<TransactionSummaryRow>(response.data);
@@ -51,8 +57,3 @@ export interface TransactionSummaryRow {
   currency: string;
   transaction_count: number;
 }
-
-const DUMMY: TransactionSummaryRow[] = [
- {total_price: 0.123456, currency: 'BTC', transaction_count: 1},
- {total_price: 10.123456, currency: 'LTC', transaction_count: 2}
-]

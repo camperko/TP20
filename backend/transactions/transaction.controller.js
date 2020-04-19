@@ -18,6 +18,7 @@ router.get('/types', getTypes);
 router.get('/fields/:type_name', getFields);
 router.get('/seller=:merchant_id/type=:type_name', getSellerWallet);
 router.post('/send/:type_name', sendTransaction);
+router.get('/primary/:merchant_id', getPrimaryWalletType);
 
 
 module.exports = router;
@@ -56,6 +57,8 @@ function getFields(req, res, next) {
     - fee_wallet
     - input_wallets
     - wallets_inputs
+    - merchantId
+    - orderId
 */
 function sendTransaction(req, res, next) {
   const sellerWallet = req.body.output_wallet;
@@ -65,6 +68,8 @@ function sendTransaction(req, res, next) {
   const inputWallets = req.body.input_wallets;
   const walletsInputs = req.body.wallets_inputs;
   const network = req.params.type_name;
+  const merchantId = req.body.merchantId;
+  const orderId = req.body.orderId;
 
   /*
     construct data for cryptoapis newTransactions
@@ -114,19 +119,22 @@ function sendTransaction(req, res, next) {
   }
 
   /*
-    send data to net based on transaction type
+    send data to net based on transaction type and log transaction details into database
   */
   cryptoapis.switchNetwork(client);
   (async () => {
     try{
       var data = await cryptoapis.newTransaction(client.transaction, inputs, output, fee, wifs);
       if(data === undefined || data === null || data.payload === null || data.payload === undefined) {
-        res.status(400).json({message: 'Sending payment to blockchain failed. Make sure, u have enough resources in wallets. Message: ' + data.meta.error.message});
+        res.status(400).json({message: 'Sending payment to blockchain failed. ' + data.meta.error.message});
+        transactionService.logTransaction(network, network, parseFloat(price) + parseFloat(fees), price, false, null, merchantId, orderId);
       } else {
         res.status(200).json({message: 'Sending payment to blockchain successful. TxID: ' + data.payload.txid});
+        transactionService.logTransaction(network, network, parseFloat(price) + parseFloat(fees), price, true, data.payload.txid, merchantId, orderId);
       }
     } catch (error) {
-      res.status(400).json({message: 'Sending payment to blockchain failed. Make sure, u have enough resources in wallets. Message: ' + error});
+      res.status(400).json({message: 'Sending payment to blockchain failed. ' + error.meta.error.message});
+      transactionService.logTransaction(network, network, parseFloat(price) + parseFloat(fees), price, false, null, merchantId, orderId);
     }
   }) ();
 }
@@ -146,5 +154,11 @@ function getSellerWallet(req, res, next) {
           res.json({wallet: walletRet[0].wallet_address});
         }
       })
+      .catch(err => next(err));
+}
+
+function getPrimaryWalletType(req, res, next) {
+  transactionService.getPrimaryWalletType(req.params.merchant_id)
+      .then(db_response => res.json({primary: db_response}))
       .catch(err => next(err));
 }

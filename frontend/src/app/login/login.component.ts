@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import { CookieService } from 'ngx-cookie-service';
 
 import { AuthenticationService } from '@app/_services';
 
@@ -28,7 +29,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: AuthenticationService) {
+    private authenticationService: AuthenticationService,
+    private cookieService: CookieService) {
     
 
    }
@@ -58,6 +60,7 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
+                    this.cookieService.set('id', data.id);
                     this.router.navigate([this.returnUrl]);
                 },
                 error => {

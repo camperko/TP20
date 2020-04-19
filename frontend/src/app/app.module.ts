@@ -8,8 +8,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
-// used to create fake backend
-import { fakeBackendProvider } from './_helpers';
+import { CookieService } from 'ngx-cookie-service';
 
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
@@ -32,12 +31,27 @@ import { TransactionHistoryComponent } from './transaction-history/transaction-h
 import { MatPaginatorModule } from '@angular/material';
 import { TransactionHistoryService } from './transaction-history/transaction-history.service';
 import { MatSortModule } from '@angular/material/sort';
-import { MatInputModule } from '@angular/material';
-import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule, MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { TransactionHistorySummaryComponent } from './transaction-history-summary/transaction-history-summary.component';
 import { TransactionHistorySummaryService } from './transaction-history-summary/transaction-history-summary.service';
-import { MatTableModule } from '@angular/material';
+import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
+import {
+    MatButtonModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatIconModule, MatInputModule,
+    MatListModule, MatSelectModule,
+    MatTableModule,
+    MatTooltipModule
+} from '@angular/material';
+import { SellerSettingsComponent } from './seller-settings/seller-settings.component';
+import {FlexModule} from '@angular/flex-layout';
+import { DeleteDialogComponent } from './seller-settings/dialogs/delete-dialog/delete-dialog.component';
+import { CreateDialogComponent } from './seller-settings/dialogs/create-dialog/create-dialog.component';
+import { EditDialogComponent } from './seller-settings/dialogs/edit-dialog/edit-dialog.component';
+import { ChangeEmailComponent } from './seller-settings/dialogs/change-email/change-email.component';
+import { ChangePasswordComponent } from './seller-settings/dialogs/change-password/change-password.component';
+import { PopUpDialogComponent } from './dialogs/pop-up-dialog/pop-up-dialog.component';
 
 @NgModule({
   declarations: [
@@ -54,25 +68,42 @@ import { MatTableModule } from '@angular/material';
     NavigationSellerComponent,
     NavigationTransparentComponent,
     TransactionHistoryComponent,
-    TransactionHistorySummaryComponent
   ],
-  imports: [
-    MatFormFieldModule,
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    MDBBootstrapModule.forRoot(),
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    AngularFontAwesomeModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatInputModule,
-    MatSelectModule,
-    MatRadioModule,
-    MatTableModule
-  ],
+    imports: [
+        MatFormFieldModule,
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule,
+        MDBBootstrapModule.forRoot(),
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        AngularFontAwesomeModule,
+        MatTableModule,
+        MatButtonModule,
+        MatIconModule,
+        MatTooltipModule,
+        MatListModule,
+        FlexModule,
+        MatCheckboxModule,
+        MatDialogModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatInputModule,
+        MatSelectModule,
+        MatRadioModule,
+        MatTableModule,
+        RecaptchaModule,
+        RecaptchaFormsModule
+    ],
+    entryComponents: [
+        DeleteDialogComponent,
+        EditDialogComponent,
+        CreateDialogComponent,
+        ChangeEmailComponent,
+        ChangePasswordComponent,
+        PopUpDialogComponent
+    ],
   providers: [
     TransactionSenderService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
@@ -80,9 +111,10 @@ import { MatTableModule } from '@angular/material';
     { provide: MAT_RADIO_DEFAULT_OPTIONS, useValue: { color: 'accent' }},
 
     // provider used to create fake backend
-    //fakeBackendProvider
+    // fakeBackendProvider
     RegistrationFormService,
     ReactiveFormsModule,
+    CookieService,
     TransactionHistoryService,
     TransactionHistorySummaryService
   ],
