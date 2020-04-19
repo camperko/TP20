@@ -12,7 +12,8 @@ module.exports = {
   getFields,
   getSellerWallet,
   logTransaction,
-  getCountByHour
+  getCountByHour,
+  getPrimaryWalletType
 };
 
 /*
@@ -47,7 +48,6 @@ async function getFields(transactionTypeName) {
 }
 
 /*
-  TODO: implement user selection
   getSellerWallet - get seller wallet address for selected transaction type name and selected user from database
   params
     - transactionTypeName - transaction type name for selected transaction type
@@ -62,6 +62,18 @@ async function getSellerWallet(transactionTypeName, merchant_id) {
       WHERE ua.user_account_id = $1
       AND tt.type_name = $2`,
       [merchant_id, transactionTypeName]);
+  } catch (error) {
+    return 'failed';
+  }
+}
+
+async function getPrimaryWalletType(merchant_id) {
+  try {
+    return db_conf.db.any(`SELECT tt.type_name FROM transaction_type tt
+      JOIN user_transaction ut ON ut.trans_type_fk = tt.trans_type_id
+      WHERE ut.user_account_fk = $1 
+      AND ut.is_primary = true`,
+        [merchant_id]);
   } catch (error) {
     return 'failed';
   }

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {SellerSettingsService} from '@app/seller-settings/seller-settings.service';
-import {TransactionSenderService} from '@app/transaction-sender/transaction-sender.service';
 import {MatDialog} from '@angular/material';
 import {DeleteDialogComponent} from '@app/seller-settings/dialogs/delete-dialog/delete-dialog.component';
 import {EditDialogComponent} from '@app/seller-settings/dialogs/edit-dialog/edit-dialog.component';
 import {CreateDialogComponent} from '@app/seller-settings/dialogs/create-dialog/create-dialog.component';
+import {ChangeEmailComponent} from '@app/seller-settings/dialogs/change-email/change-email.component';
+import {ChangePasswordComponent} from '@app/seller-settings/dialogs/change-password/change-password.component';
+import {PopUpDialogComponent} from '@app/dialogs/pop-up-dialog/pop-up-dialog.component';
 
 @Component({
   selector: 'app-seller-settings',
@@ -14,10 +16,7 @@ import {CreateDialogComponent} from '@app/seller-settings/dialogs/create-dialog/
 export class SellerSettingsComponent implements OnInit {
   sellerWallets: any[];
 
-  constructor(
-      private sellerSettingsService: SellerSettingsService, private transactionSenderService: TransactionSenderService,
-      public dialog: MatDialog
-  ) {
+  constructor(private sellerSettingsService: SellerSettingsService, public dialog: MatDialog) {
     this.sellerWallets = [];
     this.sellerSettingsService.getSellerWallets().subscribe(data => {
       if (data.wallets !== 'failed') {
@@ -60,7 +59,8 @@ export class SellerSettingsComponent implements OnInit {
       width: '1000px',
       data: {
         currencies: this.sellerSettingsService.transactionTypes,
-        wallet: currentWallet
+        wallet: currentWallet,
+        wallets: this.sellerWallets
       }
     });
 
@@ -91,7 +91,8 @@ export class SellerSettingsComponent implements OnInit {
     const createDialogRef = this.dialog.open(CreateDialogComponent, {
       width: '1000px',
       data: {
-        currencies: this.sellerSettingsService.transactionTypes
+        currencies: this.sellerSettingsService.transactionTypes,
+        wallets: this.sellerWallets
       }
     });
 
@@ -151,11 +152,50 @@ export class SellerSettingsComponent implements OnInit {
     });
   }
 
-  changeEmail(): void {
-    // TODO: change email dialog
+  openEmailDialog(): void {
+    const changeEmailDialogRef = this.dialog.open(ChangeEmailComponent, {
+      width: '800px',
+      data: {
+        email: this.sellerSettingsService.merchantEmail
+      }
+    });
+
+    changeEmailDialogRef.afterClosed().subscribe(newEmail => {
+      if (newEmail !== undefined) {
+        this.changeEmail(newEmail);
+        this.sellerSettingsService.merchantEmail = newEmail;
+      }
+    });
   }
 
-  changePassword(): void {
-    // TODO: change password dialog
+  changeEmail(newEmail: string): void {
+    this.sellerSettingsService.changeEmail(newEmail).subscribe(data => {
+      console.log(data);
+    });
+  }
+
+  openPasswordDialog(): void {
+    const changePasswordDialogRef = this.dialog.open(ChangePasswordComponent, {
+      width: '700px'
+    });
+
+    changePasswordDialogRef.afterClosed().subscribe(newPassword => {
+      if (newPassword !== undefined) {
+        this.changePassword(newPassword);
+      }
+    });
+  }
+
+  changePassword(newPassword: string): void {
+    this.sellerSettingsService.changePassword(newPassword).subscribe(data => {
+      if (data.changePassword === 'success') {
+        this.dialog.open(PopUpDialogComponent, {
+          width: '350px',
+          data: {
+            message: 'Password successfully changed!'
+          }
+        });
+      }
+    });
   }
 }

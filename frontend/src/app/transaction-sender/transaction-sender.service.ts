@@ -77,4 +77,8 @@ export class TransactionSenderService {
   sendForm(typeName, data): Observable<any> {
     return this.http.post<any>('http://localhost:8080/transaction/send/' + typeName, JSON.stringify(data), this.httpOptions);
   }
+
+  getSellerPrimaryWallet(merchantId: string): Observable<any> {
+    return this.http.get<any>('http://localhost:8080/transaction/primary/' + merchantId);
+  }
 }

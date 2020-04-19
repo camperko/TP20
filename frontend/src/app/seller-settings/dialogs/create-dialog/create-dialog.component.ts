@@ -7,8 +7,9 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
   styleUrls: ['./create-dialog.component.sass']
 })
 export class CreateDialogComponent implements OnInit {
+  alreadyExists = false;
   currentWallet: any;
-
+  sellerWallets: any[];
   constructor(
       public dialogRef: MatDialogRef<CreateDialogComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -17,9 +18,18 @@ export class CreateDialogComponent implements OnInit {
       wallet_address: '',
       is_primary: false
     };
+    this.sellerWallets = data.wallets;
   }
 
   ngOnInit() {
+  }
+
+  checkExistingWallets() {
+    if (this.sellerWallets.find(wallet => wallet.type_name === this.currentWallet.type_name) !== undefined) {
+      this.alreadyExists = true;
+    } else {
+      this.alreadyExists = false;
+    }
   }
 
   onClose(): void {

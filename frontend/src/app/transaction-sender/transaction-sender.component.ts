@@ -118,10 +118,15 @@ export class TransactionSenderComponent implements OnInit {
     this.transactionSenderService.getTransactionTypes().subscribe(
       response => {
         this.transactionTypes = response;
-        this.selectedType = response[0].type_name;
-        this.walletsInputs = [1];
-        // this.getSellerWallet(merchantId);
-        this.changeFields();
+        this.transactionSenderService.getSellerPrimaryWallet(this.merchantId).subscribe(data => {
+          if (data.primary !== 'failed' && data.primary.length !== 0) {
+            this.selectedType = data.primary[0].type_name;
+          } else {
+            this.selectedType = response[0].type_name;
+          }
+          this.walletsInputs = [1];
+          this.changeFields();
+        });
       },
       error => this.error = error
     );
@@ -136,7 +141,7 @@ export class TransactionSenderComponent implements OnInit {
       if (data.wallet !== 'failed') {
         this.sellerWallet = data.wallet;
       } else {
-        alert('Non existing merchant!');
+        alert('Non existing merchant or wallet in currency not exists!');
         this.sellerWallet = '';
       }
     },
@@ -166,7 +171,7 @@ export class TransactionSenderComponent implements OnInit {
     };
     this.transactionSenderService.sendForm(this.selectedType, data).subscribe(
       response => {
-        for (var i = 1; i < data.input_wallets.length + 1; i++){
+        for (let i = 1; i < data.input_wallets.length + 1; i++) {
           this.cookieService.set(i +  '.' + data.input_wallets[i - 1][0].field_display, data.input_wallets[i - 1][0].value);
         }
         alert(response.message);
@@ -175,6 +180,10 @@ export class TransactionSenderComponent implements OnInit {
         alert(error);
       }
     );
+  }
+
+  getSellerPrimaryWallet() {
+    return this.transactionSenderService.getSellerPrimaryWallet(this.merchantId);
   }
 
   /*

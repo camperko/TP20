@@ -17,12 +17,16 @@ function jwt() {
             /^\/transaction\/send\/.*/,
             '/api/token_validate',
             /^\/transaction\/send\/.*/,
+            /^\/transaction\/primary\/.*/,
             /^\/seller\/.*\/wallets/,
             /^\/seller\/.*\/wallet\/create/,
             /^\/seller\/wallet\/delete\/.*/,
             /^\/seller\/wallet\/update\/.*/,
             /^\/seller\/.*\/wallet\/update\/primary/,
-            /^\/seller\/wallet\/unset_primary/
+            /^\/seller\/wallet\/unset_primary/,
+            /^\/seller\/.*\/update\/email/,
+            /^\/seller\/.*\/update\/password/,
+            /^\/seller\/.*\/email/
         ]
     });
 }

@@ -187,6 +187,7 @@ CREATE TABLE public.user_account (
     username character varying,
     userpassword character varying,
     is_active boolean,
+    email character varying,
     create_date timestamp without time zone
 );
 
@@ -374,9 +375,9 @@ COPY public.transaction_type_field (trans_type_field_id, trans_type_fk, field_na
 -- Data for Name: user_account; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.user_account (user_account_id, account_type_fk, username, userpassword, is_active, create_date) FROM stdin;
-1	\N	test	$2b$10$bd0T9loE0u7dGTzKDk310evmYoSPhx0RKWwW522OgLq5/K.1w5KlG	t	2020-04-01 21:03:54.396
-3	\N	veron	$2b$10$BdqSNyt2AMSDohSf.bM9d.0oZsQl5uflvomUOhx7pFjZX46CgM4rK	t	2020-04-04 16:29:24.961
+COPY public.user_account (user_account_id, account_type_fk, username, userpassword, is_active, email, create_date) FROM stdin;
+1	2	test	$2b$10$bd0T9loE0u7dGTzKDk310evmYoSPhx0RKWwW522OgLq5/K.1w5KlG	t	newTest@mail.com	2020-04-01 21:03:54.396
+3	2	veron	$2b$10$BdqSNyt2AMSDohSf.bM9d.0oZsQl5uflvomUOhx7pFjZX46CgM4rK	t	veron@mail.com	2020-04-04 16:29:24.961
 \.
 
 

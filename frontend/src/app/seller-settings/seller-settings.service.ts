@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {TransactionSenderService} from '@app/transaction-sender/transaction-sender.service';
+import {CookieService} from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,16 +13,23 @@ export class SellerSettingsService {
       'Content-Type': 'application/json'
     })
   };
-  merchantId: number;
-
+  merchantId: string;
+  merchantEmail: string;
   transactionTypes = [];
 
-  constructor(private http: HttpClient, private transactionSenderService: TransactionSenderService) {
+  constructor(private http: HttpClient, private transactionSenderService: TransactionSenderService,
+              private cookieService: CookieService) {
+    this.merchantId = this.cookieService.get('id');
+    this.getEmail().subscribe(data => {
+      if (data.email === 'failed') {
+        this.merchantEmail = '';
+      } else {
+        this.merchantEmail = data.email;
+      }
+    });
     this.transactionSenderService.getTransactionTypes().subscribe(data => {
       this.transactionTypes = data;
     });
-    // TODO: by cookies
-    this.merchantId = 1;
   }
 
   getSellerWallets(): Observable<any> {
@@ -58,7 +66,32 @@ export class SellerSettingsService {
   unsetPrimaryWallet(walletId: number): Observable<any> {
     const data = {
       wallet_id: walletId
-    }
+    };
     return this.http.put<any>('http://localhost:8080/seller/wallet/unset_primary', JSON.stringify(data), this.httpOptions);
+  }
+
+  getEmail(): Observable<any> {
+    return this.http.get<any>('http://localhost:8080/seller/' + this.merchantId + '/email');
+  }
+  
+  changeEmail(email: string): Observable<any> {
+    const data = {
+      email
+    };
+    return this.http.put<any>('http://localhost:8080/seller/' + this.merchantId + '/update/email', JSON.stringify(data), this.httpOptions);
+  }
+
+  checkPassword(password: string): Observable<any> {
+    const data = {
+      userpassword: password
+    };
+    return this.http.put<any>('http://localhost:8080/seller/' + this.merchantId + '/password', JSON.stringify(data), this.httpOptions);
+  }
+
+  changePassword(password: string): Observable<any> {
+    const data = {
+      userpassword: password
+    };
+    return this.http.put<any>('http://localhost:8080/seller/' + this.merchantId + '/update/password', JSON.stringify(data), this.httpOptions);
   }
 }

@@ -10,9 +10,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { CookieService } from 'ngx-cookie-service';
 
-// used to create fake backend
-import { fakeBackendProvider } from './_helpers';
-
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { FooterComponent } from './footer/footer.component';
@@ -56,6 +53,9 @@ import { ExchangeRatesChartComponent } from './exchange-rates-chart/exchange-rat
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { TransactionHistoryStatisticsComponent } from './transaction-history-statistics/transaction-history-statistics.component';
 import { TransactionHistoryStatisticsService } from './transaction-history-statistics/transaction-history-statistics.service';
+import { ChangeEmailComponent } from './seller-settings/dialogs/change-email/change-email.component';
+import { ChangePasswordComponent } from './seller-settings/dialogs/change-password/change-password.component';
+import { PopUpDialogComponent } from './dialogs/pop-up-dialog/pop-up-dialog.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +79,10 @@ import { TransactionHistoryStatisticsService } from './transaction-history-stati
     CreateDialogComponent,
     EditDialogComponent,
     ExchangeRatesChartComponent,
-    TransactionHistoryStatisticsComponent
+    TransactionHistoryStatisticsComponent,
+    ChangeEmailComponent,
+    ChangePasswordComponent,
+    PopUpDialogComponent
   ],
     imports: [
         MatFormFieldModule,
@@ -110,9 +113,12 @@ import { TransactionHistoryStatisticsService } from './transaction-history-stati
         NgxChartsModule
     ],
     entryComponents: [
-      DeleteDialogComponent,
-      EditDialogComponent,
-      CreateDialogComponent
+        DeleteDialogComponent,
+        EditDialogComponent,
+        CreateDialogComponent,
+        ChangeEmailComponent,
+        ChangePasswordComponent,
+        PopUpDialogComponent
     ],
   providers: [
     TransactionSenderService,
