@@ -21,6 +21,7 @@
                 <!--Card content-->
                 <div class="card-header text-center">
                     Transaction history
+                    <mdb-icon far icon="question-circle" matTooltip="complete list of transactions detail" style="float:right"></mdb-icon>
                 </div>
                 <div class="card-body">
                     <app-transaction-history></app-transaction-history>
@@ -35,7 +36,8 @@
             <div class="card mb-4">
                 <!--Card content-->
                 <div class="card-header text-center">
-                    Exchange rates
+                    Exchange rates table
+                    <mdb-icon far icon="question-circle" matTooltip="real-time exchange rates table" style="float:right"></mdb-icon>
                 </div>
                 <div class="card-body">
                     <app-exchange-rates-table></app-exchange-rates-table>
@@ -51,6 +53,7 @@
                 <!--Card content-->
                 <div class="card-header text-center">
                     Transaction history summary
+                    <mdb-icon far icon="question-circle" matTooltip="total price and transaction count for successful and unsuccesful transactions" style="float:right"></mdb-icon>
                 </div>
                 <div class="card-body">
                     <app-transaction-history-summary></app-transaction-history-summary>
@@ -64,76 +67,32 @@
     <!--Grid row-->
     <div class="row wow fadeIn">
         <!--Grid column-->
-        <div class="col-md-4 mb-4">
+        <div class="col-md-6 mb-4">
             <!--Card-->
             <div class="card mb-4">
-                <!-- Card header -->
-                <div class="card-header">BTC stock price <i class="fas fa-angle-down ml-1"></i></div>
                 <!--Card content-->
-                <div class="card-body">
-                    <img src="../../assets/images/stockBTC.PNG" width=100%>
+                <div class="card-header text-center">
+                    Exchange rates chart
+                    <mdb-icon far icon="question-circle" matTooltip="real-time exchange rate chart for selected currency" style="float:right"></mdb-icon>
                 </div>
-            </div>
-            <!--/.Card-->
-            <!--Card-->
-            <div class="card mb-4">
-                <!-- Card header -->
-                <div class="card-header">ETH stock price <i class="fas fa-angle-down ml-1"></i></div>
-                <!--Card content-->
-                <div class="card-body">
-                    <img src="../../assets/images/stockETH.PNG" width=100%>
+                <div class="card-body" style="display: grid">
+                    <app-exchange-rates-chart style="max-height: 300px"></app-exchange-rates-chart>
                 </div>
             </div>
             <!--/.Card-->
         </div>
         <!--Grid column-->
         <!--Grid column-->
-        <div class="col-md-3 mb-4">
+        <div class="col-md-6 mb-4">
             <!--Card-->
             <div class="card mb-4">
-                <!-- Card header -->
-                <div class="card-header text-center">
-                    My PayGate 1
-                </div>
                 <!--Card content-->
-                <div class="card-body">
-                    <!-- List group links -->
-                    <div class="list-group list-group-flush">
-                        <a class="list-group-item list-group-item-action waves-effect">Amount
-                            <span class="badge badge-info pull-right ml-1">1.78 BTC</span>
-                        </a>
-                        <a class="list-group-item list-group-item-action waves-effect">Orders
-                            <span class="badge badge-info pull-right ml-1">14</span>
-                        </a>
-                        <a class="list-group-item list-group-item-action waves-effect">Accessed
-                            <span class="badge badge-info pull-right ml-1">21x</span>
-                        </a>
-                    </div>
-                    <!-- List group links -->
-                </div>
-            </div>
-            <!--/.Card-->
-
-            <div class="card mb-4">
-                <!-- Card header -->
                 <div class="card-header text-center">
-                    My PayGate 2
+                    Transaction history statistics
+                    <mdb-icon far icon="question-circle" matTooltip="number of transactions per hour of day" style="float:right"></mdb-icon>
                 </div>
-                <!--Card content-->
                 <div class="card-body">
-                    <!-- List group links -->
-                    <div class="list-group list-group-flush">
-                        <a class="list-group-item list-group-item-action waves-effect">Amount
-                            <span class="badge badge-info pull-right ml-1">2 020 EUR</span>
-                        </a>
-                        <a class="list-group-item list-group-item-action waves-effect">Orders
-                            <span class="badge badge-info pull-right ml-1">101</span>
-                        </a>
-                        <a class="list-group-item list-group-item-action waves-effect">Accessed
-                            <span class="badge badge-info pull-right ml-1">221x</span>
-                        </a>
-                    </div>
-                    <!-- List group links -->
+                    <app-transaction-history-statistics></app-transaction-history-statistics>
                 </div>
             </div>
             <!--/.Card-->

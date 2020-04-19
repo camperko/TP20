@@ -1,6 +1,6 @@
 /*
 Exchange rates table
-- gets asset details on init, then every 4 minutes
+- gets asset details on init, then every 4 seconds
 -
 */
 import { Component, OnInit } from '@angular/core';

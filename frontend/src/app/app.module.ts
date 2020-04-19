@@ -49,6 +49,10 @@ import {FlexModule} from '@angular/flex-layout';
 import { DeleteDialogComponent } from './seller-settings/dialogs/delete-dialog/delete-dialog.component';
 import { CreateDialogComponent } from './seller-settings/dialogs/create-dialog/create-dialog.component';
 import { EditDialogComponent } from './seller-settings/dialogs/edit-dialog/edit-dialog.component';
+import { ExchangeRatesChartComponent } from './exchange-rates-chart/exchange-rates-chart.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { TransactionHistoryStatisticsComponent } from './transaction-history-statistics/transaction-history-statistics.component';
+import { TransactionHistoryStatisticsService } from './transaction-history-statistics/transaction-history-statistics.service';
 import { ChangeEmailComponent } from './seller-settings/dialogs/change-email/change-email.component';
 import { ChangePasswordComponent } from './seller-settings/dialogs/change-password/change-password.component';
 import { PopUpDialogComponent } from './dialogs/pop-up-dialog/pop-up-dialog.component';
@@ -74,6 +78,8 @@ import { PopUpDialogComponent } from './dialogs/pop-up-dialog/pop-up-dialog.comp
     DeleteDialogComponent,
     CreateDialogComponent,
     EditDialogComponent,
+    ExchangeRatesChartComponent,
+    TransactionHistoryStatisticsComponent,
     ChangeEmailComponent,
     ChangePasswordComponent,
     PopUpDialogComponent
@@ -103,7 +109,8 @@ import { PopUpDialogComponent } from './dialogs/pop-up-dialog/pop-up-dialog.comp
         MatRadioModule,
         MatTableModule,
         RecaptchaModule,
-        RecaptchaFormsModule
+        RecaptchaFormsModule,
+        NgxChartsModule
     ],
     entryComponents: [
         DeleteDialogComponent,
@@ -125,7 +132,8 @@ import { PopUpDialogComponent } from './dialogs/pop-up-dialog/pop-up-dialog.comp
     ReactiveFormsModule,
     CookieService,
     TransactionHistoryService,
-    TransactionHistorySummaryService
+    TransactionHistorySummaryService,
+    TransactionHistoryStatisticsService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,33 @@
+<!--
+  Select for exchange pairs
+  Execute changeFields() function
+  Mapped to selectedExchangePair
+ -->
+ <select [(ngModel)]="selectedExchangePair" (change)="changeFields()" class="browser-default custom-select col-4 mb-3">
+  <option *ngFor="let exchangePair of exchangePairs" [ngValue]="exchangePair">
+    {{exchangePair}}
+  </option>
+</select>
+<!--
+  Exchange rate line chart
+ -->
+<ngx-charts-line-chart
+
+  [scheme]="colorScheme"
+  [legend]="legend"
+  [showXAxisLabel]="showXAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [xAxis]="xAxis"
+  [yAxis]="yAxis"
+  [xAxisLabel]="xAxisLabel"
+  [yAxisLabel]="yAxisLabel"
+  [timeline]="timeline"
+  [autoScale]="autoScale"
+  [results]="selectedDataSource"
+  (select)="onSelect($event)"
+  (activate)="onActivate($event)"
+  (deactivate)="onDeactivate($event)"
+  >
+</ngx-charts-line-chart>
+
+
