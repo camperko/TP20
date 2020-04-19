@@ -127,3 +127,39 @@
     <button type="submit" mdbBtn color="info" mdbWavesEffect>Send</button>
   </div>
 </form>
+<!--Grid row-->
+<div class="row wow fadeIn mt-4">
+    <!--Grid column-->
+    <div class="col-md-6 mb-4">
+      <!--Card-->
+      <div class="card mb-4">
+          <!--Card content-->
+          <div class="card-header text-center">
+              Exchange rates table
+              <mdb-icon far icon="question-circle" matTooltip="real-time exchange rates table" style="float:right"></mdb-icon>
+          </div>
+          <div class="card-body">
+              <app-exchange-rates-table></app-exchange-rates-table>
+          </div>
+      </div>
+      <!--/.Card-->
+  </div>
+  <!--Grid column-->
+  <!--Grid column-->
+  <div class="col-md-6 mb-4">
+      <!--Card-->
+      <div class="card mb-4">
+          <!--Card content-->
+          <div class="card-header text-center">
+              Exchange rates chart
+              <mdb-icon far icon="question-circle" matTooltip="real-time exchange rate chart for selected currency" style="float:right"></mdb-icon>
+          </div>
+          <div class="card-body" style="display: grid">
+              <app-exchange-rates-chart style="max-height: 300px"></app-exchange-rates-chart>
+          </div>
+      </div>
+      <!--/.Card-->
+  </div>
+  <!--Grid column-->
+</div>
+<!--Grid row-->
