@@ -14,10 +14,42 @@ var tickerData = []; // coinTicker exchange rates data
 var exchangePairs = ['BTC_USD', 'ETH_USD', 'BCH_USD', 'LTC_USD', 'XRP_USD'];
 const request = require("request");
 
-// MORGAN LOGGER SETUP
-// set directory and name of .log file
-var accessLogStream = fs.createWriteStream(path.join('./logs', 'access.log'), { flags: 'a' });
-// function to generate unique request id
+var winston = require('winston');
+var expressWinston = require('express-winston');
+
+const { format } = require('logform');
+
+app.use(expressWinston.logger({
+  transports: [
+    new winston.transports.File({
+      filename: './logs/access.log',
+      name: 'access-file',
+    }),
+  ],
+  format: winston.format.combine(
+    //winston.format.colorize(),
+    winston.format.json(),
+    format.timestamp(),
+    format.align(),
+    format.printf(info => `${info.timestamp}${info.message}`) 
+  ),
+  metaField: null,
+  //responseField: null,
+  responseWhitelist: ['body'], 
+  requestWhitelist: ['headers', 'query'],
+  msg: function(req, res) { 
+    responseSize = null;
+    //console.log(JSON.stringify(res.body));
+    if(res){
+      if (typeof res.body === 'object') {
+        responseSize = JSON.stringify(res.body).length
+      } else if (typeof res.body === 'string') {
+        responseSize = res.body.length
+      }
+    }
+    return `Request ID: ${req.id} Request IP address: ${req.ip} Request header: ${JSON.stringify(req.headers)} Request Method: ${req.method} Request URL: ${req.originalUrl} Status Code: ${res.statusCode} Response Size: ${responseSize} Response Time: ${res.responseTime/1000} s, ${(res.responseTime % 1000) * 1000000} ns`},
+}));
+
 app.use(function requestId(req, res, next) {
   req.id = uuid.v4();
   next();
@@ -40,29 +72,7 @@ morgan.token('reqHeaders', function(req, res) {
 // :status = the status code of the response
 // :res[content-length] = the content lenght of response
 // :response-time = the time between the request coming into morgan and when the response headers are written, in milliseconds
-app.use(morgan(':date[iso] :requestID :remote-addr :reqHeaders :method :url :status :res[content-length] :response-time ms', { stream: accessLogStream }));
 
-// WINSTON LOGGER SETUP
-const { createLogger, transports, format } = require('winston');
-const { combine, timestamp } = format;
-const logform = require('logform');
-// define log format
-const winstonConsoleFormat = logform.format.combine(
-  logform.format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`)
-);
-const logger = createLogger({
-  format: combine(
-    timestamp(),
-    winstonConsoleFormat
-  ),
-  transports: [],
-  // set exception logging
-  exceptionHandlers: [
-    // set directory and name of .log file
-    new transports.File({ filename: path.join('./logs', '/exceptions.log'), timestamp: true })
-  ],  
-  exitOnError: false // winston will handle uncaught exceptions
-});
 
 var db_conf = require("./database_conf");
 var db = db_conf.db;
@@ -91,6 +101,26 @@ app.use(jwt());
 app.use('/users', require('./users/users.controller'));
 app.use('/transaction', require('./transactions/transaction.controller'));
 app.use('/seller', require('./seller/seller.controller'));
+
+
+app.use(expressWinston.errorLogger({
+  transports: [
+    new winston.transports.File({
+      filename: './logs/exceptions.log',
+      name: 'exception-file',
+    }),
+  ],
+  format: winston.format.combine(
+    winston.format.json(),
+    format.timestamp(),
+    format.align(),
+    format.printf(info => `${info.timestamp}${info.message} ${JSON.stringify(info.meta)}`) 
+  ),
+  msg: function(req, res) { return  `Error id: ${req.id} IP address: ${req.ip}`},
+  meta: true,
+  dumpExceptions: true,
+  showStack: true
+}));
 
 // global error handler
 app.use(errorHandler);
