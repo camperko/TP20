@@ -1,5 +1,9 @@
 /*
-  TransactionSenderComponent - contains functions for transaction view
+  TransactionSenderComponent - contains functions for transaction view and redirect back to e-shop
+  Commands to to install and run e-shop:
+    - for install of server: run "npm install http-server -g" in blockchain-e-shop folder
+    - for runnning of server: run "http-server -p 8081 -o blockchain-e-shop.html" in blockchain-e-shop folder
+    - after these commands, click server address, on which the server is running, from command line
   attributes:
     - transactionSenderService
     - error
@@ -21,6 +25,8 @@
     - getSellerWallet
     - sendForm
     - isValidBeforeSend
+    - redirectForFailure
+    - redirectForSuccess
 */
 
 import { Component, OnInit } from '@angular/core';
