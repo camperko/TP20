@@ -19,6 +19,11 @@ var expressWinston = require('express-winston');
 
 const { format } = require('logform');
 
+
+/**
+ * Access logging setup
+ * @author Vladimír Bernolák
+ */
 app.use(expressWinston.logger({
   transports: [
     new winston.transports.File({
@@ -39,7 +44,6 @@ app.use(expressWinston.logger({
   requestWhitelist: ['headers', 'query'],
   msg: function(req, res) { 
     responseSize = null;
-    //console.log(JSON.stringify(res.body));
     if(res){
       if (typeof res.body === 'object') {
         responseSize = JSON.stringify(res.body).length
@@ -102,7 +106,10 @@ app.use('/users', require('./users/users.controller'));
 app.use('/transaction', require('./transactions/transaction.controller'));
 app.use('/seller', require('./seller/seller.controller'));
 
-
+/**
+ * Error/exception logging setup
+ * @author Vladimír Bernolák
+ */
 app.use(expressWinston.errorLogger({
   transports: [
     new winston.transports.File({
