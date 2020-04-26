@@ -4,7 +4,7 @@
   "description": "Json file for blockchain gateway",
   "main": "server.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --runInBand",
     "start": "node server.js"
   },
   "keywords": [

@@ -21,25 +21,45 @@ async function deleteUser(username, db) {
 
 describe('registration test', () => {
 
-  afterAll(() => {
-    return deleteUser("testuser", db_conf.db_test);
+  afterAll(function(done) {
+    server.close(done);
   });
+
+  beforeEach(() => {
+    return deleteUser("testuser", db_conf.db_test);
+ });
+
+  //console.log(typeof db);
+  it('should create a new user', async () => {
+    console.log("server2: " + server);
+    delete require.cache[require.resolve('../server')];
+    const res = await request(server)
+      .post('/users/registration')
+      .send({
+        username: "testuser",
+        email: "test@test.sk",
+        password: "testpassword",
+        dbS: "test",      })
+     expect(res.statusCode).toEqual(200)
+     expect(res.text).toBe('{\"value\":\"success\"}')
+  });
+});
+
+describe('autentication test', () => {
 
   afterAll(function(done) {
     server.close(done);
   });
 
-  //console.log(typeof db);
-  it('should create a new user', async () => {
-    console.log("server2: " + server);
+  it('should login existing user', async () => {
+    delete require.cache[require.resolve('../server')];
     const res = await request(server)
-      .post('/api/registration')
+      .post('/users/authenticate')
       .send({
-        username: "testuser",
-        password: "testpassword",
-        dbS: "test",      })
-    expect(res.statusCode).toEqual(200)
-    expect(res.text).toBe('{\"value\":\"success\"}')
-  })
-
-})
+        username: "logintest",
+        password: "logintest",
+        dbS: "test",
+      })
+      expect(res.statusCode).toEqual(200)
+  });
+ });
