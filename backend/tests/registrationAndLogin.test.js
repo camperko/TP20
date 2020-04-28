@@ -4,7 +4,7 @@ const db_conf = require('../database_conf');
 
 //delete user from database
 async function deleteUser(username, db) {
-  console.log("Spustam mazanie");
+  //console.log("Spustam mazanie");
   try {
     let data = await db.any('SELECT user_account_id FROM user_account WHERE username = $1', [username]);
     //console.log(data);
@@ -61,5 +61,18 @@ describe('autentication test', () => {
         dbS: "test",
       })
       expect(res.statusCode).toEqual(200)
+  });
+
+  it('should not login unknown user', async () => {
+    delete require.cache[require.resolve('../server')];
+    const res = await request(server)
+      .post('/users/authenticate')
+      .send({
+        username: "logintest2",
+        password: "logintest",
+        dbS: "test",
+      })
+      expect(res.statusCode).toEqual(400)
+      expect(res.text).toBe('{\"message\":\"Username or password is incorrect\"}')
   });
  });

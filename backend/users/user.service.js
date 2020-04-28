@@ -76,15 +76,15 @@ function addUser(username, email, pwHash, db) {
     db.any('INSERT INTO user_account(username, userpassword, account_type_fk, is_active, create_date, email)' +
         'VALUES($1, $2, $3, $4, $5, $6)', [username, pwHash, 2, true, new Date(), email])
       .then(() => {
-        console.log("User successfully added!");
+        //console.log("User successfully added!");
       })
       .catch(error => {
-        console.log("Fail! Adding unsuccessfull!");
+        //console.log("Fail! Adding unsuccessfull!");
       });
   }
 
 async function registration({username, email, password, dbS}){
-    console.log('Request of registration accepted!');
+    //console.log('Request of registration accepted!');
     var database;
 
     //console.log(dbS);
@@ -95,7 +95,7 @@ async function registration({username, email, password, dbS}){
       database = db_conf.db;
     }
     if (await findUser(username, database)) {
-        console.log("User already exists!");
+        //console.log("User already exists!");
         return false;
       } else {
         bcrypt

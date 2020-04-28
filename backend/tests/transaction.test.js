@@ -5,7 +5,6 @@ const db_conf = require('../database_conf');
 
 //delete transaction from database
 async function deleteTransaction(orderId, db) {
-  console.log("Spustam mazanie");
   try {
     let data = await db.any('SELECT order_id FROM transaction_log WHERE order_id = $1', [orderId]);
     //console.log(data);
@@ -26,7 +25,8 @@ describe('transaction test', () => {
       server.close(done);
     });
 
-    beforeEach(() => {
+    beforeAll(() => {
+      deleteTransaction(12345, db_conf.db_test);
       return deleteTransaction(1234, db_conf.db_test);
    });
   
@@ -47,5 +47,24 @@ describe('transaction test', () => {
             })
             expect(res.statusCode).toEqual(200)
             expect(res.text).toEqual(expect.stringContaining('{\"message\":\"Sending payment to blockchain successful. TxID: '))
+        });
+
+    it('should make unsuccesfull transaction and store it to database', async () => {
+        delete require.cache[require.resolve('../server')];
+        const res = await request(server)
+            .post('/transaction/send/' + 'BTC')
+            .send({
+              output_wallet: 'miaRyqZqPAUTyoPrrd9zXdr8CXhpgjL71J',
+              price: 1200,
+              fees: 500,
+              fee_wallet: 1,
+              input_wallets: [[{"field_name":"address","field_display":"BTC - Address","value":"mt39sKy96aeg8XyVc4K1LyxVcXquuutWDX"},{"field_name":"wif","field_display":"BTC - WIF","value":"cPx7EE2JoK9HDyUtyh52BdSgMfcjGAr5ZA45jdHykfWLnbEe63e1"}]],
+              wallets_inputs: [1000],
+              merchantId: 1,
+              orderId: 12345,
+              dbS: "test"
+            })
+            expect(res.statusCode).toEqual(400)
+            expect(res.text).toEqual(expect.stringContaining('{\"message\":\"Sending payment to blockchain failed. '))
         });
    });
