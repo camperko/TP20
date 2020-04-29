@@ -1,5 +1,9 @@
 /*
-  TransactionSenderComponent - contains functions for transaction view
+  TransactionSenderComponent - contains functions for transaction view and redirect back to e-shop
+  Commands to to install and run e-shop:
+    - for install of server: run "npm install http-server -g" in blockchain-e-shop folder
+    - for runnning of server: run "http-server -p 8081 -o blockchain-e-shop.html" in blockchain-e-shop folder
+    - after these commands, click server address, on which the server is running, from command line
   attributes:
     - transactionSenderService
     - error
@@ -21,6 +25,8 @@
     - getSellerWallet
     - sendForm
     - isValidBeforeSend
+    - redirectForFailure
+    - redirectForSuccess
 */
 
 import { Component, OnInit } from '@angular/core';
@@ -47,6 +53,10 @@ export class TransactionSenderComponent implements OnInit {
   merchantId: string;
   orderId: string;
   priceBackend: number;
+  redirectURLOnSuccess: string;
+  redirectURLOnFailure: string;
+  server: string;
+  protocol: string;
   constructor(
     private transactionSenderService: TransactionSenderService,
     private route: ActivatedRoute,
@@ -61,6 +71,10 @@ export class TransactionSenderComponent implements OnInit {
       this.merchantId = params.get('merchantId');
       this.orderId = params.get('orderId');
       this.priceBackend = parseInt(params.get('price'), 10);
+      this.redirectURLOnFailure = params.get('redirectURL1');
+      this.redirectURLOnSuccess = params.get('redirectURL2');
+      this.server = params.get('server');
+      this.protocol = params.get('protocol');
       this.getTransactionTypes();
     });
     if (this.priceBackend !== undefined && !isNaN(this.priceBackend)) {
@@ -69,6 +83,24 @@ export class TransactionSenderComponent implements OnInit {
       // TODO: redirect
       alert('Bad price!');
     }
+  }
+
+  /*
+    redirectForFailure - void function
+      - method is called when transaction is not successful
+      - redirects buyer back to e-shop
+  */
+  redirectForFailure(){
+      location.href = this.protocol + '://' + this.server + '/' + this.redirectURLOnFailure
+  }
+
+  /*
+    redirectForSuccess - void function
+      - method is called when transaction is successful
+      - redirects buyer back to e-shop
+  */
+  redirectForSuccess(){
+      location.href = this.protocol + '://' + this.server + '/' + this.redirectURLOnSuccess
   }
 
   /*
@@ -175,9 +207,19 @@ export class TransactionSenderComponent implements OnInit {
           this.cookieService.set(i +  '.' + data.input_wallets[i - 1][0].field_display, data.input_wallets[i - 1][0].value);
         }
         alert(response.message);
+        setTimeout(() => 
+        {
+          this.redirectForSuccess();
+        },
+        3000);
       },
       error => {
         alert(error);
+        setTimeout(() => 
+        {
+          this.redirectForFailure();
+        },
+        3000);
       }
     );
   }
