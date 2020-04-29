@@ -5,7 +5,7 @@ This component handles login form.
 
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
   loading = false;
     submitted = false;
     returnUrl: string;
+    captcha = false;
 
 
   constructor(
@@ -38,11 +39,12 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
      this.loginForm = this.formBuilder.group({
             username: ['', Validators.required],
-            password: ['', Validators.required]
+            password: ['', Validators.required],
+            recaptchaReactive: new FormControl()
         });
 
         // get return url from route parameters or default to '/'
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/user/home';
+      this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/user/home';
   }
 
   get f() { return this.loginForm.controls; }
@@ -53,6 +55,11 @@ export class LoginComponent implements OnInit {
         // stop here if form is invalid
         if (this.loginForm.invalid) {
             return;
+        }
+        if (!this.captcha) {
+          this.error = 'Captcha authentification required!';
+          this.loading = false;
+          return;
         }
 
         this.loading = true;
@@ -69,4 +76,23 @@ export class LoginComponent implements OnInit {
                 });
     }
 
+  async resolved(captchaResponse: string, res) {
+    console.log(`Resolved response token: ${captchaResponse}`);
+    await this.sendTokenToBackend(captchaResponse);
+  }
+
+    // function to send the token to the node server
+  sendTokenToBackend(tok) {
+    // calling the service and passing the token to the service
+    this.authenticationService.sendToken(tok).subscribe(
+      data => {
+        console.log(data);
+        this.captcha = data.success;
+      },
+      err => {
+        console.log(err);
+      },
+      () => {}
+    );
+    }
 }
