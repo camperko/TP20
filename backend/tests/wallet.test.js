@@ -1,5 +1,5 @@
-const request = require('supertest')
-const server = require('../server')
+const request = require('supertest');
+const server = require('../server');
 const db_conf = require('../database_conf');
 
 //delete wallet from database
@@ -38,6 +38,7 @@ describe('wallet creation test', () => {
                 merchant_id: "1",
                 wallet_address: "testForWalletsInUserTransaction",
                 trans_type_id: "1",
+                dbs: true
             });
         expect(res.statusCode).toEqual(200);
     });
