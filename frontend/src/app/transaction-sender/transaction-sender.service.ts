@@ -81,4 +81,8 @@ export class TransactionSenderService {
   getSellerPrimaryWallet(merchantId: string): Observable<any> {
     return this.http.get<any>('http://localhost:8080/transaction/primary/' + merchantId);
   }
+
+  getExchangeRate(from:string, to:string): Observable<any> {
+    return this.http.get<any>('http://localhost:8080/exchangeRate/' + from + '/' + to);
+  }
 }

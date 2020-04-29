@@ -1,5 +1,5 @@
-const request = require('supertest')
-const server = require('../server')
+const request = require('supertest');
+const server = require('../server');
 const db_conf = require('../database_conf');
 
 
@@ -44,9 +44,9 @@ describe('transaction test', () => {
               merchantId: 1,
               orderId: 1234,
               dbS: "test"
-            })
-            expect(res.statusCode).toEqual(200)
-            expect(res.text).toEqual(expect.stringContaining('{\"message\":\"Sending payment to blockchain successful. TxID: '))
+            });
+            expect(res.statusCode).toEqual(200);
+            expect(res.text).toEqual(expect.stringContaining('{\"message\":\"Sending payment to blockchain successful. TxID: '));
         });
 
     it('should make unsuccesfull transaction and store it to database', async () => {
@@ -63,8 +63,8 @@ describe('transaction test', () => {
               merchantId: 1,
               orderId: 12345,
               dbS: "test"
-            })
-            expect(res.statusCode).toEqual(400)
-            expect(res.text).toEqual(expect.stringContaining('{\"message\":\"Sending payment to blockchain failed. '))
+            });
+            expect(res.statusCode).toEqual(400);
+            expect(res.text).toEqual(expect.stringContaining('{\"message\":\"Sending payment to blockchain failed. '));
         });
    });

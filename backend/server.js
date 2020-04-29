@@ -11,7 +11,7 @@ const app = express();
 const coinTicker = require('coin-ticker');
 var cryptoapis = require("./cryptoapis");
 var tickerData = []; // coinTicker exchange rates data
-var exchangePairs = ['BTC_USD', 'ETH_USD', 'BCH_USD', 'LTC_USD', 'XRP_USD'];
+var exchangePairs = ['BTC_EUR', 'ETH_EUR', 'BCH_EUR', 'LTC_EUR', 'XRP_EUR'];
 const request = require("request");
 
 var winston = require('winston');
@@ -105,6 +105,7 @@ app.use(jwt());
 app.use('/users', require('./users/users.controller'));
 app.use('/transaction', require('./transactions/transaction.controller'));
 app.use('/seller', require('./seller/seller.controller'));
+app.use('/exchangeRate', require('./exchange-rates/exchange-rate.controller'));
 
 /**
  * Error/exception logging setup

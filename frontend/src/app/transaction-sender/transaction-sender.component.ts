@@ -16,6 +16,7 @@
     - feeWallet
     - fees
     - walletsInputs
+    - exchangeRate
   methods:
     - ngOnInit
     - changeFields
@@ -27,6 +28,7 @@
     - isValidBeforeSend
     - redirectForFailure
     - redirectForSuccess
+    - getExchangeRate
 */
 
 import { Component, OnInit } from '@angular/core';
@@ -57,6 +59,7 @@ export class TransactionSenderComponent implements OnInit {
   redirectURLOnFailure: string;
   server: string;
   protocol: string;
+  exchangeRate: number;
   constructor(
     private transactionSenderService: TransactionSenderService,
     private route: ActivatedRoute,
@@ -77,12 +80,6 @@ export class TransactionSenderComponent implements OnInit {
       this.protocol = params.get('protocol');
       this.getTransactionTypes();
     });
-    if (this.priceBackend !== undefined && !isNaN(this.priceBackend)) {
-      this.price = this.priceBackend;
-    } else {
-      // TODO: redirect
-      alert('Bad price!');
-    }
   }
 
   /*
@@ -118,6 +115,7 @@ export class TransactionSenderComponent implements OnInit {
       },
       error => this.error = error
     );
+    this.getExchangeRate();
   }
 
   /*
@@ -296,5 +294,28 @@ export class TransactionSenderComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  /*
+    getExchangeRate - void function
+      - fill this.exchangeRate which represents exchange rate between this.selectedType and EUR
+  */
+  getExchangeRate() {
+    this.transactionSenderService.getExchangeRate(this.selectedType, 'EUR').subscribe(data => {
+      this.exchangeRate = data.exchangeRate;
+      if (this.priceBackend !== undefined && !isNaN(this.priceBackend)) {
+        if (this.exchangeRate !== null && this.exchangeRate !== undefined && this.exchangeRate !== 0) {
+          this.price = this.priceBackend / this.exchangeRate;
+        }
+        else {
+          // ???
+        }
+      } else {
+        // TODO: redirect
+        alert('Bad price!');
+      }
+    },
+    error => this.error = error
+    );
   }
 }

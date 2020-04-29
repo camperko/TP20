@@ -1,19 +1,29 @@
-<!--
-  Html component for transactions
--->
+<div style="position: relative">
 
-<label class="col-4">Select cryptocurrency for payment</label>
+  <!--
+    Html component for transactions
+  -->
 
-<!--
-  Select for transaction types
-  Execute changeFields() function
-  Mapped to selectedType
- -->
-<select [(ngModel)]="selectedType" (change)="changeFields()" class="browser-default custom-select col-4">
-  <option *ngFor="let transationType of transactionTypes" [ngValue]="transationType.type_name">
-    {{transationType.type_name}} - {{transationType.type_display}}
-  </option>
-</select>
+  <label class="col-4">Select cryptocurrency for payment</label>
+
+  <!--
+    Select for transaction types
+    Execute changeFields() function
+    Mapped to selectedType
+  -->
+  <select [(ngModel)]="selectedType" (change)="changeFields()" class="browser-default custom-select col-4">
+    <option *ngFor="let transationType of transactionTypes" [ngValue]="transationType.type_name">
+      {{transationType.type_name}} - {{transationType.type_display}}
+    </option>
+  </select>
+
+  <!--
+    Exchange rate between selected currency and EUR
+    Mapped to exchangeRate and selectedType
+  -->
+  <span class="badge badge-info" style="position: absolute; right: 0; bottom: 0">1 {{ selectedType}} = {{ exchangeRate | number:'1.6-6' }} EUR</span>
+
+</div>
 
 <!--
   Form for transaction

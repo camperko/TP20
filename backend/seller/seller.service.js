@@ -37,9 +37,10 @@ async function deleteWallet(user_trans_id) {
     }
 }
 
-async function createWallet(merchant_id, wallet_address, trans_type_id) {
+async function createWallet(merchant_id, wallet_address, trans_type_id, db) {
     try {
-        return db_conf.db.one(`INSERT INTO user_transaction(user_account_fk, trans_type_fk, wallet_address, is_primary)
+        const database = db === 'primary' ? db_conf.db : db_conf.db_test;
+        return database.one(`INSERT INTO user_transaction(user_account_fk, trans_type_fk, wallet_address, is_primary)
             VALUES($1, $2, $3, $4) RETURNING user_trans_id`,
             [merchant_id, trans_type_id, wallet_address, false]);
     } catch (error) {
