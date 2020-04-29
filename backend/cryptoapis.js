@@ -24,13 +24,12 @@ listAllAccounts = function() {
     - baseAssetId - string -> base asset ID (etc. 'LTC')
     - quoteAssetId - string -> quote asset ID (etc. 'USD')
 */
-getSpecRate = function(baseAssetId, quoteAssetId) {
-  caClient.CMD.exchangeRates.getSpecificRate(baseAssetId, quoteAssetId)
-    .then(function(response){
-      console.log(util.inspect(response, false, null, true));
-    }).catch(function(error) {
-      console.log(error);
-    });
+getSpecRate = async function(baseAssetId, quoteAssetId) {
+  try {
+    return caClient.CMD.exchangeRates.getSpecificRate(baseAssetId, quoteAssetId);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 /*

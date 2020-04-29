@@ -26,7 +26,8 @@ function jwt() {
             /^\/seller\/wallet\/unset_primary/,
             /^\/seller\/.*\/update\/email/,
             /^\/seller\/.*\/update\/password/,
-            /^\/seller\/.*\/email/
+            /^\/seller\/.*\/email/,
+            /^\/exchangeRate\/.*\/.*/
         ]
     });
 }

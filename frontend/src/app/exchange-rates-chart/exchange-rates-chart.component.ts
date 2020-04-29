@@ -27,7 +27,7 @@ export class ExchangeRatesChartComponent implements OnInit {
   showYAxisLabel: boolean = true;
   showXAxisLabel: boolean = true;
   xAxisLabel: string = 'Time';
-  yAxisLabel: string = 'Value in USD';
+  yAxisLabel: string = 'Value in EUR';
   timeline: boolean = true;
   autoScale: boolean = true;
 
