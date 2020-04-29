@@ -94,9 +94,9 @@ async function getPrimaryWalletType(merchant_id) {
   INTO - transaction_log
   return any
 */
-async function logTransaction(sender_trans_type_name, receiver_trans_type_name, sender_price, receiver_price, is_successful, hash, user_account_id_fk, order_id) {
+async function logTransaction(sender_trans_type_name, receiver_trans_type_name, sender_price, receiver_price, is_successful, hash, user_account_id_fk, order_id, db) {
   try {
-    return db_conf.db.any(`INSERT INTO transaction_log
+    return db.any(`INSERT INTO transaction_log
     (
       sender_trans_type_fk, 
       receiver_trans_type_fk,

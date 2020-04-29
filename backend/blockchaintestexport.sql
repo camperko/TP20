@@ -65,7 +65,10 @@ CREATE TABLE public.transaction_log (
     sender_price numeric,
     receiver_price numeric,
     is_successful boolean,
-    hash character varying
+    hash character varying,
+    user_account_id_fk integer,
+    "timestamp" timestamp without time zone,
+    order_id integer
 );
 
 
@@ -184,6 +187,7 @@ CREATE TABLE public.user_account (
     username character varying,
     userpassword character varying,
     is_active boolean,
+    email character varying,
     create_date timestamp without time zone
 );
 
@@ -349,20 +353,8 @@ COPY public.transaction_type_field (trans_type_field_id, trans_type_fk, field_na
 -- Data for Name: user_account; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.user_account (user_account_id, account_type_fk, username, userpassword, is_active, create_date) FROM stdin;
-1	2	test-seller	test-seller	t	2019-11-18 22:28:55.095932
-2	\N	lenocka	jekrasnakralovna	t	2020-03-16 15:41:29.873
-3	\N	trapasek	trapasek	t	2020-03-17 09:44:39.836
-4	\N	trapasek2	trapasek2	t	2020-03-17 09:56:04.244
-8	\N	userunittesting	passwordunittesting	t	2020-03-17 10:11:53.5
-9	\N	trapasek6	trapasek3	t	2020-03-17 10:14:16.382
-10	2	trapasek7	trapasek3	t	2020-03-17 10:36:19.234
-11	2	trapasek8	trapasek3	t	2020-03-17 11:46:03.86
-12	2	userunittesting2	passwordunittesting2	t	2020-03-17 11:46:23.94
-13	2	userunittesting4	passwordunittesting4	t	2020-03-18 12:54:09.298
-14	2	userunittesting5	passwordunittesting5	t	2020-03-18 12:58:01.793
-15	2	userunittesting6	passwordunittesting6	t	2020-03-18 12:58:50.701
-16	2	userunittesting7	passwordunittesting7	t	2020-03-18 14:50:44.034
+COPY public.user_account (user_account_id, account_type_fk, username, userpassword, is_active, email, create_date) FROM stdin;
+35	2	logintest	$2b$10$9TjuEfmj6loq2tX8jH3csuI6eOP.Wl4FIki8Bbs0NXgyXtVioGwJq	t	test@test.com	2020-04-21 19:02:27.378
 \.
 
 
@@ -407,7 +399,7 @@ SELECT pg_catalog.setval('public.transaction_type_trans_type_id_seq', 1, false);
 -- Name: user_account_user_account_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.user_account_user_account_id_seq', 22, true);
+SELECT pg_catalog.setval('public.user_account_user_account_id_seq', 60, true);
 
 
 --

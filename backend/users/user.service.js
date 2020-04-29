@@ -13,9 +13,16 @@ module.exports = {
 };
 
 
-async function authenticate({ username, password}){
+async function authenticate({ username, password, dbS}){
+  var db;
+  if(dbS == "test"){
+    db = db_conf.db_test;
+  } else {
+    db = db_conf.db;
+  }
+
     try{
-        let userData = await db_conf.db.one('SELECT * FROM user_account WHERE username = $1', [username]);
+        let userData = await db.one('SELECT * FROM user_account WHERE username = $1', [username]);
         //console.log(userData);
         if(Object.keys(userData).length){
             const match = await bcrypt.compare(password, userData.userpassword);
@@ -50,9 +57,9 @@ async function getAll() {
 
 // do a single select to the database with specific username
 // return true if found, else return false
-async function findUser(username) {
+async function findUser(username, db) {
     try {
-      let data = await db_conf.db.any('SELECT user_account_id FROM user_account WHERE username = $1', [username]);
+      let data = await db.any('SELECT user_account_id FROM user_account WHERE username = $1', [username]);
       //console.log(data);
       if (Object.keys(data).length) {
         return true;
@@ -65,27 +72,35 @@ async function findUser(username) {
   }
 
   //create a new user in database
-function addUser(username, email, pwHash) {
-    db_conf.db.any('INSERT INTO user_account(username, userpassword, is_active, create_date, email)' +
-        'VALUES($1, $2, $3, $4, $5)', [username, pwHash, true, new Date(), email])
+function addUser(username, email, pwHash, db) {
+    db.any('INSERT INTO user_account(username, userpassword, account_type_fk, is_active, create_date, email)' +
+        'VALUES($1, $2, $3, $4, $5, $6)', [username, pwHash, 2, true, new Date(), email])
       .then(() => {
-        console.log("User successfully added!");
+        //console.log("User successfully added!");
       })
       .catch(error => {
-        console.log("Fail! Adding unsuccessfull!");
+        //console.log("Fail! Adding unsuccessfull!");
       });
   }
 
-async function registration({username, email, password}){
-    console.log('Request of registration accepted!');
+async function registration({username, email, password, dbS}){
+    //console.log('Request of registration accepted!');
+    var database;
 
-    if (await findUser(username)) {
-        console.log("User already exists!");
+    //console.log(dbS);
+
+    if(dbS == "test"){
+      database = db_conf.db_test;
+    } else {
+      database = db_conf.db;
+    }
+    if (await findUser(username, database)) {
+        //console.log("User already exists!");
         return false;
       } else {
         bcrypt
           .hash(password, saltRounds).then(hash => {
-            addUser(username, email, hash);
+            addUser(username, email, hash, database);
           })
           .catch(err => {console.log(err); return false});
   

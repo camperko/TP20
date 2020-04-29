@@ -11,6 +11,7 @@ const express = require('express');
 const router = express.Router();
 const transactionService = require('./transaction.service');
 const cryptoapis = require('../cryptoapis');
+var db_conf = require("../database_conf");
 
 /*
   routes for transaction methods
@@ -72,7 +73,14 @@ function sendTransaction(req, res, next) {
   const network = req.params.type_name;
   const merchantId = req.body.merchantId;
   const orderId = req.body.orderId;
+  var db;
 
+  if(req.body.dbS == "test"){
+    db = db_conf.db_test;
+  } else {
+    db = db_conf.db;
+  }
+  
   /*
     construct data for cryptoapis newTransactions
       - inputs
@@ -129,14 +137,14 @@ function sendTransaction(req, res, next) {
       var data = await cryptoapis.newTransaction(client.transaction, inputs, output, fee, wifs);
       if(data === undefined || data === null || data.payload === null || data.payload === undefined) {
         res.status(400).json({message: 'Sending payment to blockchain failed. ' + data.meta.error.message});
-        transactionService.logTransaction(network, network, parseFloat(price) + parseFloat(fees), price, false, null, merchantId, orderId);
+        transactionService.logTransaction(network, network, parseFloat(price) + parseFloat(fees), price, false, null, merchantId, orderId, db);
       } else {
         res.status(200).json({message: 'Sending payment to blockchain successful. TxID: ' + data.payload.txid});
-        transactionService.logTransaction(network, network, parseFloat(price) + parseFloat(fees), price, true, data.payload.txid, merchantId, orderId);
+        transactionService.logTransaction(network, network, parseFloat(price) + parseFloat(fees), price, true, data.payload.txid, merchantId, orderId, db);
       }
     } catch (error) {
       res.status(400).json({message: 'Sending payment to blockchain failed. ' + error.meta.error.message});
-      transactionService.logTransaction(network, network, parseFloat(price) + parseFloat(fees), price, false, null, merchantId, orderId);
+      transactionService.logTransaction(network, network, parseFloat(price) + parseFloat(fees), price, false, null, merchantId, orderId, db);
     }
   }) ();
 }
