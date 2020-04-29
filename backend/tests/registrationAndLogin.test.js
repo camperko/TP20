@@ -75,4 +75,17 @@ describe('autentication test', () => {
       expect(res.statusCode).toEqual(400)
       expect(res.text).toBe('{\"message\":\"Username or password is incorrect\"}')
   });
+
+  it('should not login user with wrong password', async () => {
+    delete require.cache[require.resolve('../server')];
+    const res = await request(server)
+      .post('/users/authenticate')
+      .send({
+        username: "logintest",
+        password: "logintest2",
+        dbS: "test",
+      })
+      expect(res.statusCode).toEqual(400)
+      expect(res.text).toBe('{\"message\":\"Username or password is incorrect\"}')
+  });
  });
