@@ -354,7 +354,7 @@ COPY public.transaction_type_field (trans_type_field_id, trans_type_fk, field_na
 --
 
 COPY public.user_account (user_account_id, account_type_fk, username, userpassword, is_active, email, create_date) FROM stdin;
-35	2	logintest	$2b$10$9TjuEfmj6loq2tX8jH3csuI6eOP.Wl4FIki8Bbs0NXgyXtVioGwJq	t	test@test.com	2020-04-21 19:02:27.378
+1	2	logintest	$2b$10$9TjuEfmj6loq2tX8jH3csuI6eOP.Wl4FIki8Bbs0NXgyXtVioGwJq	t	test@test.com	2020-04-21 19:02:27.378
 \.
 
 

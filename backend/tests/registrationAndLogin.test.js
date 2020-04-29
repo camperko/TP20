@@ -39,9 +39,10 @@ describe('registration test', () => {
         username: "testuser",
         email: "test@test.sk",
         password: "testpassword",
-        dbS: "test",      })
-     expect(res.statusCode).toEqual(200)
-     expect(res.text).toBe('{\"value\":\"success\"}')
+        dbS: "test",
+      });
+     expect(res.statusCode).toEqual(200);
+     expect(res.text).toBe('{\"value\":\"success\"}');
   });
 });
 
@@ -59,8 +60,8 @@ describe('autentication test', () => {
         username: "logintest",
         password: "logintest",
         dbS: "test",
-      })
-      expect(res.statusCode).toEqual(200)
+      });
+      expect(res.statusCode).toEqual(200);
   });
 
   it('should not login unknown user', async () => {
@@ -71,9 +72,9 @@ describe('autentication test', () => {
         username: "logintest2",
         password: "logintest",
         dbS: "test",
-      })
-      expect(res.statusCode).toEqual(400)
-      expect(res.text).toBe('{\"message\":\"Username or password is incorrect\"}')
+      });
+      expect(res.statusCode).toEqual(400);
+      expect(res.text).toBe('{\"message\":\"Username or password is incorrect\"}');
   });
 
   it('should not login user with wrong password', async () => {
@@ -84,8 +85,8 @@ describe('autentication test', () => {
         username: "logintest",
         password: "logintest2",
         dbS: "test",
-      })
-      expect(res.statusCode).toEqual(400)
-      expect(res.text).toBe('{\"message\":\"Username or password is incorrect\"}')
+      });
+      expect(res.statusCode).toEqual(400);
+      expect(res.text).toBe('{\"message\":\"Username or password is incorrect\"}');
   });
  });

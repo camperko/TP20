@@ -35,7 +35,8 @@ function deleteWallet(req, res, next) {
 }
 
 function createWallet(req, res, next) {
-    sellerService.createWallet(req.params.merchant_id, req.body.wallet_address, req.body.trans_type_id)
+    let db = req.body.dbS ? 'test' : 'primary';
+    sellerService.createWallet(req.params.merchant_id, req.body.wallet_address, req.body.trans_type_id, db)
         .then(db_response => {
             db_response === 'failed' ? res.json({wallet: 'failed'}) : res.json({wallet: db_response});
         }).catch(err => next(err));
