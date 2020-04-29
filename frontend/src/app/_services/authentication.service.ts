@@ -39,4 +39,8 @@ export class AuthenticationService {
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
     }
+    
+    sendToken(token) {
+        return this.http.post<any>('http://localhost:8080/api/token_validate', {recaptcha: token});
+      }
 }

@@ -23,6 +23,14 @@
                             <div *ngIf="f.password.errors.required">Password is required</div>
                         </div>
                     </div>
+                    <div class="cbox">
+                        <div class="recaptchaWrapper" style="transform:scale(0.77); transform-origin:0 0;">
+                            <re-captcha (resolved)="resolved($event)" 
+                                    formControlName="recaptchaReactive" 
+                                    siteKey="6Lfm0t4UAAAAAHTa7LK2bHGJj51rOPbspZDl9OSQ">  
+                            </re-captcha>
+                        </div>
+                    </div>
                     <button mdbBtn [disabled]="loading" class="btn btn-info btn-block my-4">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                         Login
