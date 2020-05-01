@@ -7,7 +7,8 @@ import { HomeComponent } from './home';
 import { HomeSellerComponent } from './home-seller';
 import { LoginComponent } from './login';
 import { AuthGuard } from './_helpers';
-import {SellerSettingsComponent} from '@app/seller-settings/seller-settings.component';
+import { SellerSettingsComponent } from '@app/seller-settings/seller-settings.component';
+import { RedirectAfterTransactionComponent } from './redirect-after-transaction/redirect-after-transaction.component';
 
 const routes: Routes = [
   { path: 'user/home', component: HomeSellerComponent, canActivate: [AuthGuard] },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'registration', component: RegistrationFormComponent },
   { path: 'transaction', component: MainContextComponent },
   { path: 'transaction/:merchantId/:orderId/:price', component: MainContextComponent },
+  { path: 'transaction/:merchantId/:orderId/:price/redirect', component: RedirectAfterTransactionComponent },
   { path: 'transaction/:merchantId/:orderId/:price/:protocol/:server/:redirectURL1/:redirectURL2', component: MainContextComponent },
   { path: '', component: HomeComponent },
   // otherwise redirect to home

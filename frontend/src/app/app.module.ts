@@ -56,6 +56,7 @@ import { TransactionHistoryStatisticsService } from './transaction-history-stati
 import { ChangeEmailComponent } from './seller-settings/dialogs/change-email/change-email.component';
 import { ChangePasswordComponent } from './seller-settings/dialogs/change-password/change-password.component';
 import { PopUpDialogComponent } from './dialogs/pop-up-dialog/pop-up-dialog.component';
+import { RedirectAfterTransactionComponent } from './redirect-after-transaction/redirect-after-transaction.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import { PopUpDialogComponent } from './dialogs/pop-up-dialog/pop-up-dialog.comp
     TransactionHistoryStatisticsComponent,
     ChangeEmailComponent,
     ChangePasswordComponent,
-    PopUpDialogComponent
+    PopUpDialogComponent,
+    RedirectAfterTransactionComponent
   ],
     imports: [
         MatFormFieldModule,

@@ -33,8 +33,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { TransactionSenderService } from './transaction-sender.service';
-import { ActivatedRoute } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service'; 
 
 @Component({
   selector: 'app-transaction-sender',
@@ -97,7 +97,8 @@ export class TransactionSenderComponent implements OnInit {
       - redirects buyer back to e-shop
   */
   redirectForSuccess(){
-      location.href = this.protocol + '://' + this.server + '/' + this.redirectURLOnSuccess
+      //location.href = this.protocol + '://' + this.server + '/' + this.redirectURLOnSuccess
+      
   }
 
   /*
@@ -204,7 +205,7 @@ export class TransactionSenderComponent implements OnInit {
         for (let i = 1; i < data.input_wallets.length + 1; i++) {
           this.cookieService.set(i +  '.' + data.input_wallets[i - 1][0].field_display, data.input_wallets[i - 1][0].value);
         }
-        alert(response.message);
+        //alert(response.message);
         setTimeout(() => 
         {
           this.redirectForSuccess();
