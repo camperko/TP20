@@ -1,7 +1,7 @@
 ﻿<app-navigation-transparent></app-navigation-transparent>
 
 <!--Carousel Wrapper-->
-<div class="carousel slide carousel-fade">
+<div class="carousel slide carousel-fade" id="page-top">
 
     <!--Slides-->
     <div class="carousel-inner" role="listbox">
@@ -26,8 +26,7 @@
 
                         <p class="mb-4 d-none d-md-block">
                             <strong>New revolutionary paygate. Supports payments between
-                                cryptocurrencies and fiat. To create your own
-                                paygate,</strong>
+                                cryptocurrencies. To create your own paygate</strong>
                         </p>
 
                         <a button type="button" routerLink="/registration"
@@ -48,34 +47,17 @@
 
 </div>
 <!--/.Carousel Wrapper-->
-<main>
+<main id="about">
     <div class="container">
-        <section class="mt-5 wow fadeIn">
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <img src="../../assets/images/paygate.png" class="img-fluid z-depth-1-half" alt="">
-                </div>
-                <div class="col-md-6 mb-4">
-                    <h3 class="h3 mb-3">Responsive self designed paygate</h3>
-                    <p>
-                        You can choose currency you want your clients to pay you in. <br> Crypto <i class="fab fa-btc"></i> or fiat <i class="fas fa-dollar-sign"></i>.
-
-                    </p>
-                    <hr>
-                    <p>To create your own paygate for your business:</p>
-                    <a routerLink="/registration" class="btn btn-grey btn-md">Sign Up
-                    </a>
-                    |
-                    <a routerLink="/login" class="btn btn-grey btn-md">Sign In
-                    </a>
-                </div>
-            </div>
-        </section>
-        <hr class="my-5">
-        <section>
+        <section class="mt-5 wow fadeIn" >
             <h3 class="h3 text-center mb-5">About BlockPay</h3>
+            <p class="text-center mb-5">
+                This paygate has been developed as university project in team of 7 students and the team advisor, who specializes in blockchain.
+                <br>
+                This project is still in the developement stage.
+            </p>
             <div class="row wow fadeIn">
-                <div class="col-lg-6 col-md-12 px-4">
+                <div class="col-lg-4 col-md-12 px-4">
                     <div class="row">
                         <div class="col-1 mr-3">
                             <i class="fas fa-hourglass-half fa-2x"></i>
@@ -88,12 +70,95 @@
                     <div style="height:30px"></div>
                     <div class="row">
                         <div class="col-1 mr-3">
-                            <i class="fas fa-piggy-bank fa-2x"></i>
+                                <i class="fas fa-book fa-2x"></i>
                         </div>
                         <div class="col-10">
-                            <h5 class="feature-title">Save money</h5>
-                            <p class="grey-text">with middle exchange rates.
-                            </p>
+                            <h5 class="feature-title">Learn fast</h5>
+                            <p class="grey-text">how to use our paygate. It's easy and intuitive!</p>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="col-lg-4 col-md-12 px-4">
+                    <div class="row">
+                        <div class="col-1 mr-3">
+                            <i class="fas fa-wallet fa-2x"></i>
+                        </div>
+                        <div class="col-10">
+                            <h5 class="feature-title">Connect multiple wallets</h5>
+                            <p class="grey-text">for various cryptocurrencies.</p>
+                        </div>
+                    </div>
+                    <div style="height:30px"></div>
+                    <div class="row">
+                        <div class="col-1 mr-3">
+                            <i class="fas fa-angle-double-up fa-2x"></i>
+                        </div>
+                        <div class="col-10">
+                            <h5 class="feature-title">Set priority</h5>
+                            <p class="grey-text">of your wallets.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 px-4">
+                    <div class="row">
+                        <div class="col-1 mr-3">
+                            <i class="fas fa-history fa-2x"></i>
+                        </div>
+                        <div class="col-10">
+                            <h5 class="feature-title">Track history</h5>
+                            <p class="grey-text">of your customer transactions.</p>
+                        </div>
+                    </div>
+                    <div style="height:30px"></div>
+                    <div class="row">
+                        <div class="col-1 mr-3">
+                            <i class="fas fa-chart-bar fa-2x"></i>
+                        </div>
+                        <div class="col-10">
+                            <h5 class="feature-title">Transaction analytics</h5>
+                            <p class="grey-text">will prevent money loss.</p>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="col-lg-6 col-md-12 px-4">
+                    <div class="row">
+                        <div class="col-1 mr-3">
+                            <i class="fas fa-hourglass-half fa-2x"></i>
+                        </div>
+                        <div class="col-10">
+                            <h5 class="feature-title">Save time</h5>
+                            <p class="grey-text">managing payment requests.</p>
+                        </div>
+                    </div>
+                    <div style="height:30px"></div>
+                    <div class="row">
+                        <div class="col-1 mr-3">
+                            <i class="fas fa-wallet fa-2x"></i>
+                        </div>
+                        <div class="col-10">
+                            <h5 class="feature-title">Connect multiple wallets</h5>
+                            <p class="grey-text">with different cryptocurencies.</p>
+                        </div>
+                    </div>
+                    <div style="height:30px"></div>
+                    <div class="row">
+                        <div class="col-1 mr-3">
+                            <i class="fas fa-history fa-2x"></i>
+                        </div>
+                        <div class="col-10">
+                            <h5 class="feature-title">Track history</h5>
+                            <p class="grey-text">of your transactions.</p>
+                        </div>
+                    </div>
+                    <div style="height:30px"></div>
+                    <div class="row">
+                        <div class="col-1 mr-3">
+                            <i class="fas fa-chart-bar fa-2x"></i>
+                        </div>
+                        <div class="col-10">
+                            <h5 class="feature-title">Transaction analytics</h5>
+                            <p class="grey-text">will prevent money loss.</p>
                         </div>
                     </div>
                     <div style="height:30px"></div>
@@ -106,13 +171,44 @@
                             <p class="grey-text">how to use our paygate. It's easy and intuitive!</p>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-6 col-md-12">
+                </div>-->
+                <!--<div class="col-lg-6 col-md-12">
                             <img src="../../assets/images/Mexico-Blockchain.jpg" style="height:300px;" class="img-fluid z-depth-1-half" alt="">
+                </div>-->
+            </div>
+        </section>
+        <hr class="my-5">
+        <section class="mt-5 wow fadeIn" id="exchange">
+            <h3 class="h3 text-center mb-5">Exchange rates</h3>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card mb-4">
+                        <!--Card content-->
+                        <div class="card-header text-center">
+                            Exchange rates table
+                            <mdb-icon far icon="question-circle" matTooltip="real-time exchange rates table" style="float:right"></mdb-icon>
+                        </div>
+                        <div class="card-body">
+                            <app-exchange-rates-table></app-exchange-rates-table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card mb-4">
+                        <!--Card content-->
+                        <div class="card-header text-center">
+                            Exchange rates chart
+                            <mdb-icon far icon="question-circle" matTooltip="real-time exchange rate chart for selected currency" style="float:right"></mdb-icon>
+                        </div>
+                        <div class="card-body" style="display: grid">
+                            <app-exchange-rates-chart style="max-height: 300px"></app-exchange-rates-chart>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
     </div>
+
 </main>
 <!--Main layout-->
 
