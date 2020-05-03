@@ -33,7 +33,7 @@ export class TransactionSenderService {
       - http.get - /transaction/types
   */
   getTransactionTypes(): Observable<any> {
-    return this.http.get<any>('http://localhost:8080/transaction/types');
+    return this.http.get<any>('https://blockpayapi.azurewebsites.net/transaction/types');
   }
 
   /*
@@ -46,7 +46,7 @@ export class TransactionSenderService {
       - http.get - /transaction/fields/{typeName}
   */
   getTransactionFields(typeName): Observable<any> {
-    return this.http.get<any>('http://localhost:8080/transaction/fields/' + typeName);
+    return this.http.get<any>('https://blockpayapi.azurewebsites.net/transaction/fields/' + typeName);
   }
 
   /*
@@ -59,7 +59,7 @@ export class TransactionSenderService {
       - http.get - /transaction/seller/{typeName}
   */
   getSellerWallet(typeName: string, merchantId: string): Observable<any> {
-    return this.http.get<any>('http://localhost:8080/transaction/seller=' + merchantId + '/type=' + typeName);
+    return this.http.get<any>('https://blockpayapi.azurewebsites.net/transaction/seller=' + merchantId + '/type=' + typeName);
   }
 
   /*
@@ -75,10 +75,10 @@ export class TransactionSenderService {
         - sending JSON.stringify(data)
   */
   sendForm(typeName, data): Observable<any> {
-    return this.http.post<any>('http://localhost:8080/transaction/send/' + typeName, JSON.stringify(data), this.httpOptions);
+    return this.http.post<any>('https://blockpayapi.azurewebsites.net/transaction/send/' + typeName, JSON.stringify(data), this.httpOptions);
   }
 
   getSellerPrimaryWallet(merchantId: string): Observable<any> {
-    return this.http.get<any>('http://localhost:8080/transaction/primary/' + merchantId);
+    return this.http.get<any>('https://blockpayapi.azurewebsites.net/transaction/primary/' + merchantId);
   }
 }

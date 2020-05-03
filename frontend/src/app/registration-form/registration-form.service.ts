@@ -15,10 +15,10 @@ import { Observable } from 'rxjs';
     constructor(private http: HttpClient) { }
 
     postDataToServer(username: string, email: string, password: string): Observable<any> {
-      return this.http.post<any>('http://localhost:8080/users/registration', {username, email, password});
+      return this.http.post<any>('https://blockpayapi.azurewebsites.net/users/registration', {username, email, password});
     }
 
     sendToken(token) {
-      return this.http.post<any>('http://localhost:8080/api/token_validate', {recaptcha: token});
+      return this.http.post<any>('https://blockpayapi.azurewebsites.net/api/token_validate', {recaptcha: token});
     }
   }

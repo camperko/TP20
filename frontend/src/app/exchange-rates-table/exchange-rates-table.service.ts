@@ -15,6 +15,6 @@ export class ExchangeRatesTableService {
   constructor(private http: HttpClient) { }
 
   getAssetDetails(): Observable<any> {
-    return this.http.get<any>('http://localhost:8080/api/getAssetDetails');
+    return this.http.get<any>('https://blockpayapi.azurewebsites.net/api/getAssetDetails');
   }
 }

@@ -62,3 +62,20 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+
+#temp
+#/frontend/Dockerfile
+#/frontend/Dockerfile copy
+#/frontend/.dockerignore
+
+#/docker-compose-2.yml
+#/docker-compose.yml
+#/docker-compose copy.yml
+#/nginx.conf
+
+#/backend/.dockerignore
+#/backend/Dockerfile
+#/backend/json.conf
+#/backend/jsdocs_conf.json
+

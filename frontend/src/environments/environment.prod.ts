@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:4200'
+  apiUrl: 'https://blockpay.azurewebsites.net:4200'
 };

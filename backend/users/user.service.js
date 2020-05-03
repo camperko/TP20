@@ -4,6 +4,8 @@ var db_conf = require("../database_conf");
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+fs = require('fs');
+
 // users hardcoded for simplicity, store in a db for production applications
 
 module.exports = {
@@ -89,7 +91,7 @@ async function registration({username, email, password}){
           })
           .catch(err => {console.log(err); return false});
   
-        // console.log("User added!");
+        console.log("User added!");
         return true;
       }
 }

@@ -15,6 +15,6 @@ export class TransactionHistorySummaryService {
   constructor(private http: HttpClient) { }
 
   getTransactionsSummary(data): Observable<any> {
-    return this.http.post<any>('http://localhost:8080/api/sellersTransactionsSummary', JSON.stringify(data), this.httpOptions);
+    return this.http.post<any>('https://blockpayapi.azurewebsites.net/api/sellersTransactionsSummary', JSON.stringify(data), this.httpOptions);
   }
 }

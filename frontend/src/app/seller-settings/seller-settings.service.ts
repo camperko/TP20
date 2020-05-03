@@ -33,11 +33,11 @@ export class SellerSettingsService {
   }
 
   getSellerWallets(): Observable<any> {
-    return this.http.get<any>('http://localhost:8080/seller/' + this.merchantId + '/wallets');
+    return this.http.get<any>('https://blockpayapi.azurewebsites.net/seller/' + this.merchantId + '/wallets');
   }
 
   deleteWallet(walletId: number): Observable<any> {
-    return this.http.delete<any>('http://localhost:8080/seller/wallet/delete/' + walletId);
+    return this.http.delete<any>('https://blockpayapi.azurewebsites.net/seller/wallet/delete/' + walletId);
   }
 
   createWallet(walletAddress: string, transTypeId): Observable<any> {
@@ -45,7 +45,7 @@ export class SellerSettingsService {
       wallet_address: walletAddress,
       trans_type_id: transTypeId
     };
-    return this.http.post<any>('http://localhost:8080/seller/' + this.merchantId + '/wallet/create', JSON.stringify(data), this.httpOptions);
+    return this.http.post<any>('https://blockpayapi.azurewebsites.net/seller/' + this.merchantId + '/wallet/create', JSON.stringify(data), this.httpOptions);
   }
 
   updateWallet(walletId: number, walletAddress: string, transTypeId: string): Observable<any> {
@@ -53,38 +53,38 @@ export class SellerSettingsService {
       wallet_address: walletAddress,
       trans_type_id: transTypeId
     };
-    return this.http.put<any>('http://localhost:8080/seller/wallet/update/' + walletId, JSON.stringify(data), this.httpOptions);
+    return this.http.put<any>('https://blockpayapi.azurewebsites.net/seller/wallet/update/' + walletId, JSON.stringify(data), this.httpOptions);
   }
 
   updatePrimaryWallet(walletId: number): Observable<any> {
     const data = {
       wallet_id: walletId
     };
-    return this.http.put<any>('http://localhost:8080/seller/' + this.merchantId + '/wallet/update/primary', JSON.stringify(data), this.httpOptions);
+    return this.http.put<any>('https://blockpayapi.azurewebsites.net/seller/' + this.merchantId + '/wallet/update/primary', JSON.stringify(data), this.httpOptions);
   }
 
   unsetPrimaryWallet(walletId: number): Observable<any> {
     const data = {
       wallet_id: walletId
     };
-    return this.http.put<any>('http://localhost:8080/seller/wallet/unset_primary', JSON.stringify(data), this.httpOptions);
+    return this.http.put<any>('https://blockpayapi.azurewebsites.net/seller/wallet/unset_primary', JSON.stringify(data), this.httpOptions);
   }
 
   getEmail(): Observable<any> {
-    return this.http.get<any>('http://localhost:8080/seller/' + this.merchantId + '/email');
+    return this.http.get<any>('https://blockpayapi.azurewebsites.net/seller/' + this.merchantId + '/email');
   }
   
   changeEmail(email: string): Observable<any> {
     const data = {
       email
     };
-    return this.http.put<any>('http://localhost:8080/seller/' + this.merchantId + '/update/email', JSON.stringify(data), this.httpOptions);
+    return this.http.put<any>('https://blockpayapi.azurewebsites.net/seller/' + this.merchantId + '/update/email', JSON.stringify(data), this.httpOptions);
   }
 
   changePassword(password: string): Observable<any> {
     const data = {
       userpassword: password
     };
-    return this.http.put<any>('http://localhost:8080/seller/' + this.merchantId + '/update/password', JSON.stringify(data), this.httpOptions);
+    return this.http.put<any>('https://blockpayapi.azurewebsites.net/seller/' + this.merchantId + '/update/password', JSON.stringify(data), this.httpOptions);
   }
 }

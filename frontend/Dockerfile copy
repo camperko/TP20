@@ -1,0 +1,21 @@
+FROM node:12-alpine as builder
+
+RUN apk update && apk add --no-cache make git
+#Create app directory and use it as the working directory
+RUN mkdir -p /srv/app/blockchain-client
+WORKDIR /srv/app/blockchain-client
+
+COPY package.json /srv/app/blockchain-client
+COPY package-lock.json /srv/app/blockchain-client
+RUN npm install @angular/cli@8.3.20 -g
+RUN cd /srv/app/blockchain-client && npm install
+COPY . /srv/app/blockchain-client
+
+RUN cd /srv/app/blockchain-client && npm run build
+
+FROM nginx:alpine
+RUN rm -rf /usr/share/nginx/html/*
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY --from=builder . /usr/share/nginx/html
+EXPOSE 4200
+CMD ["nginx", "-g", "daemon off;"]

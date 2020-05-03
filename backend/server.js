@@ -14,6 +14,19 @@ var tickerData = []; // coinTicker exchange rates data
 var exchangePairs = ['BTC_USD', 'ETH_USD', 'BCH_USD', 'LTC_USD', 'XRP_USD'];
 const request = require("request");
 
+var log_file = fs.createWriteStream('./logs/debug.log', {flags : 'w'});
+var log_stdout = process.stdout;
+
+
+
+console.log = function(d) { //
+  log_file.write(util.format(d) + '\n');
+  log_stdout.write(util.format(d) + '\n');
+};
+
+
+
+
 // MORGAN LOGGER SETUP
 // set directory and name of .log file
 var accessLogStream = fs.createWriteStream(path.join('./logs', 'access.log'), { flags: 'a' });
@@ -76,7 +89,7 @@ module.exports = {
 }
 
 var corsOptions = {
-  origin: 'http://localhost:4200',
+  origin: 'https://blockpay.azurewebsites.net',
   optionSuccessStatus: 200
 }
 
@@ -228,6 +241,8 @@ app.post('/api/token_validate', (req, res) => {
 
   //token validation url is URL: https://www.google.com/recaptcha/api/siteverify
   // METHOD used is: POST
+
+  console.log("Backend reached");
 
   const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}&remoteip=${req.connection.remoteAddress}`
 

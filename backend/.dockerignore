@@ -1,0 +1,8 @@
+json.txt
+jsdocs_conf.json
+/node_modules/*
+Dockerfile
+.gitignore
+
+# To prevent storing dev/temporary container data
+/tmp/*

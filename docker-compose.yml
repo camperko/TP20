@@ -1,0 +1,48 @@
+version: '3.3'
+services:
+  db:
+    image: blockpay.azurecr.io/postgres
+    restart: always
+    build:
+        context: .
+        dockerfile: Dockerfile
+    environment: 
+        - POSTGRES_PASSWORD=postgres
+        - POSTGRES_DB=blockchain
+    volumes:
+        - ${WEBAPP_STORAGE_HOME}/var/lib/postgresql/data  
+    networks: 
+        front:
+            ipv4_address: 172.16.238.2
+    expose:
+        - "5432"
+  backend:
+    image: blockpay.azurecr.io/nodejs-backend:latest
+    build:
+        context: ./backend
+        dockerfile: Dockerfile
+    networks: 
+        front:
+            ipv4_address: 172.16.238.3
+    expose:
+        - "8080"
+        - "2222"
+    ports:
+        - "8080:8080"
+#        - "2222:2222"
+    container_name: backend
+    tty: true
+    stdin_open: true
+    environment:
+        APP_SERVER_PORT: 8080
+    depends_on: 
+        - db
+    links:
+        - db
+networks:
+    front:
+        driver: bridge
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.16.238.0/24
