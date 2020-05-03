@@ -110,7 +110,6 @@ export class TransactionSenderComponent implements OnInit {
       data => {
         this.inputFields = JSON.parse(JSON.stringify(data));
         this.formInputs = [JSON.parse(JSON.stringify(this.inputFields))];
-        this.walletsInputs = [1];
         this.getSellerWallet();
       },
       error => this.error = error
@@ -154,7 +153,6 @@ export class TransactionSenderComponent implements OnInit {
           } else {
             this.selectedType = response[0].type_name;
           }
-          this.walletsInputs = [1];
           this.changeFields();
         });
       },
@@ -244,7 +242,7 @@ export class TransactionSenderComponent implements OnInit {
       alert('Non existing wallet in selected currency for seller!');
       return false;
     }
-    if (this.priceBackend === undefined || this.priceBackend === null || this.priceBackend <= 0) {
+    if (this.price === undefined || this.price === null || this.price <= 0) {
       alert('Fill non-negative price!');
       return false;
     }
@@ -288,9 +286,9 @@ export class TransactionSenderComponent implements OnInit {
       alert('Fill inputs on rows: ' + inputs + '!');
       return false;
     }
-    if (priceSum !== (this.priceBackend)) {
-      alert('Input ' + priceSum + ' is not equal to price of order ' + this.priceBackend + ' with fees ' + this.fees + '!' + '\n'
-        + 'Missing value is ' + (this.priceBackend + this.fees - priceSum));
+    if (priceSum !== (this.price)) {
+      alert('Input ' + priceSum + ' is not equal to price of order ' + this.price + ' with fees ' + this.fees + '!' + '\n'
+        + 'Missing value is ' + (this.price + this.fees - priceSum));
       return false;
     }
     return true;
@@ -305,7 +303,9 @@ export class TransactionSenderComponent implements OnInit {
       this.exchangeRate = data.exchangeRate;
       if (this.priceBackend !== undefined && !isNaN(this.priceBackend)) {
         if (this.exchangeRate !== null && this.exchangeRate !== undefined && this.exchangeRate !== 0) {
-          this.price = this.priceBackend / this.exchangeRate;
+          this.price = this.priceBackend / this.exchangeRate * 100000000;
+          this.walletsInputs = [this.price];
+          this.feeWallet = 1;
         }
         else {
           // ???
