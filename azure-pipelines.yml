@@ -1,6 +1,9 @@
 
 # Starter pipeline
 
+
+
+Settings:
 - task: SqlDacpacDeploymentOnMachineGroup@0
   inputs:
     TaskType: 'sqlQuery'
