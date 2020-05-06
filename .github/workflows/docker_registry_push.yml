@@ -1,0 +1,24 @@
+name: Docker Compose CI
+
+on:
+  push:
+    branches: [ feature_129 ]
+  pull_request:
+    branches: [ feature_129 ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Login to registry
+      run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      env:
+        GITHUB_PACKAGE_REGISTRY_TOKEN: ${{ secrets.GITHUB_PACKAGE_REGISTRY_TOKEN }}
+    - name: Build and Push Backend + DB
+      run: docker-compose build && docker-compose push
+    - name: Build and Push Frontend
+      run: docker build -t blockpay.azurecr.io/frontend:latest ./frontend && docker push blockpay.azurecr.io/frontend:latest
