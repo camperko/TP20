@@ -11,17 +11,11 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- task: SqlDacpacDeploymentOnMachineGroup@0
-  inputs:
-    TaskType: 'sqlQuery'
-    SqlFile: '\\TP\backend\blockchaintestexport.sql'
-    ServerName: '//postgres:postgres@localhost:5432/blockchain_test'
-    DatabaseName: 'blockchain_test'
-    AuthScheme: 'sqlServerAuthentication'
-    SqlUsername: 'postgres'
-    SqlPassword: 'postgres'
 - script: |
+    sudo apt-get install postgresql postgresql-contrib
+    createdb -h localhost -p 5432 -U postgres -E utf8 blockchain
     cd backend
+    psql -d blockchain -U postgres -f blockchainexport.sql
     npm install
     npm test
   displayName: 'Install backend and test'
