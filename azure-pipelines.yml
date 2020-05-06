@@ -1,5 +1,14 @@
 
 # Starter pipeline
+- task: SqlDacpacDeploymentOnMachineGroup@0
+  inputs:
+    TaskType: 'sqlQuery'
+    SqlFile: '\\TP\backend\blockchaintestexport.sql'
+    ServerName: '//postgres:postgres@localhost:5432/blockchain_test'
+    DatabaseName: 'blockchain_test'
+    AuthScheme: 'sqlServerAuthentication'
+    SqlUsername: 'postgres'
+    SqlPassword: 'postgres'
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
