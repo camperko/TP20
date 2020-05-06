@@ -1,5 +1,6 @@
 
 # Starter pipeline
+
 - task: SqlDacpacDeploymentOnMachineGroup@0
   inputs:
     TaskType: 'sqlQuery'
@@ -9,6 +10,7 @@
     AuthScheme: 'sqlServerAuthentication'
     SqlUsername: 'postgres'
     SqlPassword: 'postgres'
+
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
