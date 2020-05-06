@@ -12,7 +12,6 @@ pool:
 
 steps:
 - script: |
-    sudo apt-get install postgresql postgresql-contrib
     createdb -h localhost -p 5432 -U postgres -E utf8 blockchain
     cd backend
     psql -d blockchain -U postgres -f blockchainexport.sql
