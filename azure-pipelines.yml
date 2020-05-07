@@ -6,24 +6,30 @@
 
 trigger:
 - develop
-- task: SqlAzureDacpacDeployment@1
-  inputs:
-    AuthenticationType: 'server'
-    ServerName: 'localhost,5432'
-    DatabaseName: 'blockchain_test'
-    SqlUsername: 'postgres'
-    SqlPassword: 'postgres'
-    deployType: 'SqlTask'
-    SqlFile: '\\TP20\backend\blockchaintest.sql'
-    IpDetectionMethod: 'AutoDetect'
 
 pool:
   vmImage: 'ubuntu-latest'
+  variables:
+      BACKEND: postgres
+      PG_DATABASE_URL: postgres://postgres:postgres@localhost/
+      PG_EXAMPLE_DATABASE_URL: postgres://postgres:postgres@localhost:5432/blockchain_test
+
+setup:    
+- script: |
+     sudo apt-get update &&
+     sudo apt-get -y install postgresql libpq-dev &&
+     echo "host    all             all             127.0.0.1/32            md5" > sudo tee -a /etc/postgresql/9.5/main/pg_hba.conf &&
+     sudo service postgresql restart && sleep 3 &&
+     sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'postgres';" &&
+     sudo service postgresql restart && sleep 3
+  displayName: Install postgresql
 
 steps:
 - script: |
     cd backend
     npm install
+    createdb -h localhost -p 5432 -U postgres -E utf8 blockchain_test
+    psql -d blockchain_test -U postgres -f blockchaintestexport.sql
     npm test
   displayName: 'Install backend and test'
 
