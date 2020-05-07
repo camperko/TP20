@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'registration', component: RegistrationFormComponent },
   { path: 'transaction', component: MainContextComponent },
   { path: 'transaction/:merchantId/:orderId/:price', component: MainContextComponent },
-  { path: 'transaction/:merchantId/:orderId/:price/redirect', component: RedirectAfterTransactionComponent },
+  { path: 'transaction/redirect', component: RedirectAfterTransactionComponent },
   { path: 'transaction/:merchantId/:orderId/:price/:protocol/:server/:redirectURL1/:redirectURL2', component: MainContextComponent },
   { path: '', component: HomeComponent },
   // otherwise redirect to home

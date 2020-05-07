@@ -27,7 +27,8 @@ function jwt() {
             /^\/seller\/.*\/update\/email/,
             /^\/seller\/.*\/update\/password/,
             /^\/seller\/.*\/email/,
-            /^\/exchangeRate\/.*\/.*/
+            /^\/exchangeRate\/.*\/.*/,
+            'transaction/redirect'
         ]
     });
 }
