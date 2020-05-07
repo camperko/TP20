@@ -5,16 +5,7 @@
 
 trigger:
 - master
-- task: SqlAzureDacpacDeployment@1
-  inputs:
-    AuthenticationType: 'server'
-    ServerName: 'localhost,5432'
-    DatabaseName: 'blockchain_test'
-    SqlUsername: 'postgres'
-    SqlPassword: 'postgres'
-    deployType: 'SqlTask'
-    SqlFile: '\\TP\backend\blockchaintest.sql'
-    IpDetectionMethod: 'AutoDetect'
+
 pool:
   vmImage: 'ubuntu-latest'
 
