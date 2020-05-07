@@ -1,4 +1,4 @@
-name: Docker Compose CI
+name: App Build and Push
 
 on:
   push:
@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Login to registry
-      run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login blockpay.azurecr.io -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
       env:
         GITHUB_PACKAGE_REGISTRY_TOKEN: ${{ secrets.GITHUB_PACKAGE_REGISTRY_TOKEN }}
     - name: Build and Push Backend + DB
