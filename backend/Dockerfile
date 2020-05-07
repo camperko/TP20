@@ -23,5 +23,5 @@ RUN ["chmod", "+x", "/usr/local/bin/init.sh"]
 
 RUN npm install
 
-ENTRYPOINT ["init.sh"]
+ENTRYPOINT ["bash", "init.sh"]
 #CMD ["npm", "start"]
