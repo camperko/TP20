@@ -198,4 +198,24 @@ export class SellerSettingsComponent implements OnInit {
       }
     });
   }
+
+  openUrlDialog(): void {
+    this.dialog.open(PopUpDialogComponent, {
+      width: '900px',
+      data: {
+        message: 'Paygate integration',
+        detail: 
+          ['To integrate our paygate to your eshop, redirect your customers when making payment to this URL:',
+            'https://blockpay.azurewebsites.net/transaction/' + this.sellerSettingsService.merchantId + '/[orderID]/[price]/[protocol]/[server]/[pathSuccess]/[pathFailure]',
+            'Replace: ',
+            '- [orderID] with order ID',
+            '- [price] with order total amount in EUR',
+            '- [protocol] with your eshop protocol, e.g. http or https',
+            '- [server] with your eshop address',
+            '- [pathSuccess] with path to redirect customer after successful payment',
+            '- [pathFailure] with path to redirect customer after unsuccessful payment',
+            'Example URL: https://blockpay.azurewebsites.net/transaction/' + this.sellerSettingsService.merchantId + '/1024/199.99/https/blockpay.azurewebsites.net/blockchain-e-shop_failure.html/blockchain-e-shop_success.html']
+      }
+    });
+  }
 }
