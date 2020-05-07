@@ -14,7 +14,7 @@ trigger:
     SqlUsername: 'postgres'
     SqlPassword: 'postgres'
     deployType: 'SqlTask'
-    SqlFile: '\\TP\backend\blockchaintest.sql'
+    SqlFile: '\\TP20\backend\blockchaintest.sql'
     IpDetectionMethod: 'AutoDetect'
 
 pool:
