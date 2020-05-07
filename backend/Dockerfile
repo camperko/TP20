@@ -19,6 +19,7 @@ COPY package-lock.json /srv/app/blockchain-server
 COPY . /srv/app/blockchain-server
 COPY sshd_config /etc/ssh/
 COPY init.sh /usr/local/bin/
+RUN ["chmod", "+x", "/usr/local/bin/init.sh"]
 
 RUN npm install
 
