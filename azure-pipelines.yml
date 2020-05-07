@@ -12,9 +12,9 @@ pool:
   variables:
       BACKEND: postgres
       PG_DATABASE_URL: postgres://postgres:postgres@localhost/
-      PG_EXAMPLE_DATABASE_URL: postgres://postgres:postgres@localhost:5432/blockchain_test
+      PG_EXAMPLE_DATABASE_URL: postgres://postgres:postgres@localhost:5432/blockchain_test 
 
-setup:    
+steps:
 - script: |
      sudo apt-get update &&
      sudo apt-get -y install postgresql libpq-dev &&
@@ -24,7 +24,6 @@ setup:
      sudo service postgresql restart && sleep 3
   displayName: Install postgresql
 
-steps:
 - script: |
     cd backend
     npm install
