@@ -25,6 +25,7 @@ steps:
   displayName: Install postgresql
 
 - script: |
+    cd backend
     createdb -h localhost -p 5432 -U postgres -E utf8 blockchain_test
     psql -d blockchain_test -U postgres -f blockchaintestexport.sql
   displayName: 'Create and Import Database'
