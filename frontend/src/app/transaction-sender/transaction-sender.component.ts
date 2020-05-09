@@ -35,6 +35,7 @@ import { Component, OnInit } from '@angular/core';
 import { TransactionSenderService } from './transaction-sender.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service'; 
+import { SharedServiceService } from '../shared-service.service';
 
 @Component({
   selector: 'app-transaction-sender',
@@ -63,7 +64,9 @@ export class TransactionSenderComponent implements OnInit {
   constructor(
     private transactionSenderService: TransactionSenderService,
     private route: ActivatedRoute,
-    private cookieService: CookieService) { }
+    private router: Router,
+    private cookieService: CookieService,
+    private sharedService: SharedServiceService) { }
 
   /*
     ngOnInit - void function
@@ -79,6 +82,13 @@ export class TransactionSenderComponent implements OnInit {
       this.server = params.get('server');
       this.protocol = params.get('protocol');
       this.getTransactionTypes();
+
+      /*this.sharedService.currentServer.subscribe(server => this.server = server);
+      this.sharedService.currentProtocol.subscribe(protocol => this.protocol = protocol);
+      this.sharedService.currentFailURL.subscribe(redirectURLOnFailure => this.redirectURLOnFailure = redirectURLOnFailure);
+      this.sharedService.currentSuccessURL.subscribe(redirectURLOnSuccess => this.redirectURLOnSuccess = redirectURLOnSuccess);
+*/
+     
     });
   }
 
@@ -88,7 +98,8 @@ export class TransactionSenderComponent implements OnInit {
       - redirects buyer back to e-shop
   */
   redirectForFailure(){
-      location.href = this.protocol + '://' + this.server + '/' + this.redirectURLOnFailure
+      //location.href = this.protocol + '://' + this.server + '/' + this.redirectURLOnFailure
+      this.router.navigate(["transaction/redirect"]);
   }
 
   /*
@@ -98,6 +109,7 @@ export class TransactionSenderComponent implements OnInit {
   */
   redirectForSuccess(){
       //location.href = this.protocol + '://' + this.server + '/' + this.redirectURLOnSuccess
+       this.router.navigate(["transaction/redirect"]);
       
   }
 
