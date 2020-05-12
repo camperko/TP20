@@ -82,12 +82,6 @@ export class TransactionSenderComponent implements OnInit {
       this.server = params.get('server');
       this.protocol = params.get('protocol');
       this.getTransactionTypes();
-
-      /*this.sharedService.currentServer.subscribe(server => this.server = server);
-      this.sharedService.currentProtocol.subscribe(protocol => this.protocol = protocol);
-      this.sharedService.currentFailURL.subscribe(redirectURLOnFailure => this.redirectURLOnFailure = redirectURLOnFailure);
-      this.sharedService.currentSuccessURL.subscribe(redirectURLOnSuccess => this.redirectURLOnSuccess = redirectURLOnSuccess);
-*/
      
     });
   }
@@ -95,21 +89,27 @@ export class TransactionSenderComponent implements OnInit {
   /*
     redirectForFailure - void function
       - method is called when transaction is not successful
-      - redirects buyer back to e-shop
+      - redirects buyer back to our redirect page
   */
   redirectForFailure(){
       //location.href = this.protocol + '://' + this.server + '/' + this.redirectURLOnFailure
+      this.sharedService.changeServer(this.server);
+      this.sharedService.changeURL(this.redirectURLOnFailure);
+      this.sharedService.changeProtocol(this.protocol);
       this.router.navigate(["transaction/redirect"]);
   }
 
   /*
     redirectForSuccess - void function
       - method is called when transaction is successful
-      - redirects buyer back to e-shop
+      - redirects buyer to our redirect page
   */
   redirectForSuccess(){
       //location.href = this.protocol + '://' + this.server + '/' + this.redirectURLOnSuccess
-       this.router.navigate(["transaction/redirect"]);
+      this.sharedService.changeServer(this.server);
+      this.sharedService.changeURL(this.redirectURLOnSuccess);
+      this.sharedService.changeProtocol(this.protocol);
+      this.router.navigate(["transaction/redirect"]);
       
   }
 
@@ -200,7 +200,7 @@ export class TransactionSenderComponent implements OnInit {
   */
   sendForm() {
     if (!this.isValidBeforeSend()) {
-      return;
+      //return;
     }
     const data = {
       input_wallets: this.formInputs,
