@@ -1,0 +1,27 @@
+<app-navigation></app-navigation>
+<main>
+    <!--Grid row-->
+    <div class="mt-5 ml-5 mr-5 row wow fadeIn">
+        <!--Grid column-->
+        <div class="col-md-12 mb-4">
+            <!--Card-->
+            <div class="card mb-4">
+                <!--Card content-->
+                <div class="card-header text-center">
+                    Payment status: pending
+                </div>
+                <div class="card-body">
+                    Your transaction is being processed.
+                    <br>
+                    To redirect back to the merchant's page, press the Continue button.
+                    <div>
+                        <button class="mt-3" type="button" (click)="onSubmit()" mdbBtn color="info" mdbWavesEffect>Continue</button>
+                    </div>
+                </div>
+            </div>
+            <!--/.Card-->
+        </div>
+        <!--Grid column-->
+    </div>
+    <!--Grid row-->
+</main>

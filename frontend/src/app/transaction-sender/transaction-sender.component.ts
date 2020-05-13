@@ -33,8 +33,9 @@
 
 import { Component, OnInit } from '@angular/core';
 import { TransactionSenderService } from './transaction-sender.service';
-import { ActivatedRoute } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service'; 
+import { SharedServiceService } from '../shared-service.service';
 
 @Component({
   selector: 'app-transaction-sender',
@@ -63,7 +64,9 @@ export class TransactionSenderComponent implements OnInit {
   constructor(
     private transactionSenderService: TransactionSenderService,
     private route: ActivatedRoute,
-    private cookieService: CookieService) { }
+    private router: Router,
+    private cookieService: CookieService,
+    private sharedService: SharedServiceService) { }
 
   /*
     ngOnInit - void function
@@ -79,25 +82,35 @@ export class TransactionSenderComponent implements OnInit {
       this.server = params.get('server');
       this.protocol = params.get('protocol');
       this.getTransactionTypes();
+     
     });
   }
 
   /*
     redirectForFailure - void function
       - method is called when transaction is not successful
-      - redirects buyer back to e-shop
+      - redirects buyer back to our redirect page
   */
   redirectForFailure(){
-      location.href = this.protocol + '://' + this.server + '/' + this.redirectURLOnFailure
+      //location.href = this.protocol + '://' + this.server + '/' + this.redirectURLOnFailure
+      this.sharedService.changeServer(this.server);
+      this.sharedService.changeURL(this.redirectURLOnFailure);
+      this.sharedService.changeProtocol(this.protocol);
+      this.router.navigate(["transaction/redirect"]);
   }
 
   /*
     redirectForSuccess - void function
       - method is called when transaction is successful
-      - redirects buyer back to e-shop
+      - redirects buyer to our redirect page
   */
   redirectForSuccess(){
-      location.href = this.protocol + '://' + this.server + '/' + this.redirectURLOnSuccess
+      //location.href = this.protocol + '://' + this.server + '/' + this.redirectURLOnSuccess
+      this.sharedService.changeServer(this.server);
+      this.sharedService.changeURL(this.redirectURLOnSuccess);
+      this.sharedService.changeProtocol(this.protocol);
+      this.router.navigate(["transaction/redirect"]);
+      
   }
 
   /*
@@ -185,7 +198,7 @@ export class TransactionSenderComponent implements OnInit {
   */
   sendForm() {
     if (!this.isValidBeforeSend()) {
-      return;
+      //return;
     }
     const data = {
       input_wallets: this.formInputs,
@@ -202,7 +215,7 @@ export class TransactionSenderComponent implements OnInit {
         for (let i = 1; i < data.input_wallets.length + 1; i++) {
           this.cookieService.set(i +  '.' + data.input_wallets[i - 1][0].field_display, data.input_wallets[i - 1][0].value);
         }
-        alert(response.message);
+        //alert(response.message);
         setTimeout(() => 
         {
           this.redirectForSuccess();
